@@ -1,0 +1,215 @@
+@import url('https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300..700&display=swap');
+
+body {
+    overflow-x: auto;
+}
+
+.nav-right {
+    display: flex;
+
+    p {
+        margin-top: 20px;
+    }
+}
+
+.container {
+    height: 100vh;
+}
+
+.restaurants{
+    margin-top: 4%;
+    height: 80vh;
+
+    .table{
+        width: 40%;
+        border-bottom: 1px solid var(--unable);
+        .td{
+            padding: 10px;
+        }
+    }
+}
+
+.reserve-row {
+    padding-block: 12px;
+    margin-block: 120px;
+    font-size: 14px;
+    
+}
+
+.sub-nav {
+    background-color: var(--peach-color);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-inline: 18px;
+    padding-top: 12px;
+}
+
+.center{
+    align-items: center;
+}
+
+.blur{
+    font-size: 10px;
+    font-weight: 300;
+    line-height: 14px;
+    letter-spacing: 0;
+    text-align: left;
+    color: var(--light-grey);
+}
+.red-blur{
+    font-size: 10px;
+    font-weight: 300;
+    line-height: 14px;
+    letter-spacing: 0;
+    text-align: left;
+    color: var(--peach-color);
+}
+.bold{
+    font-size: 16px;
+}
+.wide{
+    display: flex;
+    padding-top: 0;
+    margin: 0;
+    align-items: center;
+    justify-content: space-between;
+    padding-inline: 10px;
+}
+
+.grid-container {
+    display: grid;
+    gap: 5px;
+    grid-template-columns: 30% auto;
+    background-color: var(--peach-color);
+    padding: 0;
+}
+
+.grid-item {
+    background-color: white;
+    height: calc(100vh - 200px);
+    padding: 20px;
+    font-size: 25px;
+    text-align: center;
+
+    .inline-cell{
+        font-size: 13px;
+        padding: 0;
+        margin: 0;
+    }
+}
+
+@media screen and (max-width:1200px) {
+    .grid-container {
+        display: block;
+    }
+}
+
+.tables-list{
+    width: 60%;
+    display: flex;
+    flex-wrap: wrap;
+    grid-template-columns: auto auto auto auto auto auto;
+    padding: 2%;
+    row-gap: 10px;
+    margin: auto;
+
+    .table-card{
+        /*width: 102px;*/
+        /*height: 75px;*/
+        width: 67px;
+        height: 57px;
+        border-radius: 10px;
+        background: var(--brown-like);
+        padding: 3% 5%;
+        display: grid;
+        grid-template-columns: auto auto;
+        margin: 12px;
+
+        .card-part{
+            font-size: 16px;
+            color: white;
+
+            .seat{
+                width: 18px;
+                height: 14px;
+                top: 356px;
+                left: 847px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width:490px) {
+
+    .tables-list {
+        width: 90%;
+        height: fit-content;
+        overflow-y: scroll;
+    }
+
+    .table-card{
+        width: 42px;
+        height: 25px;
+        border-radius: 8px;
+        margin: 4px;
+    }
+
+    .pink-back {
+        position: relative;
+        
+    }
+}
+
+.table{
+    border: 1px solid var(--pink);
+    .ruler{
+        border: 1px solid var(--pink);;
+    }
+}
+.left-align{
+    text-align: left;
+}
+
+
+@media screen and (max-width: 768px){
+    .grid-container{
+        grid-template-columns: 40% auto;
+    }
+
+    .blur{
+        font-size: 70%;
+    }
+
+    .bold{
+        font-size: 80%;
+    }
+
+    .wide{
+        display: block;
+        padding: 0;
+        margin: 0;
+    }
+
+    .reservations{
+        *{
+            font-size: 14px;
+        }
+    }
+
+    .nav-title{
+        display: none;
+    }
+}
+
+td {
+    color: var(--light-grey);
+}
+
+.second-table {
+    @media screen and (max-width:798px) {
+        display: block;
+        
+    }
+}

@@ -1,0 +1,29 @@
+.search-container {
+    display: block;
+    margin: auto;
+    height: 53.5vh;
+
+    ul {
+        margin: auto;
+        position: relative;
+        bottom: 200px;
+    }
+}
+
+.pages {
+    position: fixed;
+    bottom: 15%;
+    left: 43%;
+    display: block;
+    margin: auto;
+
+    button {
+        margin-inline: 12px;
+        /* border-radius: 50%;
+        border-color: var(--peach-color);
+        border-width: 2px; 
+        border-style: solid;*/
+        background-color: white;
+        color: var(--peach-color);
+    }
+}

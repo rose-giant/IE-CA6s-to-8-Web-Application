@@ -1,0 +1,79 @@
+.modall {
+    display: block;
+    width: 460px;
+    height: 720px;
+    background-color: white;
+
+    .close-btn {
+        background-color: white;
+        color: black;
+    }
+
+    .modal-head {
+        p {
+            font-size: 22px;
+            font-weight: 500;
+
+            span {
+                color: var(--peach-color);
+            }
+        }
+    }
+
+    .modal-body {
+        .sub {
+            font-size: 16px;
+            font-weight: 400;
+            color: var(--light-grey);
+        }
+    }
+}
+
+textarea {
+    width: 400px;
+    height: 220px;
+    display: block;
+    margin: auto;
+    border: none;
+    border-radius: 12px;
+    padding: 8px;
+    overflow: scroll;
+    background-color: rgb(239, 239, 239);
+}
+
+.review-rates {
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+
+    li {
+        width: inherit;
+        position: relative;
+        right: 12px;
+        p {
+            color: var(--black-like);
+     
+        }
+    }
+}
+
+.submission {
+    display: block;
+    position: relative;
+    top: 0px;
+
+    button {
+        height: 40px;
+        width: 368px;
+        border-radius: 12px;
+        margin-block: 12px;
+        margin-left: 24px;
+    }
+
+    .cancel {
+        background-color: white;
+        border: 1px solid var(--peach-color);
+        color: var(--peach-color);
+    }
+}
