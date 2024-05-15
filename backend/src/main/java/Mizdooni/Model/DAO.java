@@ -1,15 +1,10 @@
 package Mizdooni.Model;
 
-import Mizdooni.Model.User.User;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;

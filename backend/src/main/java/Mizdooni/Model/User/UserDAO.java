@@ -25,16 +25,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class UserDAO extends DAO {
 
     private static final String TABLE_NAME = "user";
 
-
-    protected String getInsertStatement() {
-        return String.format("INSERT IGNORE INTO %s(username, password, email, address) VALUES(?,?,?,?)", TABLE_NAME);
-    }
 
 
     protected void fillInsertValues(PreparedStatement st, User user) throws SQLException {
@@ -44,10 +41,11 @@ public class UserDAO extends DAO {
         st.setString(4, user.getAddress().toString());
     }
 
-    public void addToDatabase(User obj) throws SQLException {
+    public void addToDatabase(User user) throws SQLException {
         Connection con = HibernateUtils.getConnection();
-        PreparedStatement st = con.prepareStatement(getInsertStatement());
-        fillInsertValues(st, obj);
+        String insertQuery = getInsertRecordQuery(user.getRole());
+        PreparedStatement st = con.prepareStatement(insertQuery);
+        fillInsertValues(st, user);
         System.out.println(st);
         try {
             st.execute();
@@ -61,18 +59,23 @@ public class UserDAO extends DAO {
         }
     }
 
+    private String getInsertRecordQuery(String role) {
+        return String.format("INSERT IGNORE INTO %s(username, password, email, address) VALUES(?,?,?,?)", role );
+    }
 
-    public void createTable() throws SQLException {
+
+    public void createTable(String tableName) throws SQLException {
         Connection con = HibernateUtils.getConnection();
         PreparedStatement createTableStatement = con.prepareStatement(
                 String.format(
                         "CREATE TABLE IF NOT EXISTS %s " +
                                 "(username CHAR(225),\npassword CHAR(225),\nemail CHAR(225),\naddress CHAR(225),\nPRIMARY KEY(username));",
-                        TABLE_NAME)
+                        tableName)
         );
         System.out.println(createTableStatement);
         createTableStatement.executeUpdate();
         createTableStatement.close();
         con.close();
     }
+
 }
