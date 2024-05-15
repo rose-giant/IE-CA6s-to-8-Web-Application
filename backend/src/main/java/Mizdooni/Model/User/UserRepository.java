@@ -8,11 +8,11 @@ import java.util.Objects;
 public class UserRepository {
 
     private static UserRepository instance;
-    private ArrayList<User> users = new ArrayList<>();
-
+//    private ArrayList<User> users = new ArrayList<>();
+    UserDAO dao = new UserDAO();
     public UserRepository() throws Exception {
-        UserDAO dao = new UserDAO();
-        users = dao.getFromAPI();
+
+        dao.fetchFromAPI();
     }
 
     public static UserRepository getInstance() throws Exception {
@@ -21,29 +21,29 @@ public class UserRepository {
         else return instance;
     }
 
-    public ArrayList<User> getAll() {
-        return users;
-    }
-
-    public User findUserByUserName(String userName) {
-        for(User user: users) {
-            if(Objects.equals(user.username, userName)) {
-                return user;
-            }
-        }
-        return null;
-    }
-
-    public User findByUsernameAndPassword(String username, String password) {
-        for(User user: users) {
-            if(Objects.equals(user.username, username) && Objects.equals(user.password, password)) {
-                return user;
-            }
-        }
-        return null;
-    }
-
-    public void addUser(User newUser) {
-        users.add(newUser);
-    }
+//    public ArrayList<User> getAll() {
+//        return dao.getUsers;
+//    }
+//
+//    public User findUserByUserName(String userName) {
+//        for(User user: users) {
+//            if(Objects.equals(user.username, userName)) {
+//                return user;
+//            }
+//        }
+//        return null;
+//    }
+//
+//    public User findByUsernameAndPassword(String username, String password) {
+//        for(User user: users) {
+//            if(Objects.equals(user.username, username) && Objects.equals(user.password, password)) {
+//                return user;
+//            }
+//        }
+//        return null;
+//    }
+//
+//    public void addUser(User newUser) {
+//        dao.add(newUser);
+//    }
 }

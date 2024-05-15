@@ -22,10 +22,17 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UserDAO extends DAO {
-    public ArrayList<User> getFromAPI() throws Exception{
+    public void fetchFromAPI() throws Exception{
         String UsersJsonString = getRequest(Constants.GET_USERS_URL);
-//        String UsersJsonString ="[{\"address\":{\"city\":\"Pittsburgh\",\"country\":\"US\"},\"email\":\"ali@gmail.com\",\"password\":\"ali_1234\",\"role\":\"manager\",\"username\":\"ali\"}]";
         ObjectMapper om = new ObjectMapper();
-        return om.readValue(UsersJsonString, new TypeReference<ArrayList<User>>(){});
+        ArrayList<User> users = om.readValue(UsersJsonString, new TypeReference<ArrayList<User>>(){});
+
+        for (User user:
+             users) {
+
+
+        }
     }
+
+
 }

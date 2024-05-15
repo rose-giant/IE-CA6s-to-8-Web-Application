@@ -1,12 +1,18 @@
 package Mizdooni.Model;
 
+import Mizdooni.Model.User.User;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.Scanner;
 
-public class DAO {
+public abstract class DAO<TYPE> {
 
-    public static String getRequest(String Url) throws Exception{
+    public static String getRequest(String Url) throws Exception {
         URL url = new URL(Url);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
@@ -29,11 +35,18 @@ public class DAO {
         }
     }
 
-    //    public ArrayList<User> getFromAPI() throws Exception{
-//        String ObjectsJsonString = getRequest();
-//        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-//        return gson.fromJson(ObjectsJsonString, new TypeToken<ArrayList<Object>>() {}.getType());
-//    }
+    public void fetchFromAPI(String GET_URL) throws Exception{
+        String UsersJsonString = getRequest(GET_URL);
+        ObjectMapper om = new ObjectMapper();
+        ArrayList<TYPE> users = om.readValue(UsersJsonString, new TypeReference<ArrayList<TYPE>>(){});
+
+        for (TYPE user: users) {
+//            Connection con =
+
+        }
+    }
+
+
 }
 
 
