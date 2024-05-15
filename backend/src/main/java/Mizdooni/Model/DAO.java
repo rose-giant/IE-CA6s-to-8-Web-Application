@@ -10,6 +10,8 @@ import org.hibernate.Transaction;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -47,22 +49,22 @@ public abstract class DAO<TYPE> {
     }
 
 
-    public void addToDatabase(TYPE user) {
-        Session session = HibernateUtils.getSessionFactory().openSession();
-        Transaction transaction = null;
-        try {
-            transaction = session.beginTransaction();
-            session.save(user);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-    }
+//    public void addToDatabase(TYPE obj) throws SQLException {
+//        Connection con = HibernateUtils.getConnection();
+//        PreparedStatement st = con.prepareStatement(getInsertStatement());
+//        fillInsertValues(st, obj);
+//        System.out.println(st);
+//        try {
+//            st.execute();
+//            st.close();
+//            con.close();
+//        } catch (Exception e) {
+//            st.close();
+//            con.close();
+//            System.out.println("error in Repository.insert query.");
+//            e.printStackTrace();
+//        }
+//    }
 }
 
 

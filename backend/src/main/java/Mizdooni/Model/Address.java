@@ -8,6 +8,7 @@ public class Address {
     public Address(String city, String country) {
         this.city = city;
         this.country = country;
+        this.street = " ";
     }
     public Address(String city, String country, String street) {
         this.city = city;
@@ -16,4 +17,8 @@ public class Address {
     }
 
     public Address(){}
+
+    public String toString(){
+        return country + ", " +  city + ", " + street;
+    }
 }

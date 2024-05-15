@@ -12,6 +12,7 @@ public class UserRepository {
     private ArrayList<User> users = new ArrayList<>();
     UserDAO dao = new UserDAO();
     public UserRepository() throws Exception {
+        dao.createTable();
         users = dao.fetchFromAPI(Constants.GET_USERS_URL, User.class);
         for (User user:users) {
             dao.addToDatabase(user);
