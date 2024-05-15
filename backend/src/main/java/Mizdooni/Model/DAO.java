@@ -3,6 +3,7 @@ package Mizdooni.Model;
 import Mizdooni.Model.User.User;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.CollectionType;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -38,10 +39,11 @@ public abstract class DAO<TYPE> {
     }
 
 
-    public ArrayList<TYPE> fetchFromAPI(String GET_URL) throws Exception{
+    public <TYPE> ArrayList<TYPE> fetchFromAPI(String GET_URL, Class<TYPE> elementClass) throws Exception{
         String UsersJsonString = getRequest(GET_URL);
         ObjectMapper om = new ObjectMapper();
-        return om.readValue(UsersJsonString, new TypeReference<ArrayList<TYPE>>(){});
+        CollectionType listType = om.getTypeFactory().constructCollectionType(ArrayList.class,elementClass);
+        return om.readValue(UsersJsonString,listType);
     }
 
 
