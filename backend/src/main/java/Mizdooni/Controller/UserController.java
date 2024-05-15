@@ -26,16 +26,5 @@ public class UserController {
     public ArrayList<User> getAll() {
         return userRepo.getAll();
     }
-//    @PostMapping("/login")
-//    public User login(HttpServletResponse response,
-//                      @RequestBody Map<String, String> body) throws Exception {
-//        UserRepository userRep = UserRepository.getInstance();
-//        User user = userRepo.findByUsernameAndPassword(body.get("username"), body.get("password"));
-//        if(user != null) {
-//            return user;
-//        } else {
-//            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-//            throw new Exception("Invalid username or password!");
-//        }
-//    }
+
 }

@@ -3,6 +3,7 @@ package Mizdooni.Model.User;
 import Mizdooni.Model.Constants;
 
 import Mizdooni.Model.DAO;
+import Mizdooni.Model.HibernateUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
@@ -15,6 +16,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -22,17 +25,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UserDAO extends DAO {
-    public void fetchFromAPI() throws Exception{
-        String UsersJsonString = getRequest(Constants.GET_USERS_URL);
-        ObjectMapper om = new ObjectMapper();
-        ArrayList<User> users = om.readValue(UsersJsonString, new TypeReference<ArrayList<User>>(){});
 
-        for (User user:
-             users) {
-
-
-        }
-    }
 
 
 }

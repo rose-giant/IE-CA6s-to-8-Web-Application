@@ -3,6 +3,8 @@ package Mizdooni.Model;
 import Mizdooni.Model.User.User;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -35,18 +37,30 @@ public abstract class DAO<TYPE> {
         }
     }
 
-    public void fetchFromAPI(String GET_URL) throws Exception{
+
+    public ArrayList<TYPE> fetchFromAPI(String GET_URL) throws Exception{
         String UsersJsonString = getRequest(GET_URL);
         ObjectMapper om = new ObjectMapper();
-        ArrayList<TYPE> users = om.readValue(UsersJsonString, new TypeReference<ArrayList<TYPE>>(){});
-
-        for (TYPE user: users) {
-//            Connection con =
-
-        }
+        return om.readValue(UsersJsonString, new TypeReference<ArrayList<TYPE>>(){});
     }
 
 
+    public void addToDatabase(TYPE user) {
+        Session session = HibernateUtils.getSessionFactory().openSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            session.save(user);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
 }
 
 
