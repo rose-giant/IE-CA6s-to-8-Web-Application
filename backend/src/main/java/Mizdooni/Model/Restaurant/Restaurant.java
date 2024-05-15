@@ -8,17 +8,34 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.Data;
 import lombok.Getter;
 
+@Entity
 @Getter
+@Data
+@Table(name = "restaurant")
 public class Restaurant {
+    @Id
+    @Column(name = "name")
     public String name;
+    @Column(name = "managerUsername")
     public String managerUsername;
+    @Column(name = "type")
     public String type;
+    @Column(name = "startTime")
     public String startTime;
+    @Column(name = "endTime")
     public String endTime;
+    @Column(name = "description")
     public String description;
+    @Column(name = "image")
     public String image;
+    @Column(name = "address")
     public Address address = new Address();
 
     @JsonIgnore
