@@ -1,6 +1,7 @@
 package Mizdooni.Model.Restaurant;
 
 import Mizdooni.Model.Address;
+import Mizdooni.Model.Constants.*;
 import Mizdooni.Model.ResponseHandler;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -14,11 +15,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.Getter;
+import static Mizdooni.Model.Constants.RESTAURANTS_TABLE_NAME;
 
 @Entity
 @Getter
 @Data
-@Table(name = "restaurant")
+@Table(name = RESTAURANTS_TABLE_NAME)
 public class Restaurant {
     @Id
     @Column(name = "name")
