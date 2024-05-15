@@ -66,4 +66,35 @@ public class Restaurant {
     }
     public Restaurant(){};
 
+    public String getName() {
+        return this.name;
+    }
+
+    public String getManagerUsername() {
+        return this.managerUsername;
+    }
+
+    public String getType() {
+        return this.type;
+    }
+
+    public String getStartTime() {
+        return this.startTime;
+    }
+
+    public String getEndTime() {
+        return this.endTime;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public String getImage() {
+        return this.image;
+    }
+
+    public Object getAddress() {
+        return this.address;
+    }
 }

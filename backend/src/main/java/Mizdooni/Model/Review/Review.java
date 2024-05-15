@@ -1,21 +1,37 @@
 package Mizdooni.Model.Review;
 
-
 import Mizdooni.Model.ResponseHandler;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 
-
+@Entity
 @Getter
+@Data
+@Table(name = "review")
 public class Review {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @Column(name = "ambiance_rate")
     public Double ambianceRate;
+    @Column(name = "comment")
     public String comment;
+    @Column(name = "food_rate")
     public Double foodRate;
+    @Column(name = "overall_rate")
     public Double overallRate;
+    @Column(name = "restaurant_name")
     public String restaurantName;
+    @Column(name = "service_rate")
     public Double serviceRate;
+
+    @ManyToOne
+    @JoinColumn(name = "comment_username", nullable = false)
     public String username;
 
     public Review(@JsonProperty("ambianceRate") Double ambianceRate,

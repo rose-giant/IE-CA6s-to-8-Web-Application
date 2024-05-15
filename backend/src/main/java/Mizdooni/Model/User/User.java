@@ -49,5 +49,25 @@ public class User {
         this.address = address;
     }
     public User(){};
+
+    public String getUsername() {
+        return this.username;
+    }
+
+    public String getPassword() {
+        return this.password;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public Object getAddress() {
+        return this.address;
+    }
+
+    public String getRole() {
+        return this.role;
+    }
 //    public User(String username, String password, String role){};
 }

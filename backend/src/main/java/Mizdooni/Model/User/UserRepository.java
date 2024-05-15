@@ -11,6 +11,7 @@ public class UserRepository {
     private static UserRepository instance;
     private ArrayList<User> users = new ArrayList<>();
     UserDAO dao = new UserDAO();
+
     public UserRepository() throws Exception {
         dao.createTable(Constants.MANAGER_ROLE);
         dao.createTable(Constants.CLIENT_ROLE);

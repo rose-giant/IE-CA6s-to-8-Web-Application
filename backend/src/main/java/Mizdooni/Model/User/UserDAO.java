@@ -32,8 +32,6 @@ public class UserDAO extends DAO {
 
     private static final String TABLE_NAME = "user";
 
-
-
     protected void fillInsertValues(PreparedStatement st, User user) throws SQLException {
         st.setString(1, user.getUsername());
         st.setString(2, user.getPassword());
@@ -63,7 +61,6 @@ public class UserDAO extends DAO {
         return String.format("INSERT IGNORE INTO %s(username, password, email, address) VALUES(?,?,?,?)", role );
     }
 
-
     public void createTable(String tableName) throws SQLException {
         Connection con = HibernateUtils.getConnection();
         PreparedStatement createTableStatement = con.prepareStatement(
@@ -77,5 +74,4 @@ public class UserDAO extends DAO {
         createTableStatement.close();
         con.close();
     }
-
 }
