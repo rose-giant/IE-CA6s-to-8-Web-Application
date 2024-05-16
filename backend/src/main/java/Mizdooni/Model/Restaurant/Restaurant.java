@@ -9,10 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import static Mizdooni.Model.Constants.RESTAURANTS_TABLE_NAME;
@@ -23,9 +20,12 @@ import static Mizdooni.Model.Constants.RESTAURANTS_TABLE_NAME;
 @Table(name = RESTAURANTS_TABLE_NAME)
 public class Restaurant {
     @Id
-    @Column(name = "name")
     public String name;
+
+    @OneToOne
+    @JoinColumn(name = "restaurant_manager", nullable = false)
     @Column(name = "managerUsername")
+
     public String managerUsername;
     @Column(name = "type")
     public String type;
