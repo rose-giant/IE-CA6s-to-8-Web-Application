@@ -24,23 +24,25 @@ public class TableDAO extends DAO {
     @Override
     protected String getCreateTableQuery(String tableName) {
         return  String.format(
-                "CREATE TABLE %s (\n" +
-                        "\t\t\t\tid BIGINT AUTO_INCREMENT PRIMARY KEY,\n" +
-                        "\t\t\t\ttable_number INT,\n" +
-                        "\t\t\t\ttable_restaurant VARCHAR(255) NOT NULL,\n" +
-                        "\t\t\t\ttable_manager VARCHAR(255) NOT NULL,\n" +
-                        "\t\t\t\tseats INT,\n" +
-                        "\t\t\t\tFOREIGN KEY (table_restaurant) REFERENCES restaurant (name),\n" +
-                        "\t\t\t\tFOREIGN KEY (table_manager) REFERENCES manager (username)\n" +
-                        "\t\t\t);"
+               "CREATE TABLE IF NOT EXISTS %s (\n" +
+                       "id MEDIUMINT NOT NULL AUTO_INCREMENT,\n" +
+                       "tableRestaurant CHAR(225),\n" +
+                       "tableManager CHAR(225),\n" +
+                       "seats INT,\n" +
+                       "tableNumber INT UNIQUE,\n" +
+                       "PRIMARY KEY(id), \n" +
+                       "FOREIGN KEY(tableManager)REFERENCES manager(username),\n" +
+                       "FOREIGN KEY(tableRestaurant)REFERENCES restaurant(name)\n" +
+                       ");"
                 ,tableName);
     }
 
 
     protected void fillInsertValues(PreparedStatement st, TableRest table) throws SQLException {
-        st.setString(1, table.managerUsername);
-        st.setString(2, table.restaurantName);
+        st.setString(1, table.restaurantName);
+        st.setString(2, table.managerUsername);
         st.setInt(3, table.seatsNumber);
+        st.setInt(4, table.tableNumber);
     }
 
     public void addToDatabase(TableRest table) throws SQLException {
@@ -62,7 +64,7 @@ public class TableDAO extends DAO {
     }
 
     private String getInsertRecordQuery() {
-        return String.format("INSERT IGNORE INTO %s(table_restaurant, table_manager, seats) VALUES(?,?,?)", Constants.TABLES_TABLE_NAME );
+        return String.format("INSERT IGNORE INTO %s(tableRestaurant, tableManager, seats, tableNumber) VALUES(?,?,?,?)", Constants.TABLES_TABLE_NAME );
     }
 
 }

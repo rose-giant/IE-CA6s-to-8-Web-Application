@@ -23,6 +23,8 @@ public class Reservation {
     @JoinColumn(name = "reservation_restaurant", nullable = false)
     public String restaurantName;
 
+    @ManyToOne
+    @JoinColumn(name = "tableNumber", nullable = false)
     public int tableNumber;
 
     @Column(name = "datetime", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")

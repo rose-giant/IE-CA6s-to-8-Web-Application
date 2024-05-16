@@ -19,13 +19,13 @@ public class ReviewDAO extends DAO {
     private static final String TABLE_NAME = "reviews";
 
     protected void fillInsertValues(PreparedStatement st, Review review) throws SQLException {
-        st.setString(1, review.restaurantName);
+        st.setDouble(1, review.ambianceRate);
         st.setString(2, review.comment);
-        st.setString(3, review.username);
+        st.setDouble(3, review.foodRate);
+        st.setDouble(4, review.overallRate);
         st.setDouble(5, review.serviceRate);
-        st.setDouble(6, review.foodRate);
-        st.setDouble(7, review.overallRate);
-        st.setDouble(8, review.ambianceRate);
+        st.setString(6, review.restaurantName);
+        st.setString(7, review.username);
     }
 
     public void addToDatabase(Review review) throws SQLException {
@@ -47,7 +47,7 @@ public class ReviewDAO extends DAO {
     }
 
     private String getInsertRecordQuery() {
-        return String.format("INSERT INTO %s(ambiance_rate, comment, food_rate, overall_rate, service_rate, review_restaurant, review_username) VALUES(?, ?, ?, ?, ?, ?, ?)", TABLE_NAME);
+        return String.format("INSERT INTO %s(ambiance_rate, comment, food_rate, overall_rate, service_rate, review_restaurant, review_username) VALUES(?, ?, ?, ?, ?, ?, ?)", Constants.REVIEWS_TABLE_NAME);
     }
 
     private String getReviewsByRestaurantQuery(String restaurantName) {
@@ -66,7 +66,7 @@ public class ReviewDAO extends DAO {
                                 "    review_restaurant VARCHAR(255),\n" +
                                 "    review_username VARCHAR(255),\n" +
                                 "    FOREIGN KEY (review_restaurant) REFERENCES restaurant (name),\n" +
-                                "    FOREIGN KEY (review_username) REFERENCES users (username)\n" +
+                                "    FOREIGN KEY (review_username) REFERENCES client (username)\n" +
                                 ");",
                         tableName);
     }

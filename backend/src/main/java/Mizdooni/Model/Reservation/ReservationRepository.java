@@ -5,6 +5,7 @@ import Mizdooni.Model.Table.TableRest;
 
 import java.util.ArrayList;
 
+import static Mizdooni.Model.Constants.RESERVES_TABLE_NAME;
 import static Mizdooni.Model.Constants.TABLES_TABLE_NAME;
 
 public class ReservationRepository {
@@ -13,7 +14,7 @@ public class ReservationRepository {
     ReservationDAO dao = new ReservationDAO();
 
     public ReservationRepository() throws Exception {
-        if(!dao.checkTableExistence(TABLES_TABLE_NAME)){
+        if(!dao.checkTableExistence(RESERVES_TABLE_NAME)){
             reservations = dao.getFromAPI();
             for (Reservation user:reservations) {
                 dao.addToDatabase(user);

@@ -20,7 +20,7 @@ public final class Constants {
     public static final String CLIENTS_TABLE_NAME = "client";
     public static final String RESTAURANTS_TABLE_NAME = "restaurant";
     public static final String RESERVES_TABLE_NAME = "reserve";
-    public static final String TABLES_TABLE_NAME = "table";
+    public static final String TABLES_TABLE_NAME = "rest_table";
     public static final String REVIEWS_TABLE_NAME = "review";
 
 

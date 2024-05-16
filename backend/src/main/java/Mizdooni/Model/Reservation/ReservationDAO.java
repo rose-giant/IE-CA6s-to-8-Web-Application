@@ -28,12 +28,13 @@ public class ReservationDAO extends DAO {
                         "    reservation_number BIGINT AUTO_INCREMENT PRIMARY KEY,\n" +
                         "    reservation_username VARCHAR(255) NOT NULL,\n" +
                         "    reservation_restaurant VARCHAR(255) NOT NULL,\n" +
-                        "    table_number INT,\n" +
                         "    datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n" +
-                        "    FOREIGN KEY (reservation_username) REFERENCES users (username),\n" +
-                        "    FOREIGN KEY (reservation_restaurant) REFERENCES restaurants (name)\n" +
+                        "    tableNumber INT,\n" +
+                        "    FOREIGN KEY (reservation_username) REFERENCES client (username),\n" +
+                        "    FOREIGN KEY (reservation_restaurant) REFERENCES restaurant (name),\n" +
+                        "    FOREIGN KEY (tableNumber) REFERENCES rest_table (tableNumber)\n"+
                         ");\n",
-                TABLE_NAME);
+                tableName);
     }
 
     private static final String TABLE_NAME = "reservation";
@@ -42,6 +43,7 @@ public class ReservationDAO extends DAO {
         st.setString(1, reservation.username);
         st.setString(2, reservation.restaurantName);
         st.setString(3, reservation.datetime);
+        st.setInt(4, reservation.tableNumber);
     }
 
     public void addToDatabase(Reservation reservation) throws SQLException {
@@ -63,7 +65,7 @@ public class ReservationDAO extends DAO {
     }
 
     private String getInsertRecordQuery() {
-        return "INSERT IGNORE INTO %s(reservation_username, reservation_restaurant, datetime) VALUES(?,?,?)";
+        return String.format("INSERT IGNORE INTO %s(reservation_username, reservation_restaurant, datetime, tableNumber) VALUES(?,?,?,?)", Constants.RESERVES_TABLE_NAME) ;
     }
 
 
