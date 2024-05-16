@@ -1,6 +1,4 @@
 package Mizdooni.Model.User;
-
-import Mizdooni.Model.Address;
 import Mizdooni.Model.Constants;
 
 import java.util.ArrayList;
@@ -19,7 +17,6 @@ public class UserRepository {
         for (User user:users) {
             dao.addToDatabase(user);
         }
-
     }
 
     public static UserRepository getInstance() throws Exception {

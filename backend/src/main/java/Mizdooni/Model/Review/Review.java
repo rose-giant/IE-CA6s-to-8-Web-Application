@@ -25,13 +25,15 @@ public class Review {
     public Double foodRate;
     @Column(name = "overall_rate")
     public Double overallRate;
-    @Column(name = "restaurant_name")
-    public String restaurantName;
     @Column(name = "service_rate")
     public Double serviceRate;
 
     @ManyToOne
-    @JoinColumn(name = "comment_username", nullable = false)
+    @JoinColumn(name = "review_restaurant", nullable = false)
+    public String restaurantName;
+
+    @ManyToOne
+    @JoinColumn(name = "review_username", nullable = false)
     public String username;
 
     public Review(@JsonProperty("ambianceRate") Double ambianceRate,
