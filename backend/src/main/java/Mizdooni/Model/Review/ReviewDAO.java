@@ -13,10 +13,11 @@ import java.sql.SQLException;
 
 import static Mizdooni.Model.Constants.REVIEWS_TABLE_NAME;
 
-public class ReviewDAO extends DAO {
+public class ReviewDAO extends DAO<Review> {
 
     private static final String TABLE_NAME = "reviews";
 
+    @Override
     protected void fillInsertValues(PreparedStatement st, Review review) throws SQLException {
         st.setDouble(1, review.ambianceRate);
         st.setString(2, review.comment);
@@ -27,25 +28,8 @@ public class ReviewDAO extends DAO {
         st.setString(7, review.username);
     }
 
-    public void addToDatabase(Review review) throws SQLException {
-        Connection con = HibernateUtils.getConnection();
-        String insertQuery = getInsertRecordQuery();
-        PreparedStatement st = con.prepareStatement(insertQuery);
-        fillInsertValues(st, review);
-        System.out.println(st);
-        try {
-            st.execute();
-            st.close();
-            con.close();
-        } catch (Exception e) {
-            st.close();
-            con.close();
-            System.out.println("error in Repository.insert query.");
-            e.printStackTrace();
-        }
-    }
-
-    private String getInsertRecordQuery() {
+    @Override
+    protected String getInsertRecordQuery() {
         return String.format("INSERT INTO %s(ambiance_rate, comment, food_rate, overall_rate, service_rate, review_restaurant, review_username) VALUES(?, ?, ?, ?, ?, ?, ?)", Constants.REVIEWS_TABLE_NAME);
     }
 
@@ -77,7 +61,7 @@ public class ReviewDAO extends DAO {
 
 
     @Override
-    protected Object convertToDomainModel(ResultSet rs) {
+    protected Review convertToDomainModel(ResultSet rs) {
         try{
             return new Review(rs.getDouble(2), rs.getString(3), rs.getDouble(4), rs.getDouble(5), rs.getString(7), rs.getDouble(6), rs.getString(8));
         }

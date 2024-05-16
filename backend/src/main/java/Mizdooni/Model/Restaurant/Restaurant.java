@@ -21,11 +21,9 @@ import static Mizdooni.Model.Constants.RESTAURANTS_TABLE_NAME;
 public class Restaurant {
     @Id
     public String name;
-
     @OneToOne
     @JoinColumn(name = "restaurant_manager", nullable = false)
     @Column(name = "managerUsername")
-
     public String managerUsername;
     @Column(name = "type")
     public String type;

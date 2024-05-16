@@ -9,7 +9,7 @@ import java.sql.*;
 import static Mizdooni.Model.Constants.CLIENTS_TABLE_NAME;
 import static Mizdooni.Model.Constants.MANAGERS_TABLE_NAME;
 
-public class UserDAO extends DAO {
+public class UserDAO extends DAO<User> {
 
 
     protected void fillInsertValues(PreparedStatement st, User user) throws SQLException {
@@ -18,27 +18,20 @@ public class UserDAO extends DAO {
         st.setString(3, user.getEmail());
         st.setString(4, user.getAddress().toString());
     }
-
+    @Override
     public void addToDatabase(User user) throws SQLException {
         Connection con = HibernateUtils.getConnection();
         String insertQuery = getInsertRecordQuery(user.getRole());
         PreparedStatement st = con.prepareStatement(insertQuery);
         fillInsertValues(st, user);
         System.out.println(st);
-//        try {
-            st.execute();
-            SQLWarning warning = st.getWarnings();
-            if (warning != null) {
-                throw new SQLWarning(warning.getMessage());
-            }
-            st.close();
-            con.close();
-//        } catch (SQLException e) {
-//            st.close();
-//            con.close();
-//            System.out.println("error in Repository.insert query.");
-////            e.printStackTrace();
-//        }
+        st.execute();
+        SQLWarning warning = st.getWarnings();
+        if (warning != null) {
+            throw new SQLWarning(warning.getMessage());
+        }
+        st.close();
+        con.close();
     }
 
     private String getInsertRecordQuery(String role) {
@@ -52,8 +45,6 @@ public class UserDAO extends DAO {
                 tableName);
 
     }
-
-
 
     @Override
     protected String getAllQuery() {
@@ -71,6 +62,9 @@ public class UserDAO extends DAO {
             return null;
         }
     }
+
+    @Override
+    protected String getInsertRecordQuery() {return null;}
 
     private String getFindByFieldQuery(String fieldName, String tableName) {
         return String.format("SELECT * FROM %s u WHERE u.%s = ?;", tableName, fieldName);

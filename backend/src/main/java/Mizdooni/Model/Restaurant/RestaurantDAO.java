@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 import static Mizdooni.Model.Constants.RESTAURANTS_TABLE_NAME;
 
-public class RestaurantDAO extends DAO {
+public class RestaurantDAO extends DAO<Restaurant> {
     public ArrayList<Restaurant> getFromAPI() throws Exception{
         String RestaurantsJsonString = getRequest(Constants.GET_RESTAURANTS_URL);
         ObjectMapper om = new ObjectMapper();
@@ -34,7 +34,7 @@ public class RestaurantDAO extends DAO {
     }
 
     @Override
-    protected Object convertToDomainModel(ResultSet rs) {
+    protected Restaurant convertToDomainModel(ResultSet rs) {
         try{
             Address ad = new Address().toAddress(rs.getString(8));
             return new Restaurant(ad, rs.getString(6), rs.getString(5), rs.getString(7), rs.getString(2), rs.getString(1), rs.getString(4), rs.getString(3));
@@ -50,25 +50,8 @@ public class RestaurantDAO extends DAO {
         return "SELECT * FROM " + RESTAURANTS_TABLE_NAME;
     }
 
-    public void addToDatabase(Restaurant rest) throws SQLException {
-        Connection con = HibernateUtils.getConnection();
-        String insertQuery = getInsertRecordQuery();
-        PreparedStatement st = con.prepareStatement(insertQuery);
-        fillInsertValues(st, rest);
-        System.out.println(st);
-        try {
-            st.execute();
-            st.close();
-            con.close();
-        } catch (Exception e) {
-            st.close();
-            con.close();
-            System.out.println("error in Repository.insert query.");
-            e.printStackTrace();
-        }
-    }
-
-    private void fillInsertValues(PreparedStatement st, Restaurant rest) throws SQLException {
+    @Override
+    protected void fillInsertValues(PreparedStatement st, Restaurant rest) throws SQLException {
         st.setString(1, rest.getName());
         st.setString(2, rest.getManagerUsername());
         st.setString(3, rest.getType());
@@ -79,7 +62,8 @@ public class RestaurantDAO extends DAO {
         st.setString(8, rest.getAddress().toString());
     }
 
-    private String getInsertRecordQuery() {
+    @Override
+    protected String getInsertRecordQuery() {
         return String.format("INSERT IGNORE INTO %s(name,managerUsername,type,startTime,endTime,description,image,address) VALUES(?,?,?,?,?,?,?,?)", RESTAURANTS_TABLE_NAME );
     }
 

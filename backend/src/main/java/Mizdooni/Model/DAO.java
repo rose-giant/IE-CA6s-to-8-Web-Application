@@ -1,21 +1,22 @@
 package Mizdooni.Model;
 
+import Mizdooni.Model.User.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public abstract class DAO<TYPE> {
 
     protected abstract String getCreateTableQuery(String tableName);
-
+    protected abstract String getAllQuery();
+    protected abstract TYPE convertToDomainModel(ResultSet res);
+    protected abstract String getInsertRecordQuery();
+    abstract protected void fillInsertValues(PreparedStatement st, TYPE obj) throws SQLException;
     public static String getRequest(String Url) throws Exception {
         URL url = new URL(Url);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -38,15 +39,12 @@ public abstract class DAO<TYPE> {
             return informationString.toString();
         }
     }
-
-
     public <TYPE> ArrayList<TYPE> fetchFromAPI(String GET_URL, Class<TYPE> elementClass) throws Exception{
         String UsersJsonString = getRequest(GET_URL);
         ObjectMapper om = new ObjectMapper();
         CollectionType listType = om.getTypeFactory().constructCollectionType(ArrayList.class,elementClass);
         return om.readValue(UsersJsonString,listType);
     }
-
     public boolean checkTableExistence(String tableName) throws SQLException {
         Connection conn = HibernateUtils.getConnection();
         String sql = "SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = ?";
@@ -66,10 +64,6 @@ public abstract class DAO<TYPE> {
         return tableExists;
 
     }
-
-    protected abstract TYPE convertToDomainModel(ResultSet res);
-
-
     public <TYPE> ArrayList<TYPE> getAll() throws SQLException {
         Connection conn = HibernateUtils.getConnection();
         PreparedStatement stmt = conn.prepareStatement(getAllQuery());
@@ -82,7 +76,24 @@ public abstract class DAO<TYPE> {
         return objects;
     }
 
-    protected abstract String getAllQuery();
+    public void addToDatabase(TYPE obj) throws SQLException {
+        Connection con = HibernateUtils.getConnection();
+        String insertQuery = getInsertRecordQuery();
+        PreparedStatement st = con.prepareStatement(insertQuery);
+        fillInsertValues(st, obj);
+        System.out.println(st);
+        st.execute();
+        SQLWarning warning = st.getWarnings();
+        if (warning != null) {
+            throw new SQLWarning(warning.getMessage());
+        }
+        st.close();
+        con.close();
+    }
+
+
+
+
 }
 
 

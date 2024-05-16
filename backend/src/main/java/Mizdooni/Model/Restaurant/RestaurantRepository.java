@@ -31,4 +31,8 @@ public class RestaurantRepository {
     public ArrayList<Restaurant> getAll() throws SQLException {
         return dao.getAll();
     }
+
+    public void addRestaurant(Restaurant newRest) throws SQLException {
+        dao.addToDatabase(newRest);
+    }
 }

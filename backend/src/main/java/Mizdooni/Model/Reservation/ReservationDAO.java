@@ -17,7 +17,7 @@ import java.sql.SQLException;
 import static Mizdooni.Model.Constants.RESERVES_TABLE_NAME;
 import static Mizdooni.Model.Constants.REVIEWS_TABLE_NAME;
 
-public class ReservationDAO extends DAO {
+public class ReservationDAO extends DAO<Reservation> {
 
     public ArrayList<Reservation> getFromAPI() throws Exception{
         String ReservationsJsonString = "[{\"username\": \"Mostafa_Ebrahimi\", \"restaurantName\": \"Sullivan's Steakhouse\", \"tableNumber\": 1, \"datetime\": \"1986-04-08 12:30\"}, {\"username\": \"Arshia_Abolghasemi\", \"restaurantName\": \"Sullivan's Steakhouse\", \"tableNumber\": 1, \"datetime\": \"1986-04-09 12:30\"},{\"username\": \"MohammadSadegh_Aboofazeli\", \"restaurantName\": \"Sullivan's Steakhouse\", \"tableNumber\": 1, \"datetime\": \"2000-04-08 12:30\"},{\"username\": \"Mostafa_Ebrahimi\", \"restaurantName\": \"Sullivan's Steakhouse\", \"tableNumber\": 4, \"datetime\": \"1986-04-08 12:30\"}, {\"username\": \"Arshia_Abolghasemi\", \"restaurantName\": \"Sullivan's Steakhouse\", \"tableNumber\": 3, \"datetime\": \"1986-04-09 12:30\"},{\"username\": \"MohammadSadegh_Aboofazeli\", \"restaurantName\": \"Sullivan's Steakhouse\", \"tableNumber\": 3, \"datetime\": \"2000-04-08 12:30\"}]";
@@ -42,7 +42,7 @@ public class ReservationDAO extends DAO {
     }
 
     @Override
-    protected Object convertToDomainModel(ResultSet rs) {
+    protected Reservation convertToDomainModel(ResultSet rs) {
         try{
             System.out.println(rs);
             return new Reservation(rs.getString(2), rs.getString(3), rs.getInt(5), rs.getString(4));
@@ -66,26 +66,8 @@ public class ReservationDAO extends DAO {
         st.setString(3, reservation.datetime);
         st.setInt(4, reservation.tableNumber);
     }
-
-    public void addToDatabase(Reservation reservation) throws SQLException {
-        Connection con = HibernateUtils.getConnection();
-        String insertQuery = getInsertRecordQuery();
-        PreparedStatement st = con.prepareStatement(insertQuery);
-        fillInsertValues(st, reservation);
-        System.out.println(st);
-        try {
-            st.execute();
-            st.close();
-            con.close();
-        } catch (Exception e) {
-            st.close();
-            con.close();
-            System.out.println("error in Repository.insert query.");
-            e.printStackTrace();
-        }
-    }
-
-    private String getInsertRecordQuery() {
+    @Override
+    protected String getInsertRecordQuery() {
         return String.format("INSERT IGNORE INTO %s(reservation_username, reservation_restaurant, datetime, tableNumber) VALUES(?,?,?,?)", Constants.RESERVES_TABLE_NAME) ;
     }
 
