@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 @RestController
@@ -18,7 +19,7 @@ public class TableController {
         tableRepo = TableRepository.getInstance();
     }
     @GetMapping("")
-    public ArrayList<TableRest> getAll() {
+    public ArrayList<TableRest> getAll() throws SQLException {
         return tableRepo.getAll();
     }
 }

@@ -5,8 +5,6 @@ import Mizdooni.Model.DAO;
 import Mizdooni.Model.HibernateUtils;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Objects;
 
 import static Mizdooni.Model.Constants.CLIENTS_TABLE_NAME;
 import static Mizdooni.Model.Constants.MANAGERS_TABLE_NAME;
@@ -59,17 +57,14 @@ public class UserDAO extends DAO {
 
     @Override
     protected String getAllQuery() {
-        return "SELECT * FROM " + MANAGERS_TABLE_NAME + "UNION" + "SELECT * FROM " + CLIENTS_TABLE_NAME;
-
+        return "SELECT * FROM " + MANAGERS_TABLE_NAME + " UNION SELECT * FROM " + CLIENTS_TABLE_NAME +";";
     }
 
     @Override
-    protected User convertToDomainModel(Object...rss) {
-        ResultSet rs = (ResultSet)rss[0];
-        String type= (String) rss[1];
+    protected User convertToDomainModel(ResultSet rs) {
         try{
             Address ad = new Address().toAddress(rs.getString(4));
-            return new User(ad, rs.getString(3), rs.getString(2), type, rs.getString(1));
+            return new User(ad, rs.getString(3), rs.getString(2), "user", rs.getString(1));
         }
         catch (Exception e){
             System.out.println("convertToDomainModelError: " + e.getMessage());
@@ -94,7 +89,7 @@ public class UserDAO extends DAO {
                 con.close();
                 return null;
             }
-            User result = convertToDomainModel(resultSet, tableName);
+            User result = convertToDomainModel(resultSet);
             System.out.println("result: "+result);
             st.close();
             con.close();

@@ -2,6 +2,7 @@ package Mizdooni.Model.Restaurant;
 
 import Mizdooni.Model.Constants;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import static Mizdooni.Model.Constants.RESTAURANTS_TABLE_NAME;
@@ -27,7 +28,7 @@ public class RestaurantRepository {
         else return instance;
     }
 
-    public ArrayList<Restaurant> getAll() {
-        return restaurants;
+    public ArrayList<Restaurant> getAll() throws SQLException {
+        return dao.getAll();
     }
 }

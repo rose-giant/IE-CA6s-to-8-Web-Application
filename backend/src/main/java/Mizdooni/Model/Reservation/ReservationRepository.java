@@ -3,6 +3,7 @@ package Mizdooni.Model.Reservation;
 import Mizdooni.Model.Constants;
 import Mizdooni.Model.Table.TableRest;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import static Mizdooni.Model.Constants.RESERVES_TABLE_NAME;
@@ -28,7 +29,7 @@ public class ReservationRepository {
         else return instance;
     }
 
-    public ArrayList<Reservation> getAll() {
-        return reservations;
+    public ArrayList<Reservation> getAll() throws SQLException {
+        return dao.getAll();
     }
 }

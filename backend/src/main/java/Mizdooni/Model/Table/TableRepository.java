@@ -4,6 +4,7 @@ import Mizdooni.Model.Constants;
 import Mizdooni.Model.Review.Review;
 import Mizdooni.Model.User.User;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import static Mizdooni.Model.Constants.REVIEWS_TABLE_NAME;
@@ -30,8 +31,8 @@ public class TableRepository {
         else return instance;
     }
 
-    public ArrayList<TableRest> getAll() {
-        return tables;
+    public ArrayList<TableRest> getAll() throws SQLException {
+        return dao.getAll();
     }
 
     public ArrayList<TableRest> findTableByRestaurantName(String restaurantName) {

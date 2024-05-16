@@ -6,6 +6,7 @@ import Mizdooni.Model.Constants;
 import Mizdooni.Model.Table.TableDAO;
 import Mizdooni.Model.User.User;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import static Mizdooni.Model.Constants.*;
@@ -52,7 +53,7 @@ public class ReviewRepository {
         else return instance;
     }
 
-    public ArrayList<Review> getAll() {
-        return reviews;
+    public ArrayList<Review> getAll() throws SQLException {
+        return dao.getAll();
     }
 }

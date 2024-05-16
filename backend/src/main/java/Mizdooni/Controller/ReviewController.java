@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 
@@ -20,7 +21,7 @@ public class ReviewController {
         reviewRepo = ReviewRepository.getInstance();
     }
     @GetMapping("")
-    public ArrayList<Review> getAll() {
+    public ArrayList<Review> getAll() throws SQLException {
         return reviewRepo.getAll();
     }
 }

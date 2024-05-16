@@ -2,19 +2,15 @@ package Mizdooni.Model.Review;
 
 import Mizdooni.Model.Constants;
 import Mizdooni.Model.DAO;
+import Mizdooni.Model.Table.TableRest;
 import Mizdooni.Model.User.User;
 import Mizdooni.Model.HibernateUtils;
-import Mizdooni.Model.User.User;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
-import static Mizdooni.Model.Constants.MANAGERS_TABLE_NAME;
 import static Mizdooni.Model.Constants.REVIEWS_TABLE_NAME;
 
 public class ReviewDAO extends DAO {
@@ -75,18 +71,20 @@ public class ReviewDAO extends DAO {
     }
 
     @Override
-    protected Object convertToDomainModel(Object... res) {
-        return null;
-    }
-
-    @Override
     protected String getAllQuery() {
         return "SELECT * FROM " + REVIEWS_TABLE_NAME;
     }
 
 
-    protected User convertToDomainModel(ResultSet res, String tableName) {
-        return null;
+    @Override
+    protected Object convertToDomainModel(ResultSet rs) {
+        try{
+            return new Review(rs.getDouble(2), rs.getString(3), rs.getDouble(4), rs.getDouble(5), rs.getString(7), rs.getDouble(6), rs.getString(8));
+        }
+        catch (Exception e){
+            System.out.println("convertToDomainModelError: " + e.getMessage());
+            return null;
+        }
     }
 
 }

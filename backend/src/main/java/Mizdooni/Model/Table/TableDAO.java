@@ -1,19 +1,17 @@
 package Mizdooni.Model.Table;
 
+
+import Mizdooni.Model.Address;
 import Mizdooni.Model.Constants;
 import Mizdooni.Model.DAO;
 import Mizdooni.Model.HibernateUtils;
 import Mizdooni.Model.User.User;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
-import static Mizdooni.Model.Constants.MANAGERS_TABLE_NAME;
 import static Mizdooni.Model.Constants.TABLES_TABLE_NAME;
 
 public class TableDAO extends DAO {
@@ -41,8 +39,14 @@ public class TableDAO extends DAO {
     }
 
     @Override
-    protected Object convertToDomainModel(Object... res) {
-        return null;
+    protected Object convertToDomainModel(ResultSet rs) {
+        try{
+            return new TableRest(rs.getString(3), rs.getInt(5), rs.getString(2), rs.getInt(4));
+        }
+        catch (Exception e){
+            System.out.println("convertToDomainModelError: " + e.getMessage());
+            return null;
+        }
     }
 
     @Override

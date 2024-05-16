@@ -1,19 +1,20 @@
 package Mizdooni.Model.Reservation;
 
+import Mizdooni.Model.Address;
 import Mizdooni.Model.Constants;
 import Mizdooni.Model.DAO;
-import Mizdooni.Model.Reservation.Reservation;
+import Mizdooni.Model.Restaurant.Restaurant;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.io.FileInputStream;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import Mizdooni.Model.HibernateUtils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import static Mizdooni.Model.Constants.MANAGERS_TABLE_NAME;
+import static Mizdooni.Model.Constants.RESERVES_TABLE_NAME;
 import static Mizdooni.Model.Constants.REVIEWS_TABLE_NAME;
 
 public class ReservationDAO extends DAO {
@@ -41,13 +42,20 @@ public class ReservationDAO extends DAO {
     }
 
     @Override
-    protected Object convertToDomainModel(Object... res) {
-        return null;
+    protected Object convertToDomainModel(ResultSet rs) {
+        try{
+            System.out.println(rs);
+            return new Reservation(rs.getString(2), rs.getString(3), rs.getInt(5), rs.getString(4));
+        }
+        catch (Exception e){
+            System.out.println("convertToDomainModelError: " + e.getMessage());
+            return null;
+        }
     }
 
     @Override
     protected String getAllQuery() {
-        return "SELECT * FROM " + REVIEWS_TABLE_NAME;
+        return "SELECT * FROM " + RESERVES_TABLE_NAME;
     }
 
     private static final String TABLE_NAME = "reservation";

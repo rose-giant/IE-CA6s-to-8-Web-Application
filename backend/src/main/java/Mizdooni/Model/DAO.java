@@ -1,6 +1,5 @@
 package Mizdooni.Model;
 
-import Mizdooni.Model.User.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
@@ -12,8 +11,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
-
-import static Mizdooni.Model.Constants.*;
 
 public abstract class DAO<TYPE> {
 
@@ -70,14 +67,14 @@ public abstract class DAO<TYPE> {
 
     }
 
-    protected abstract TYPE convertToDomainModel(Object...res);
+    protected abstract TYPE convertToDomainModel(ResultSet res);
 
 
     public <TYPE> ArrayList<TYPE> getAll() throws SQLException {
         Connection conn = HibernateUtils.getConnection();
         PreparedStatement stmt = conn.prepareStatement(getAllQuery());
-        ResultSet rs = stmt.executeQuery();
         System.out.println(stmt);
+        ResultSet rs = stmt.executeQuery();
         ArrayList<TYPE> objects = new ArrayList<>();
         while (rs.next()) {
             objects.add((TYPE) convertToDomainModel(rs));

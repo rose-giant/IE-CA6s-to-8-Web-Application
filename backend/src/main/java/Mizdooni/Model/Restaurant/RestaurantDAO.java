@@ -1,8 +1,10 @@
 package Mizdooni.Model.Restaurant;
 
+import Mizdooni.Model.Address;
 import Mizdooni.Model.Constants;
 import Mizdooni.Model.DAO;
 import Mizdooni.Model.HibernateUtils;
+import Mizdooni.Model.Review.Review;
 import Mizdooni.Model.User.User;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,7 +15,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import static Mizdooni.Model.Constants.MANAGERS_TABLE_NAME;
 import static Mizdooni.Model.Constants.RESTAURANTS_TABLE_NAME;
 
 public class RestaurantDAO extends DAO {
@@ -33,8 +34,15 @@ public class RestaurantDAO extends DAO {
     }
 
     @Override
-    protected Object convertToDomainModel(Object... res) {
-        return null;
+    protected Object convertToDomainModel(ResultSet rs) {
+        try{
+            Address ad = new Address().toAddress(rs.getString(8));
+            return new Restaurant(ad, rs.getString(6), rs.getString(5), rs.getString(7), rs.getString(2), rs.getString(1), rs.getString(4), rs.getString(3));
+        }
+        catch (Exception e){
+            System.out.println("convertToDomainModelError: " + e.getMessage());
+            return null;
+        }
     }
 
     @Override
