@@ -23,7 +23,17 @@ public class ReservationDAO extends DAO {
 
     @Override
     protected String getCreateTableQuery(String tableName) {
-        return null;
+        return String.format(
+                "CREATE TABLE %s (\n" +
+                        "    reservation_number BIGINT AUTO_INCREMENT PRIMARY KEY,\n" +
+                        "    reservation_username VARCHAR(255) NOT NULL,\n" +
+                        "    reservation_restaurant VARCHAR(255) NOT NULL,\n" +
+                        "    table_number INT,\n" +
+                        "    datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n" +
+                        "    FOREIGN KEY (reservation_username) REFERENCES users (username),\n" +
+                        "    FOREIGN KEY (reservation_restaurant) REFERENCES restaurants (name)\n" +
+                        ");\n",
+                TABLE_NAME);
     }
 
     private static final String TABLE_NAME = "reservation";
@@ -56,25 +66,5 @@ public class ReservationDAO extends DAO {
         return "INSERT IGNORE INTO %s(reservation_username, reservation_restaurant, datetime) VALUES(?,?,?)";
     }
 
-    public void createTable() throws SQLException {
-        Connection con = HibernateUtils.getConnection();
-        PreparedStatement createTableStatement = con.prepareStatement(
-                String.format(
-                        "CREATE TABLE %s (\n" +
-                                "    reservation_number BIGINT AUTO_INCREMENT PRIMARY KEY,\n" +
-                                "    reservation_username VARCHAR(255) NOT NULL,\n" +
-                                "    reservation_restaurant VARCHAR(255) NOT NULL,\n" +
-                                "    table_number INT,\n" +
-                                "    datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n" +
-                                "    FOREIGN KEY (reservation_username) REFERENCES users (username),\n" +
-                                "    FOREIGN KEY (reservation_restaurant) REFERENCES restaurants (name)\n" +
-                                ");\n",
-                        TABLE_NAME)
-        );
-        System.out.println(createTableStatement);
-        createTableStatement.executeUpdate();
-        createTableStatement.close();
-        con.close();
-    }
 
 }

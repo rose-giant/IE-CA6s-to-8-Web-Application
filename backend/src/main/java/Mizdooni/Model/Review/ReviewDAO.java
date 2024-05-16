@@ -54,10 +54,8 @@ public class ReviewDAO extends DAO {
         return String.format("SELECT * FROM %s WHERE review_restaurant = '%s'", TABLE_NAME, restaurantName);
     }
 
-    public void createTable(String tableName) throws SQLException {
-        Connection con = HibernateUtils.getConnection();
-        PreparedStatement createTableStatement = con.prepareStatement(
-                String.format(
+    public String getCreateTableQuery(String tableName) {
+        return String.format(
                         "CREATE TABLE %s (\n" +
                                 "    id BIGINT AUTO_INCREMENT PRIMARY KEY,\n" +
                                 "    ambiance_rate DOUBLE,\n" +
@@ -70,18 +68,7 @@ public class ReviewDAO extends DAO {
                                 "    FOREIGN KEY (review_restaurant) REFERENCES restaurant (name),\n" +
                                 "    FOREIGN KEY (review_username) REFERENCES users (username)\n" +
                                 ");",
-                        tableName)
-        );
-        System.out.println(createTableStatement);
-        createTableStatement.executeUpdate();
-        createTableStatement.close();
-        con.close();
-    }
-
-    public ArrayList<Review> getFromAPI() throws Exception{
-        String ReviewsJsonString = getRequest(Constants.GET_REVIEWS_URL);
-        ObjectMapper om = new ObjectMapper();
-        return om.readValue(ReviewsJsonString, new TypeReference<ArrayList<Review>>(){});
+                        tableName);
     }
 
 
@@ -89,8 +76,4 @@ public class ReviewDAO extends DAO {
         return null;
     }
 
-    @Override
-    protected String getCreateTableQuery(String tableName) {
-        return null;
-    }
 }

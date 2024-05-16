@@ -23,7 +23,17 @@ public class TableDAO extends DAO {
 
     @Override
     protected String getCreateTableQuery(String tableName) {
-        return null;
+        return  String.format(
+                "CREATE TABLE %s (\n" +
+                        "\t\t\t\tid BIGINT AUTO_INCREMENT PRIMARY KEY,\n" +
+                        "\t\t\t\ttable_number INT,\n" +
+                        "\t\t\t\ttable_restaurant VARCHAR(255) NOT NULL,\n" +
+                        "\t\t\t\ttable_manager VARCHAR(255) NOT NULL,\n" +
+                        "\t\t\t\tseats INT,\n" +
+                        "\t\t\t\tFOREIGN KEY (table_restaurant) REFERENCES restaurant (name),\n" +
+                        "\t\t\t\tFOREIGN KEY (table_manager) REFERENCES manager (username)\n" +
+                        "\t\t\t);"
+                ,tableName);
     }
 
 

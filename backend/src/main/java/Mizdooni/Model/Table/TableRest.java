@@ -13,7 +13,7 @@ import java.util.ArrayList;
 @Entity
 @Getter
 @Data
-@Table(name = "tables")
+@Table(name = "table")
 public class TableRest {
 
     @Id

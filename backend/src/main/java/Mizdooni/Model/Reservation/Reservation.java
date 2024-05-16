@@ -12,7 +12,7 @@ import java.util.Date;
 @Entity
 @Data
 @Getter
-@Table(name = "reservations")
+@Table(name = "reservation")
 public class Reservation {
 
     @ManyToOne
