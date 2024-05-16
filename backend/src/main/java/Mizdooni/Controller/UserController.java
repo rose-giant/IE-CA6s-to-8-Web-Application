@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 @RestController
@@ -21,7 +22,7 @@ public class UserController {
     }
 
     @GetMapping("")
-    public ArrayList<User> getAll() {
+    public ArrayList<User> getAll() throws SQLException {
         return userRepo.getAll();
     }
 

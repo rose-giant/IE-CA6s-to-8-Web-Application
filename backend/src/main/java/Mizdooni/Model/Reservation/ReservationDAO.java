@@ -13,6 +13,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import static Mizdooni.Model.Constants.MANAGERS_TABLE_NAME;
+import static Mizdooni.Model.Constants.REVIEWS_TABLE_NAME;
+
 public class ReservationDAO extends DAO {
 
     public ArrayList<Reservation> getFromAPI() throws Exception{
@@ -35,6 +38,16 @@ public class ReservationDAO extends DAO {
                         "    FOREIGN KEY (tableNumber) REFERENCES rest_table (tableNumber)\n"+
                         ");\n",
                 tableName);
+    }
+
+    @Override
+    protected Object convertToDomainModel(Object... res) {
+        return null;
+    }
+
+    @Override
+    protected String getAllQuery() {
+        return "SELECT * FROM " + REVIEWS_TABLE_NAME;
     }
 
     private static final String TABLE_NAME = "reservation";

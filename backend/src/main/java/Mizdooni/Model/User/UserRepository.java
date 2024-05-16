@@ -33,8 +33,8 @@ public class UserRepository {
         else return instance;
     }
 
-    public ArrayList<User> getAll() {
-        return users;
+    public ArrayList<User> getAll() throws SQLException {
+        return dao.getAll();
     }
 
     public User findUserByUserName(String userName) {

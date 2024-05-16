@@ -4,14 +4,15 @@ import Mizdooni.Model.Address;
 import Mizdooni.Model.DAO;
 import Mizdooni.Model.HibernateUtils;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.Objects;
+
+import static Mizdooni.Model.Constants.CLIENTS_TABLE_NAME;
+import static Mizdooni.Model.Constants.MANAGERS_TABLE_NAME;
 
 public class UserDAO extends DAO {
 
-    private static final String TABLE_NAME = "user";
 
     protected void fillInsertValues(PreparedStatement st, User user) throws SQLException {
         st.setString(1, user.getUsername());
@@ -26,16 +27,20 @@ public class UserDAO extends DAO {
         PreparedStatement st = con.prepareStatement(insertQuery);
         fillInsertValues(st, user);
         System.out.println(st);
-        try {
+//        try {
             st.execute();
+            SQLWarning warning = st.getWarnings();
+            if (warning != null) {
+                throw new SQLWarning(warning.getMessage());
+            }
             st.close();
             con.close();
-        } catch (Exception e) {
-            st.close();
-            con.close();
-            System.out.println("error in Repository.insert query.");
-            e.printStackTrace();
-        }
+//        } catch (SQLException e) {
+//            st.close();
+//            con.close();
+//            System.out.println("error in Repository.insert query.");
+////            e.printStackTrace();
+//        }
     }
 
     private String getInsertRecordQuery(String role) {
@@ -50,10 +55,21 @@ public class UserDAO extends DAO {
 
     }
 
-    protected User convertToDomainModel(ResultSet rs, String tableName) throws SQLException {
+
+
+    @Override
+    protected String getAllQuery() {
+        return "SELECT * FROM " + MANAGERS_TABLE_NAME + "UNION" + "SELECT * FROM " + CLIENTS_TABLE_NAME;
+
+    }
+
+    @Override
+    protected User convertToDomainModel(Object...rss) {
+        ResultSet rs = (ResultSet)rss[0];
+        String type= (String) rss[1];
         try{
             Address ad = new Address().toAddress(rs.getString(4));
-            return new User(ad, rs.getString(3), rs.getString(2), tableName, rs.getString(1));
+            return new User(ad, rs.getString(3), rs.getString(2), type, rs.getString(1));
         }
         catch (Exception e){
             System.out.println("convertToDomainModelError: " + e.getMessage());

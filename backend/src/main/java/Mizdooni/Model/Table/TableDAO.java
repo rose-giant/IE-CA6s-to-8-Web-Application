@@ -13,6 +13,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import static Mizdooni.Model.Constants.MANAGERS_TABLE_NAME;
+import static Mizdooni.Model.Constants.TABLES_TABLE_NAME;
+
 public class TableDAO extends DAO {
 
 
@@ -35,6 +38,16 @@ public class TableDAO extends DAO {
                        "FOREIGN KEY(tableRestaurant)REFERENCES restaurant(name)\n" +
                        ");"
                 ,tableName);
+    }
+
+    @Override
+    protected Object convertToDomainModel(Object... res) {
+        return null;
+    }
+
+    @Override
+    protected String getAllQuery() {
+        return "SELECT * FROM " + TABLES_TABLE_NAME;
     }
 
 

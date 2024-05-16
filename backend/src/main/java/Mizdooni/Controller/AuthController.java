@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.SQLWarning;
 import java.util.Map;
 
 @RestController
@@ -22,6 +23,8 @@ public class AuthController {
         User user = userRepo.findByUsernameAndPassword(body.get("username"), body.get("password"));
         if(user == null) {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            response.getWriter().write("Invalid username or password!");
+            response.getWriter().flush();
             System.out.println("Invalid username or password!");
         }
         return user;
@@ -31,9 +34,17 @@ public class AuthController {
                        @RequestBody userView userView) throws Exception {
         UserRepository userRepository = UserRepository.getInstance();
         User newUser = userView.viewToUser();
-        userRepository.addUser(newUser);
-        response.setStatus(HttpServletResponse.SC_CREATED);
-        return newUser;
+        try{
+            userRepository.addUser(newUser);
+            response.setStatus(HttpServletResponse.SC_CREATED);
+            return newUser;
+        }catch (SQLWarning e){
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.getWriter().write(e.getMessage());
+            response.getWriter().flush();
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 
 }

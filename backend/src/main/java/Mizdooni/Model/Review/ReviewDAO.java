@@ -14,6 +14,9 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import static Mizdooni.Model.Constants.MANAGERS_TABLE_NAME;
+import static Mizdooni.Model.Constants.REVIEWS_TABLE_NAME;
+
 public class ReviewDAO extends DAO {
 
     private static final String TABLE_NAME = "reviews";
@@ -69,6 +72,16 @@ public class ReviewDAO extends DAO {
                                 "    FOREIGN KEY (review_username) REFERENCES client (username)\n" +
                                 ");",
                         tableName);
+    }
+
+    @Override
+    protected Object convertToDomainModel(Object... res) {
+        return null;
+    }
+
+    @Override
+    protected String getAllQuery() {
+        return "SELECT * FROM " + REVIEWS_TABLE_NAME;
     }
 
 

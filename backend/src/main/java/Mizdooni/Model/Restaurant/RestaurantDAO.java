@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import static Mizdooni.Model.Constants.MANAGERS_TABLE_NAME;
 import static Mizdooni.Model.Constants.RESTAURANTS_TABLE_NAME;
 
 public class RestaurantDAO extends DAO {
@@ -29,6 +30,16 @@ public class RestaurantDAO extends DAO {
                         "\nendTime CHAR(225),\ndescription CHAR(225),\nimage CHAR(225),\naddress CHAR(225)," +
                         "\nPRIMARY KEY(name), \nFOREIGN KEY(managerUsername)REFERENCES manager(username));",
                 restaurantsTableName);
+    }
+
+    @Override
+    protected Object convertToDomainModel(Object... res) {
+        return null;
+    }
+
+    @Override
+    protected String getAllQuery() {
+        return "SELECT * FROM " + RESTAURANTS_TABLE_NAME;
     }
 
     public void addToDatabase(Restaurant rest) throws SQLException {

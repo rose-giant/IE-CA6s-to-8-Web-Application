@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import static Mizdooni.Model.Constants.RESTAURANTS_TABLE_NAME;
+import static Mizdooni.Model.Constants.*;
 
 public abstract class DAO<TYPE> {
 
@@ -70,9 +70,22 @@ public abstract class DAO<TYPE> {
 
     }
 
-    
+    protected abstract TYPE convertToDomainModel(Object...res);
 
 
+    public <TYPE> ArrayList<TYPE> getAll() throws SQLException {
+        Connection conn = HibernateUtils.getConnection();
+        PreparedStatement stmt = conn.prepareStatement(getAllQuery());
+        ResultSet rs = stmt.executeQuery();
+        System.out.println(stmt);
+        ArrayList<TYPE> objects = new ArrayList<>();
+        while (rs.next()) {
+            objects.add((TYPE) convertToDomainModel(rs));
+        }
+        return objects;
+    }
+
+    protected abstract String getAllQuery();
 }
 
 
