@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 public class TableRepository {
     private static TableRepository instance;
-    private ArrayList<Table> tables = new ArrayList<>();
+    private ArrayList<TableRest> tableRests = new ArrayList<>();
 
     public TableRepository() throws Exception {
         TableDAO dao = new TableDAO();
-        tables = dao.getFromAPI();
+        tableRests = dao.getFromAPI();
     }
 
     public static TableRepository getInstance() throws Exception {
@@ -17,7 +17,18 @@ public class TableRepository {
         else return instance;
     }
 
-    public ArrayList<Table> getAll() {
+    public ArrayList<TableRest> getAll() {
+        return tableRests;
+    }
+
+    public ArrayList<TableRest> findTableByRestaurantName(String restaurantName) {
+        ArrayList<TableRest> tables = new ArrayList<>();
+        for(TableRest tableRest: tableRests) {
+            if (restaurantName.equals(tableRest.restaurantName)) {
+                tables.add(tableRest);
+            }
+        }
+
         return tables;
     }
 }

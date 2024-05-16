@@ -1,6 +1,6 @@
 package Mizdooni.Controller;
 
-import Mizdooni.Model.Table.Table;
+import Mizdooni.Model.Table.TableRest;
 import Mizdooni.Model.Table.TableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +18,7 @@ public class TableController {
         tableRepo = TableRepository.getInstance();
     }
     @GetMapping("")
-    public ArrayList<Table> getAll() {
+    public ArrayList<TableRest> getAll() {
         return tableRepo.getAll();
     }
 }
