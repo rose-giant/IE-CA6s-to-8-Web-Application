@@ -1,9 +1,14 @@
 package Mizdooni.Model.Review;
 
 import Mizdooni.Model.Constants;
+
+import Mizdooni.Model.Constants;
+import Mizdooni.Model.Table.TableDAO;
 import Mizdooni.Model.User.User;
 
 import java.util.ArrayList;
+
+import static Mizdooni.Model.Constants.*;
 
 public class ReviewRepository {
     private static ReviewRepository instance;
@@ -11,10 +16,11 @@ public class ReviewRepository {
     ReviewDAO dao = new ReviewDAO();
 
     public ReviewRepository() throws Exception {
-        dao.createTable("reviews");
-        reviews = dao.fetchFromAPI(Constants.GET_REVIEWS_URL, Review.class);
-        for (Review review: reviews) {
-            dao.addToDatabase(review);
+        if(!dao.checkTableExistence(REVIEWS_TABLE_NAME)){
+            reviews = dao.fetchFromAPI(Constants.GET_REVIEWS_URL, Review.class);
+            for (Review user:reviews) {
+                dao.addToDatabase(user);
+            }
         }
     }
 

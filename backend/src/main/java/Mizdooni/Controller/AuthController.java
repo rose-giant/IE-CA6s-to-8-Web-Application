@@ -22,7 +22,7 @@ public class AuthController {
         User user = userRepo.findByUsernameAndPassword(body.get("username"), body.get("password"));
         if(user == null) {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-            throw new Exception("Invalid username or password!");
+            System.out.println("Invalid username or password!");
         }
         return user;
     }

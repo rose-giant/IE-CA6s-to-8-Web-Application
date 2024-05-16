@@ -1,14 +1,27 @@
 package Mizdooni.Model.Table;
 
+import Mizdooni.Model.Constants;
+import Mizdooni.Model.Review.Review;
+import Mizdooni.Model.User.User;
+
 import java.util.ArrayList;
+
+import static Mizdooni.Model.Constants.REVIEWS_TABLE_NAME;
+import static Mizdooni.Model.Constants.TABLES_TABLE_NAME;
 
 public class TableRepository {
     private static TableRepository instance;
-    private ArrayList<TableRest> tableRests = new ArrayList<>();
+    private ArrayList<TableRest> tables = new ArrayList<>();
+
+    TableDAO dao = new TableDAO();
 
     public TableRepository() throws Exception {
-        TableDAO dao = new TableDAO();
-        tableRests = dao.getFromAPI();
+        if(!dao.checkTableExistence(TABLES_TABLE_NAME)){
+            tables = dao.fetchFromAPI(Constants.GET_TABLES_URL, TableRest.class);
+            for (TableRest user:tables) {
+                dao.addToDatabase(user);
+            }
+        }
     }
 
     public static TableRepository getInstance() throws Exception {
@@ -18,12 +31,12 @@ public class TableRepository {
     }
 
     public ArrayList<TableRest> getAll() {
-        return tableRests;
+        return tables;
     }
 
     public ArrayList<TableRest> findTableByRestaurantName(String restaurantName) {
         ArrayList<TableRest> tables = new ArrayList<>();
-        for(TableRest tableRest: tableRests) {
+        for(TableRest tableRest: tables) {
             if (restaurantName.equals(tableRest.restaurantName)) {
                 tables.add(tableRest);
             }

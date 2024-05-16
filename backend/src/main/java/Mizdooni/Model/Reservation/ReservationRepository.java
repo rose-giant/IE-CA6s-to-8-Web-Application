@@ -1,14 +1,24 @@
 package Mizdooni.Model.Reservation;
 
+import Mizdooni.Model.Constants;
+import Mizdooni.Model.Table.TableRest;
+
 import java.util.ArrayList;
+
+import static Mizdooni.Model.Constants.TABLES_TABLE_NAME;
 
 public class ReservationRepository {
     private static ReservationRepository instance;
-    private ArrayList<Reservation> restaurants = new ArrayList<>();
+    private ArrayList<Reservation> reservations = new ArrayList<>();
+    ReservationDAO dao = new ReservationDAO();
 
     public ReservationRepository() throws Exception {
-        ReservationDAO dao = new ReservationDAO();
-        restaurants = dao.getFromAPI();
+        if(!dao.checkTableExistence(TABLES_TABLE_NAME)){
+            reservations = dao.getFromAPI();
+            for (Reservation user:reservations) {
+                dao.addToDatabase(user);
+            }
+        }
     }
 
     public static ReservationRepository getInstance() throws Exception {
@@ -18,6 +28,6 @@ public class ReservationRepository {
     }
 
     public ArrayList<Reservation> getAll() {
-        return restaurants;
+        return reservations;
     }
 }

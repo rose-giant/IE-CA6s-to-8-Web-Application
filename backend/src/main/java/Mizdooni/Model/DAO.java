@@ -1,16 +1,23 @@
 package Mizdooni.Model;
 
+import Mizdooni.Model.User.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static Mizdooni.Model.Constants.RESTAURANTS_TABLE_NAME;
+
 public abstract class DAO<TYPE> {
+
+    protected abstract String getCreateTableQuery(String tableName);
 
     public static String getRequest(String Url) throws Exception {
         URL url = new URL(Url);
@@ -43,23 +50,29 @@ public abstract class DAO<TYPE> {
         return om.readValue(UsersJsonString,listType);
     }
 
+    public boolean checkTableExistence(String tableName) throws SQLException {
+        Connection conn = HibernateUtils.getConnection();
+        String sql = "SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = ?";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1, tableName);
+        ResultSet rs = stmt.executeQuery();
+        boolean tableExists = rs.next();
+        System.out.println(tableName + ": " +tableExists);
+        if (!tableExists) {
+            stmt = conn.prepareStatement(getCreateTableQuery(tableName));
+            System.out.println(stmt);
+            stmt.executeUpdate();
+        }
+        rs.close();
+        stmt.close();
+        conn.close();
+        return tableExists;
 
-//    public void addToDatabase(TYPE obj) throws SQLException {
-//        Connection con = HibernateUtils.getConnection();
-//        PreparedStatement st = con.prepareStatement(getInsertStatement());
-//        fillInsertValues(st, obj);
-//        System.out.println(st);
-//        try {
-//            st.execute();
-//            st.close();
-//            con.close();
-//        } catch (Exception e) {
-//            st.close();
-//            con.close();
-//            System.out.println("error in Repository.insert query.");
-//            e.printStackTrace();
-//        }
-//    }
+    }
+
+    
+
+
 }
 
 

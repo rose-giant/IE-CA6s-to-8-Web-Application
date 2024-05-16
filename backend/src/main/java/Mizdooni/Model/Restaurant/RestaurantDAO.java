@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -21,20 +22,13 @@ public class RestaurantDAO extends DAO {
         return om.readValue(RestaurantsJsonString, new TypeReference<ArrayList<Restaurant>>(){});
     }
 
-    public void createTable(String restaurantsTableName) throws SQLException {
-        Connection con = HibernateUtils.getConnection();
-        PreparedStatement createTableStatement = con.prepareStatement(
-                String.format(
-                        "CREATE TABLE IF NOT EXISTS %s " +
-                                "(name CHAR(225),\nmanagerUsername CHAR(225),\ntype CHAR(225),startTime CHAR(225)," +
-                                "\nendTime CHAR(225),\ndescription CHAR(225),\nimage CHAR(225),\naddress CHAR(225)," +
-                                "\nPRIMARY KEY(name), \nFOREIGN KEY(managerUsername)REFERENCES manager(username));",
-                        restaurantsTableName)
-        );
-        System.out.println(createTableStatement);
-        createTableStatement.executeUpdate();
-        createTableStatement.close();
-        con.close();
+    public String getCreateTableQuery(String restaurantsTableName) {
+        return String.format(
+                "CREATE TABLE IF NOT EXISTS %s " +
+                        "(name CHAR(225),\nmanagerUsername CHAR(225),\ntype CHAR(225),startTime CHAR(225)," +
+                        "\nendTime CHAR(225),\ndescription CHAR(225),\nimage CHAR(225),\naddress CHAR(225)," +
+                        "\nPRIMARY KEY(name), \nFOREIGN KEY(managerUsername)REFERENCES manager(username));",
+                restaurantsTableName);
     }
 
     public void addToDatabase(Restaurant rest) throws SQLException {
@@ -68,5 +62,10 @@ public class RestaurantDAO extends DAO {
 
     private String getInsertRecordQuery() {
         return String.format("INSERT IGNORE INTO %s(name,managerUsername,type,startTime,endTime,description,image,address) VALUES(?,?,?,?,?,?,?,?)", RESTAURANTS_TABLE_NAME );
+    }
+
+
+    protected User convertToDomainModel(ResultSet res, String tableName) {
+        return null;
     }
 }

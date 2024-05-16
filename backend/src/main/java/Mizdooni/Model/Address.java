@@ -21,4 +21,8 @@ public class Address {
     public String toString(){
         return country + ", " +  city + ", " + street;
     }
+    public Address toAddress(String addressStr){
+        String[] a = addressStr.split(",");
+        return new Address(a[1], a[0], a[2]);
+    }
 }

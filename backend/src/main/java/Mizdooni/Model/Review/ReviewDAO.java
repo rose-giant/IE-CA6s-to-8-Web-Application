@@ -2,11 +2,13 @@ package Mizdooni.Model.Review;
 
 import Mizdooni.Model.Constants;
 import Mizdooni.Model.DAO;
+import Mizdooni.Model.User.User;
 import Mizdooni.Model.HibernateUtils;
 import Mizdooni.Model.User.User;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -80,5 +82,15 @@ public class ReviewDAO extends DAO {
         String ReviewsJsonString = getRequest(Constants.GET_REVIEWS_URL);
         ObjectMapper om = new ObjectMapper();
         return om.readValue(ReviewsJsonString, new TypeReference<ArrayList<Review>>(){});
+    }
+
+
+    protected User convertToDomainModel(ResultSet res, String tableName) {
+        return null;
+    }
+
+    @Override
+    protected String getCreateTableQuery(String tableName) {
+        return null;
     }
 }

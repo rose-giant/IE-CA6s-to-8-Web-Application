@@ -9,16 +9,23 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class TableDAO extends DAO {
-    private static final String TABLE_NAME = "tables";
-    public ArrayList<TableRest> getFromAPI() throws Exception{
-        String TablesJsonString = getRequest(Constants.GET_TABLES_URL);
-        ObjectMapper om = new ObjectMapper();
-        return om.readValue(TablesJsonString, new TypeReference<ArrayList<TableRest>>(){});
+
+
+
+    protected User convertToDomainModel(ResultSet res, String tableName) {
+        return null;
     }
+
+    @Override
+    protected String getCreateTableQuery(String tableName) {
+        return null;
+    }
+
 
     protected void fillInsertValues(PreparedStatement st, TableRest table) throws SQLException {
         st.setString(1, table.managerUsername);
@@ -45,27 +52,7 @@ public class TableDAO extends DAO {
     }
 
     private String getInsertRecordQuery() {
-        return String.format("INSERT IGNORE INTO %s(table_restaurant, table_manager, seats) VALUES(?,?,?)", TABLE_NAME );
+        return String.format("INSERT IGNORE INTO %s(table_restaurant, table_manager, seats) VALUES(?,?,?)", Constants.TABLES_TABLE_NAME );
     }
 
-    public void createTable() throws SQLException {
-        Connection con = HibernateUtils.getConnection();
-        PreparedStatement createTableStatement = con.prepareStatement(
-                String.format(
-                        "CREATE TABLE %s (\n" +
-                                "    id BIGINT AUTO_INCREMENT PRIMARY KEY,\n" +
-                                "    table_number INT,\n" +
-                                "    table_restaurant VARCHAR(255) NOT NULL,\n" +
-                                "    table_manager VARCHAR(255) NOT NULL,\n" +
-                                "    seats INT,\n" +
-                                "    FOREIGN KEY (table_restaurant) REFERENCES restaurant (name),\n" +
-                                "    FOREIGN KEY (table_manager) REFERENCES manager (username)\n" +
-                                ");",
-                        TABLE_NAME)
-        );
-        System.out.println(createTableStatement);
-        createTableStatement.executeUpdate();
-        createTableStatement.close();
-        con.close();
-    }
 }
