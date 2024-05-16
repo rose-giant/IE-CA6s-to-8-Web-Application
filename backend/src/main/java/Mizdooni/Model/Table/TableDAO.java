@@ -58,7 +58,7 @@ public class TableDAO extends DAO {
                                 "    table_restaurant VARCHAR(255) NOT NULL,\n" +
                                 "    table_manager VARCHAR(255) NOT NULL,\n" +
                                 "    seats INT,\n" +
-                                "    FOREIGN KEY (table_restaurant) REFERENCES restaurant (restaurant_name),\n" +
+                                "    FOREIGN KEY (table_restaurant) REFERENCES restaurant (name),\n" +
                                 "    FOREIGN KEY (table_manager) REFERENCES manager (username)\n" +
                                 ");",
                         TABLE_NAME)
