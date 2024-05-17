@@ -6,6 +6,7 @@ import Mizdooni.Model.User.User;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static Mizdooni.Model.Constants.REVIEWS_TABLE_NAME;
 import static Mizdooni.Model.Constants.TABLES_TABLE_NAME;
@@ -35,14 +36,11 @@ public class TableRepository {
         return dao.getAll();
     }
 
-    public ArrayList<TableRest> findTableByRestaurantName(String restaurantName) {
-        ArrayList<TableRest> tables = new ArrayList<>();
-        for(TableRest tableRest: tables) {
-            if (restaurantName.equals(tableRest.restaurantName)) {
-                tables.add(tableRest);
-            }
-        }
+    public ArrayList<TableRest> findTablesByRestaurantName(String restaurantName) throws SQLException {
+        return dao.findByFields(Arrays.asList(restaurantName), Arrays.asList("tableRestaurant"), TABLES_TABLE_NAME);
+    }
 
-        return tables;
+    public void addTable(TableRest newRest) throws SQLException {
+        dao.addToDatabase(newRest);
     }
 }

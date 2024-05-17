@@ -5,6 +5,7 @@ import Mizdooni.Model.Table.TableRest;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static Mizdooni.Model.Constants.RESERVES_TABLE_NAME;
 import static Mizdooni.Model.Constants.TABLES_TABLE_NAME;
@@ -31,5 +32,24 @@ public class ReservationRepository {
 
     public ArrayList<Reservation> getAll() throws SQLException {
         return dao.getAll();
+    }
+
+    public void addReservation(Reservation newRest) throws SQLException {
+        dao.addToDatabase(newRest);
+    }
+
+    public ArrayList<Reservation> findReservationsByUsername(String username) throws SQLException {
+        return dao.findByFields(Arrays.asList(username),
+                Arrays.asList("reservation_username"), RESERVES_TABLE_NAME);
+    }
+
+    public ArrayList<Reservation> findReservationsByRestaurantName(String restName) throws SQLException {
+        return dao.findByFields(Arrays.asList(restName),
+                Arrays.asList("reservation_restaurant"), RESERVES_TABLE_NAME);
+    }
+
+    public ArrayList<Reservation> findReservationsByRestaurantNameAndTableNumber(String restName, String tableNumber) throws SQLException {
+        return dao.findByFields(Arrays.asList(restName, tableNumber),
+                Arrays.asList("reservation_restaurant", "tableNumber"), RESERVES_TABLE_NAME);
     }
 }

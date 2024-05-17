@@ -28,7 +28,7 @@ public class RestaurantDAO extends DAO<Restaurant> {
         return String.format(
                 "CREATE TABLE IF NOT EXISTS %s " +
                         "(name CHAR(225),\nmanagerUsername CHAR(225),\ntype CHAR(225),startTime CHAR(225)," +
-                        "\nendTime CHAR(225),\ndescription CHAR(225),\nimage CHAR(225),\naddress CHAR(225)," +
+                        "\nendTime CHAR(225),\ndescription TEXT,\nimage CHAR(225),\naddress CHAR(225)," +
                         "\nPRIMARY KEY(name), \nFOREIGN KEY(managerUsername)REFERENCES manager(username));",
                 restaurantsTableName);
     }
@@ -69,6 +69,11 @@ public class RestaurantDAO extends DAO<Restaurant> {
 
 
     protected User convertToDomainModel(ResultSet res, String tableName) {
+        return null;
+    }
+
+    public ArrayList<Restaurant> findTopRate(int number) {
+//        String query = "SELECT * FROM " + RESTAURANTS_TABLE_NAME + " t WHERE t.";
         return null;
     }
 }
