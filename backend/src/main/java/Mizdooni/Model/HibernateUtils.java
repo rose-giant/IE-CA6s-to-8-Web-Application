@@ -8,6 +8,7 @@ import jakarta.persistence.Persistence;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.internal.SessionFactoryImpl;
 
 
 import java.sql.Connection;
@@ -17,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HibernateUtils {
-    private static final SessionFactory sessionFactory;
+    private static SessionFactory sessionFactory;
 
 
     static {
@@ -71,10 +72,6 @@ public class HibernateUtils {
             System.out.println(e.getMessage());
         }
     }
-
-
-
-
 
     public static EntityManagerFactory getEmf() {
         EntityManagerFactory emf;
