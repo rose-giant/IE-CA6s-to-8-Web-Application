@@ -1,15 +1,24 @@
 package Mizdooni.Model;
 
+
+
+
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
 
 public class HibernateUtils {
     private static final SessionFactory sessionFactory;
+
 
     static {
         try {
@@ -61,6 +70,28 @@ public class HibernateUtils {
         {
             System.out.println(e.getMessage());
         }
+    }
+
+
+
+
+
+    public static EntityManagerFactory getEmf() {
+        EntityManagerFactory emf;
+        Map<String, String> persistenceProperties = new HashMap<>();
+        persistenceProperties.put("jakarta.persistence.jdbc.url", "jdbc:mysql://localhost:3306/mizdooni");
+        persistenceProperties.put("jakarta.persistence.jdbc.user", "root");
+        persistenceProperties.put("jakarta.persistence.jdbc.password", "rootpassword");
+        persistenceProperties.put("jakarta.persistence.jdbc.driver", "com.mysql.jdbc.Driver");
+        persistenceProperties.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
+        persistenceProperties.put("hibernate.show_sql", "true");
+
+        // Add entity classes
+        persistenceProperties.put("jakarta.persistence.mapping.entities", "Mizdooni.Model.User, Mizdooni.Model.Restaurant");
+        // Create EntityManagerFactory programmatically
+        emf = Persistence.createEntityManagerFactory("mizdooni-persistence-unit", persistenceProperties);
+
+        return emf;
     }
 }
 
