@@ -45,4 +45,8 @@ public class TableRepository {
 
         return tables;
     }
+
+    public void addTable(TableRest newRest) throws SQLException {
+        dao.addToDatabase(newRest);
+    }
 }
