@@ -10,23 +10,34 @@ export default function TableList({ restName }) {
     const [table, setTable] = useContext(GlobalTable)
 
     useEffect(() => {
-        axios.get("http://localhost:8080/tables")
+        const params = { restaurantName: restName }
+        axios.get("http://localhost:8080/tables", params)
             .then(response => {
-                setTables(response.data.filter(table => table.restaurantName == restName));
+                // setTables(response.data.filter(table => table.restaurantName == restName));
+                setTables(response.data)
             })
             .catch(error => {
                 console.error("Error fetching restaurants:", error);
             });
     }, tables)
 
-    // console.log(restName);
-    // console.log(tables)
-
+    const addTableHandler = (e) => {
+        e.preventDefault()
+        const params = { restaurantName: restName, seats: table.seatsNumber }
+        axios.post("http://localhost:8080/table", params)
+            .then(response => {
+                // setFakes(response.data)
+                // setReview(response.data)
+            })
+            .catch(error => {
+                console.error("Error fetching reviews:", error);
+        })
+    }
 
     return (
         <div>
             <div class="grid-item pink-back">
-                <a className="red inline-cell">+ Add Table</a>
+                <a className="red inline-cell" onClick={addTableHandler}>+ Add Table</a>
                 {
                     tables.length == 0
                     ?

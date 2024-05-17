@@ -17,7 +17,6 @@ nav {
             .nav-title {
                 color: var(--peach-color);
                 position: relative;
-                top: 32px;
                 margin-left: 12px;
             }
 

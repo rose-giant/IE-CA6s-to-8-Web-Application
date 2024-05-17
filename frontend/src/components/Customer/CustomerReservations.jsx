@@ -3,19 +3,23 @@ import { Context } from "../../App"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import "./customer.css"
+import { useContext } from "react"
+import { Context } from "../../App"
 
 export default function CustomerReservations({ customerName }) {
-
+    const [signedIn, setSignedIn] = useContext(Context)
     const [reservations, setReservations] = useState([])
 
     useEffect(() => {
-        axios.get("http://localhost:8080/reservations")
+        const params = { username: signedIn }
+        axios.get("http://localhost:8080/reservations", params)
             .then(response => {
-                setReservations(response.data.filter(rest => rest.username == customerName));
+                // setReservations(response.data.filter(rest => rest.username == customerName));
+                setReservations(response.data)
             })
             .catch(error => {
                 console.error("Error fetching reservations:", error);
-            });
+            })
     }, reservations)
 
     console.log(customerName);
@@ -48,8 +52,5 @@ export default function CustomerReservations({ customerName }) {
                 </tbody>
             </table>
         </div>
-
-
-
     )
 }

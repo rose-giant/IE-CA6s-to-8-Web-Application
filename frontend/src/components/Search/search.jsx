@@ -10,41 +10,35 @@ import { Context } from "../../App"
 import Footer from "../Footer/footer"
 
 export default function Search() {
-    const location = useLocation()
     const [signedIn, setSignedIn] = useContext(Context)
-    const searchParams = new URLSearchParams(location.search)
-    const locationParam = searchParams.get('location')
-    const restaurantParam = searchParams.get('restaurant')
-    const searchParam = searchParams.get('search')
+    // const searchParams = new URLSearchParams(location.search)
+    // const locationParam = searchParams.get('location')
+    // const restaurantParam = searchParams.get('restaurant')
+    // const searchParam = searchParams.get('search')
+    const location = useLocation()
     const [currentPage, setCurrentPage] = useState(1)
     const itemsPerPage = 6
     const [restaurants, setRestaurants] = useState([])
 
     useEffect(() => {
-        axios.get("http://localhost:8080/restaurants")
-          .then(response => {
-            setRestaurants(response.data);
-          })
-          .catch(error => {
-            console.error("Error fetching restaurants:", error);
-          });
-      }, [])
+      const data = location.state?.data
+      setRestaurants(JSON.stringify(data))
+    }, [])
 
-    const filteredRestaurants = restaurants.filter(restaurant => {
-        const matchesLocation = !locationParam || restaurant.address.city === locationParam
-        const matchesRestaurantType = !restaurantParam || restaurant.type === restaurantParam
-        const matchesSearchQuery = !searchParam || restaurant.name.toLowerCase().includes(searchParam.toLowerCase())
-        return matchesLocation && matchesRestaurantType && matchesSearchQuery
-    })
+    // const filteredRestaurants = restaurants.filter(restaurant => {
+    //     const matchesLocation = !locationParam || restaurant.address.city === locationParam
+    //     const matchesRestaurantType = !restaurantParam || restaurant.type === restaurantParam
+    //     const matchesSearchQuery = !searchParam || restaurant.name.toLowerCase().includes(searchParam.toLowerCase())
+    //     return matchesLocation && matchesRestaurantType && matchesSearchQuery
+    // })
 
-    const totalPages = Math.ceil(filteredRestaurants.length / itemsPerPage);
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = filteredRestaurants.slice(indexOfFirstItem, indexOfLastItem);
+    const totalPages = Math.ceil(restaurants.length / itemsPerPage)
+    const indexOfLastItem = currentPage * itemsPerPage
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage
+    const currentItems = restaurants.slice(indexOfFirstItem, indexOfLastItem)
 
     return(
-        
-        <>
+      <>
         <div className="homepage"> 
         </div>
         <div className="search-container">

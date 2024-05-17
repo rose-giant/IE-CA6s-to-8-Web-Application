@@ -6,20 +6,21 @@ import Footer from "../Footer/footer"
 import axios from "axios"
 import CustomerReservations from "./CustomerReservations"
 
-
 export default function Customer() {
     const [signedIn, setSignedIn] = useContext(Context)
 
     const [customer, setcustomer] = useState(null)
 
     useEffect(() => {
-        axios.get("http://localhost:8080/users")
+        const params = { username: signedIn }
+        axios.get("http://localhost:8080/users", params)
             .then(response => {
-                setcustomer(response.data.filter(user => user.username == signedIn)[0]);
+                // setcustomer(response.data.filter(user => user.username == signedIn)[0]);
+                setcustomer(response.data)
             })
             .catch(error => {
                 console.error("Error fetching users:", error);
-            });
+            })
     }, [customer])
 
     // console.log(customer)
@@ -39,4 +40,3 @@ export default function Customer() {
         </>
     )
 }
-

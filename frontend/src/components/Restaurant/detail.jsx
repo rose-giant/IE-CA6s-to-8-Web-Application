@@ -51,6 +51,11 @@ export default function RestaurantDetail() {
         })
     }
 
+    const handleReservation = (e) => {
+        e.preventDefault()
+        setIsModalOpen(true)
+    }
+
     const param = useParams()
     useEffect(() => {
         axios.get("http://localhost:8080/restaurants")
@@ -60,7 +65,6 @@ export default function RestaurantDetail() {
         .catch(error => {
           console.error("Error fetching restaurants:", error);
         })
-        // setFakes()
         
         getAvailableTimes()
     }, [restaurant, param])
@@ -178,8 +182,11 @@ export default function RestaurantDetail() {
                         {
                             date == null ? <button className="passiveCompletet">Complete the Reservation</button> :
                             <div>
-                                <button onClick={() => setIsModalOpen(true)} className="completet">Complete the Reservation</button>
-                                <ReserveModal time={date} city={restaurant.address.city} country={restaurant.address.country} street={restaurant.address.street} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+                                <button onClick={handleReservation} className="completet">Complete the Reservation</button>
+                                <ReserveModal time={date} city={restaurant.address.city} country={restaurant.address.country}
+                                 street={restaurant.address.street} isOpen={isModalOpen}
+                                 restaurantName={restaurant.name} username={signedIn}
+                                 onClose={() => setIsModalOpen(false)} />
                             </div>
                         }
                     </div>

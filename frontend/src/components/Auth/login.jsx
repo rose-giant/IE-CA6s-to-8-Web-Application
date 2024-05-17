@@ -13,8 +13,8 @@ export default function Login() {
     const navigate = useNavigate()
 
     const handleLogin = (e) => {
-        e.preventDefault();
-        const params = { username: username, password: password };
+        e.preventDefault()
+        const params = { username: username, password: password }
         axios.post("http://localhost:8080/login", params)
             .then(response => {
                 if (response.status && response.status === 200) {
@@ -31,7 +31,7 @@ export default function Login() {
             .catch(error => {
                 navigate("/403")
                 console.error("Error fetching users:", error);
-            });
+            })
     }
 
     return(

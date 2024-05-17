@@ -44,9 +44,11 @@ export default function ReviewList({ restaurantName }) {
     }
 
     useEffect(() => {
-        axios.get("http://localhost:8080/reviews")
+        const params = { restaurantName: restaurantName }
+        axios.get("http://localhost:8080/reviews", params)
           .then(response => {
-            findTargetRest(response.data)
+            // findTargetRest(response.data)
+            setreviews(response.data)
           })
           .catch(error => {
             console.error("Error fetching reviews:", error)

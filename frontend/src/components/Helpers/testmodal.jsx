@@ -5,25 +5,39 @@ import axios from "axios"
 
 const ReviewModal = ({ isOpen, onClose, restaurantName }) => {
     const [singedIn, setSignedIn] = useContext(Context)
-    const [review, setReview] = useState()
+    const [review, setReview] = useState("")
 
-    const setFakes = (listie) => {
-      listie.forEach(item => {
-          if(String(item.restaurantName).valueOf().trim() == String(restaurantName).valueOf()) {
-              console.log("1 , ", String(item.username).valueOf().trim())
-              console.log("2 , ", String(singedIn).valueOf())
-              if(String(item.username).valueOf().trim() == String(singedIn).valueOf().trim()) {
-                setReview(item)
-                console.log("matched item = ", item)
-              }
-          }
+    // const setFakes = (listie) => {
+    //   listie.forEach(item => {
+    //       if(String(item.restaurantName).valueOf().trim() == String(restaurantName).valueOf()) {
+    //           console.log("1 , ", String(item.username).valueOf().trim())
+    //           console.log("2 , ", String(singedIn).valueOf())
+    //           if(String(item.username).valueOf().trim() == String(singedIn).valueOf().trim()) {
+    //             setReview(item)
+    //             console.log("matched item = ", item)
+    //           }
+    //       }
+    //   })
+    // }
+
+    const submitReview = (e) => {
+      e.preventDefault()
+      const params = { username: singedIn, restaurantName: restaurantName, comment: review.comment }
+      axios.post("http://localhost:8080/review", params)
+          .then(response => {
+            // setFakes(response.data)
+            // setReview(response.data)
+          })
+          .catch(error => {
+            console.error("Error fetching reviews:", error);
       })
     }
 
     useEffect(() => {
-        axios.get("http://localhost:8080/reviews")
+      axios.get("http://localhost:8080/review", params)
           .then(response => {
-            setFakes(response.data)
+            // setFakes(response.data)
+            setReview(response.data)
           })
           .catch(error => {
             console.error("Error fetching reviews:", error);
@@ -68,7 +82,7 @@ const ReviewModal = ({ isOpen, onClose, restaurantName }) => {
                 </textarea>
              
               <div className="submission">
-                <button className="submit" type="submit">Submit Review</button>
+                <button className="submit" type="submit" onClick={submitReview}>Submit Review</button>
                 <button className="cancel">Cancel</button>
               </div>
             </div>

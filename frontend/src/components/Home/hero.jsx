@@ -1,6 +1,7 @@
 import React from "react"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import axios from "axios"
 
 export default function Hero() {
     const [location, setLocation] = useState('')
@@ -8,9 +9,25 @@ export default function Hero() {
     const [search, setSearch] = useState('')
     const navigate = useNavigate()
     const handleSearch = (e) => {
-        e.preventDefault()   
-        const queryString = `?location=${location}&restaurant=${restaurant}&search=${search}`;
-        navigate(`/search/${queryString}`)
+        e.preventDefault()
+        // const queryString = `?location=${location}&restaurant=${restaurant}&search=${search}`;
+        // navigate(`/search/${queryString}`)
+        const params = { location: location, restaurant: restaurant, search: search }
+        console.log(params)
+        axios.post("http://localhost:8080/search", params)
+            .then(response => {
+                if (response.status && response.status === 200) {
+                    navigate("/search", { state: { data: response.data } })
+                }
+
+                else{
+                    navigate("/403")
+                }
+            })
+            .catch(error => {
+                navigate("/403")
+                console.error("Error fetching users:", error)
+            })
     }
 
     return(
