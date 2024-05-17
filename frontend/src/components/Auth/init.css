@@ -49,6 +49,7 @@ button {
     width: fit-content;
     display: block;
     margin: auto;
+    margin-top: 32px;
 
     button {
         padding-inline: 48px;
@@ -56,18 +57,16 @@ button {
     }
 }
 
-.activeLogin {
-    background-color: var(--peach-color);
+.activeLogin, .inactiveLogin {
     border-top-left-radius: 12px;
     border-bottom-left-radius: 12px;
 }
 
-.activeRegister {
-    background-color: var(--peach-color);
+.activeRegister, .inactiveRegister {
     border-top-right-radius: 12px;
     border-bottom-right-radius: 12px;
 }
 
-.inactiveButton {
-    background-color: grey;
+.inactiveLogin, .inactiveRegister {
+    background-color: gray;
 }

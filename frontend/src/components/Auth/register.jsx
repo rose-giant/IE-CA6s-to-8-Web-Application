@@ -39,7 +39,8 @@ export default function Register() {
             .catch(error => {
                 navigate("/403")
                 console.error("Error fetching users:", error);
-            });
+            })
+            
         e.preventDefault()
         console.log(name)
         setSignedIn(name)

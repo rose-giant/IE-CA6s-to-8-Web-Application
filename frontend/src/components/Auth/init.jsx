@@ -35,13 +35,13 @@ export default function InitUser() {
         <>
         <div className="activators">
             <button
-                className={activeButton === 'login' ? 'activeLogin' : 'inactiveButton'}
+                className={activeButton === 'login' ? 'activeLogin' : 'inactiveLogin'}
                 onClick={handleLoginClick} >
                 Login
             </button>
 
             <button
-                className={activeButton === 'register' ? 'activeRegister' : 'inactiveButton'}
+                className={activeButton === 'register' ? 'activeRegister' : 'inactiveRegister'}
                 onClick={handleRegisterClick}>
                 Register
             </button>

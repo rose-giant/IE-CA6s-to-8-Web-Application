@@ -32,16 +32,6 @@ export default function Login() {
                 navigate("/403")
                 console.error("Error fetching users:", error);
             });
-        
-
-        // e.preventDefault()
-        // axios.get("http://localhost:8080/users")
-        // .then(response => {
-        //   findTargetUser(response.data)
-        // })
-        // .catch(error => {
-        //   console.error("Error fetching reviews:", error)
-        // })
     }
 
     return(
