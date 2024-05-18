@@ -56,4 +56,8 @@ public class ReviewRepository {
     public ArrayList<Review> getAll() throws SQLException {
         return dao.getAll();
     }
+
+    public void addReview(Review newRest) throws SQLException {
+        dao.addToDatabase(newRest);
+    }
 }

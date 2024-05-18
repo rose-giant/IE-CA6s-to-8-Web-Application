@@ -8,6 +8,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public abstract class DAO<TYPE> {
@@ -89,6 +90,49 @@ public abstract class DAO<TYPE> {
         }
         st.close();
         con.close();
+    }
+
+    public <TYPE> ArrayList<TYPE> findByFields(List<String> values, List<String> field_names, String tableName) throws SQLException {
+        Connection con = HibernateUtils.getConnection();
+        String query = getFindByFieldQuery(values, field_names, tableName);
+        PreparedStatement st = con.prepareStatement(query);
+        System.out.println(st);
+        try {
+            ResultSet resultSet = st.executeQuery();
+            if (resultSet == null) {
+                st.close();
+                con.close();
+                return new ArrayList<>();
+            }
+            ArrayList<TYPE> result = convertToDomainModelList(resultSet);
+            st.close();
+            con.close();
+            return result;
+        } catch (Exception e) {
+            st.close();
+            con.close();
+            System.out.println("error in Repository.findAll query.");
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    private String getFindByFieldQuery(List<String> values, List<String> fieldNames, String tableName) {
+        String query = "SELECT * FROM " + tableName + " t WHERE ";
+        for(int i = 0; i < fieldNames.size(); i++){
+            query += ("t." + fieldNames.get(i) + " = " + "\"" + values.get(i) +"\"");
+            if(i != fieldNames.size()-1) query += " AND ";
+        }
+        query += ";";
+        return query;
+    }
+
+    protected <TYPE> ArrayList<TYPE> convertToDomainModelList(ResultSet rs) throws SQLException {
+        ArrayList<TYPE> suppliers = new ArrayList<>();
+        while (rs.next()) {
+            suppliers.add((TYPE) convertToDomainModel(rs));
+        }
+        return suppliers;
     }
 
 

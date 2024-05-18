@@ -26,11 +26,11 @@ public class TableDAO extends DAO<TableRest> {
     protected String getCreateTableQuery(String tableName) {
         return  String.format(
                "CREATE TABLE IF NOT EXISTS %s (\n" +
-                       "id MEDIUMINT NOT NULL AUTO_INCREMENT,\n" +
+                       "id INT NOT NULL AUTO_INCREMENT,\n" +
                        "tableRestaurant CHAR(225),\n" +
                        "tableManager CHAR(225),\n" +
                        "seats INT,\n" +
-                       "tableNumber INT UNIQUE,\n" +
+                       "tableNumber INT,\n" +
                        "PRIMARY KEY(id), \n" +
                        "FOREIGN KEY(tableManager)REFERENCES manager(username),\n" +
                        "FOREIGN KEY(tableRestaurant)REFERENCES restaurant(name)\n" +

@@ -30,13 +30,13 @@ public class ReservationDAO extends DAO<Reservation> {
         return String.format(
                 "CREATE TABLE %s (\n" +
                         "    reservation_number BIGINT AUTO_INCREMENT PRIMARY KEY,\n" +
-                        "    reservation_username VARCHAR(255) NOT NULL,\n" +
-                        "    reservation_restaurant VARCHAR(255) NOT NULL,\n" +
+                        "    reservation_username CHAR(225) NOT NULL,\n" +
+                        "    reservation_restaurant CHAR(225) NOT NULL,\n" +
                         "    datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n" +
                         "    tableNumber INT,\n" +
                         "    FOREIGN KEY (reservation_username) REFERENCES client (username),\n" +
                         "    FOREIGN KEY (reservation_restaurant) REFERENCES restaurant (name),\n" +
-                        "    FOREIGN KEY (tableNumber) REFERENCES rest_table (tableNumber)\n"+
+                        "    FOREIGN KEY (tableNumber) REFERENCES rest_table (id)\n"+
                         ");\n",
                 tableName);
     }

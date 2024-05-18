@@ -46,8 +46,8 @@ public class ReviewDAO extends DAO<Review> {
                                 "    food_rate DOUBLE,\n" +
                                 "    overall_rate DOUBLE,\n" +
                                 "    service_rate DOUBLE,\n" +
-                                "    review_restaurant VARCHAR(255),\n" +
-                                "    review_username VARCHAR(255),\n" +
+                                "    review_restaurant CHAR(225),\n" +
+                                "    review_username CHAR(225),\n" +
                                 "    FOREIGN KEY (review_restaurant) REFERENCES restaurant (name),\n" +
                                 "    FOREIGN KEY (review_username) REFERENCES client (username)\n" +
                                 ");",

@@ -80,32 +80,7 @@ public class UserDAO extends DAO<User> {
         return String.format("SELECT * FROM %s u WHERE u.%s = ?;", tableName, fieldName);
     }
 
-    public User findByField(String value, String field_name, String tableName) throws SQLException {
-        Connection con = HibernateUtils.getConnection();
-        String query = getFindByFieldQuery(field_name, tableName);
-        PreparedStatement st = con.prepareStatement(query);
-        st.setString(1,value);
-        System.out.println(st);
-        try {
-            ResultSet resultSet = st.executeQuery();
-            if (!resultSet.next()) {
-                st.close();
-                con.close();
-                return null;
-            }
-            User result = convertToDomainModel(resultSet);
-            System.out.println("result: "+result);
-            st.close();
-            con.close();
-            return result;
-        } catch (Exception e) {
-            st.close();
-            con.close();
-            System.out.println("error in Repository.find query.");
-            e.printStackTrace();
-            throw e;
-        }
-    }
+
 
 
 }

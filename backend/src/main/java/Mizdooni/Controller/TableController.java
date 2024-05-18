@@ -1,6 +1,7 @@
 package Mizdooni.Controller;
 
-
+import Mizdooni.Model.Address;
+import Mizdooni.Model.Table.TableRepository;
 import Mizdooni.Model.Table.TableRest;
 import Mizdooni.Model.Table.TableRepository;
 import jakarta.servlet.http.HttpServletResponse;
@@ -24,13 +25,17 @@ public class TableController {
     public ArrayList<TableRest> getAll() throws SQLException {
         return tableRepo.getAll();
     }
-
+    @GetMapping("/{RestaurantName}")
+    public ArrayList<TableRest> getTablesOfRestaurant(@PathVariable String RestaurantName) throws SQLException {
+        return tableRepo.findTablesByRestaurantName(RestaurantName);
+    }
     @PostMapping("")
     public TableRest addTable(HttpServletResponse response,
                                     @RequestBody Map<String, String> body) throws Exception {
-        TableRest newRest = new TableRest(body.get("username"), Integer.parseInt(body.get("tableNumber")),body.get("restaurantName"),Integer.parseInt(body.get("seatNumber")));
+        TableRepository restRepository = TableRepository.getInstance();
+        TableRest newRest = new TableRest(body.get("managerUsername"), Integer.parseInt(body.get("tableNumber")) , body.get("restaurantName"), Integer.parseInt(body.get("seatsNumber")));
         try{
-            tableRepo.addTable(newRest);
+            restRepository.addTable(newRest);
             response.setStatus(HttpServletResponse.SC_CREATED);
             return newRest;
         }catch (SQLWarning e){
@@ -41,5 +46,4 @@ public class TableController {
         }
         return null;
     }
-
 }

@@ -5,6 +5,7 @@ import Mizdooni.Model.Constants;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 import static Mizdooni.Model.Constants.*;
@@ -48,10 +49,10 @@ public class UserRepository {
 
 
     public User findByUsernameAndPassword(String username, String password) throws SQLException {
-         User u1 = dao.findByField(username, "username", CLIENTS_TABLE_NAME);
-         User u2 = dao.findByField(username, "username", MANAGERS_TABLE_NAME);
-         if(u1 != null && Objects.equals(u1.getPassword() , password))return u1;
-         else if(u2 != null && Objects.equals(u2.getPassword() , password))return u2;
+         ArrayList<User> u1 = dao.findByFields(Arrays.asList(username, password),Arrays.asList("username", "password") , CLIENTS_TABLE_NAME);
+         if(u1.size() != 0) return u1.get(0);
+         ArrayList<User> u2 = dao.findByFields(Arrays.asList(username, password),Arrays.asList("username", "password") , MANAGERS_TABLE_NAME);
+         if(u2.size() != 0) return u2.get(0);
          else return null;
     }
 

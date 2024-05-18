@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -24,8 +26,20 @@ public class RestaurantController {
         restaurantRepo = RestaurantRepository.getInstance();
     }
     @GetMapping("")
-    public ArrayList<Restaurant> getAll() throws SQLException {
-        return restaurantRepo.getAll();
+    public ArrayList<Restaurant> getAll(
+            @RequestParam(required = false) String address,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String type
+    ) throws SQLException {
+        return restaurantRepo.getAll(address, name, type);
+    }
+    @GetMapping("/{username}")
+    public ArrayList<Restaurant> getRestaurantsOfUser(@PathVariable String username) throws SQLException {
+        return restaurantRepo.findRestaurantsByManager(username);
+    }
+    @GetMapping("/top/{number}")
+    public ArrayList<Restaurant> getTopTenRestaurants(@PathVariable int number) throws SQLException {
+        return restaurantRepo.findTopRestaurants(number);
     }
 
     @PostMapping("")
