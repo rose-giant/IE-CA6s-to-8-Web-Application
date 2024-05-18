@@ -47,9 +47,13 @@ export default function Hero() {
                                 </select>
                                 <select name="Restaurant" id="restaurant" value={restaurant} onChange={(e) => setRestaurant(e.target.value)}>
                                     <option>Asian</option>
-                                    <option>American</option>
+                                    <option>Persian</option>
+                                    <option>Seafood</option>
+                                    <option>Bar</option>
+                                    <option>Italian</option>
                                     <option>European</option>
-                                    <option>African</option>
+                                    <option>Japanese</option>
+                                    <option>French</option>
                                 </select>
                                 <input type="text" placeholder="type restaurant..." value={search} onChange={(e) => setSearch(e.target.value)} />
                                 <button type="submit" className="search-btn" >
