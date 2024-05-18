@@ -32,19 +32,23 @@ public class RestaurantRepository {
     }
 
     public ArrayList<Restaurant> getAll(String location, String name, String type) throws SQLException {
-        List<String> values = Collections.emptyList();
-        List<String> fields = Collections.emptyList();
+        ArrayList fields = new ArrayList<>();
+        ArrayList values = new ArrayList<>();
+
         if(location != null){
             values.add(location);
             fields.add("address");
         }if(name != null){
             values.add(name);
             fields.add("name");
-        }if(name != null){
+        }if(type != null){
             values.add(type);
             fields.add("type");
         }
-        return dao.findByFields(values, fields, RESTAURANTS_TABLE_NAME);
+        System.out.println("####" + values);
+        System.out.println("####" + fields);
+        if(values.size() == 0) return dao.getAll();
+        else return dao.findByFields(values, fields, RESTAURANTS_TABLE_NAME);
     }
 
     public void addRestaurant(Restaurant newRest) throws SQLException {

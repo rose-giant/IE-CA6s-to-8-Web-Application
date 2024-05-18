@@ -22,21 +22,27 @@ public class ReservationController {
         reservationRepo = ReservationRepository.getInstance();
     }
     @GetMapping("")
-    public ArrayList<Reservation> getAll() throws SQLException {
-        return reservationRepo.getAll();
+    public ArrayList<Reservation> getReservation(
+            @RequestParam(required = false) String userName,
+            @RequestParam(required = false) String restName,
+            @RequestParam(required = false) String tableNum
+    ) throws SQLException {
+        return reservationRepo.getAll(userName, restName, tableNum);
     }
-    @GetMapping("/{username}")
-    public ArrayList<Reservation> getReservationOfUser(@PathVariable String username) throws SQLException {
-        return reservationRepo.findReservationsByUsername(username);
-    }
-    @GetMapping("/{RestaurantName}")
-    public ArrayList<Reservation> getReservationOfRestaurant(@PathVariable String restName) throws SQLException {
-        return reservationRepo.findReservationsByRestaurantName(restName);
-    }
-    @GetMapping("/{RestaurantName}/{TableNumber}")
-    public ArrayList<Reservation> getReservationOfRestaurantAndTable(@PathVariable String restName,@PathVariable String tableNumber ) throws SQLException {
-        return reservationRepo.findReservationsByRestaurantNameAndTableNumber(restName, tableNumber);
-    }
+//    @GetMapping("")
+//    public ArrayList<Reservation> getReservationOfUser(
+//            @RequestParam(required = false) String username) throws SQLException {
+//        return reservationRepo.findReservationsByUsername(username);
+//    }
+//    @GetMapping("")
+//    public ArrayList<Reservation> getReservationOfRestaurant(
+//            @RequestParam(required = false) String restName) throws SQLException {
+//        return reservationRepo.findReservationsByRestaurantName(restName);
+////    }
+//    @GetMapping("/{RestaurantName}/{TableNumber}")
+//    public ArrayList<Reservation> getReservationOfRestaurantAndTable(@PathVariable String restName,@PathVariable String tableNumber ) throws SQLException {
+//        return reservationRepo.findReservationsByRestaurantNameAndTableNumber(restName, tableNumber);
+//    }
     @PostMapping("")
     public Reservation addReservation(HttpServletResponse response,
                            @RequestBody Map<String, String> body) throws Exception {

@@ -26,8 +26,12 @@ public class RestaurantController {
         restaurantRepo = RestaurantRepository.getInstance();
     }
     @GetMapping("")
-    public ArrayList<Restaurant> getAll(@RequestBody Map<String, String> body) throws SQLException {
-        return restaurantRepo.getAll(body.get("location"), body.get("name"), body.get("type"));
+    public ArrayList<Restaurant> getAll(
+            @RequestParam(required = false) String address,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String type
+    ) throws SQLException {
+        return restaurantRepo.getAll(address, name, type);
     }
     @GetMapping("/{username}")
     public ArrayList<Restaurant> getRestaurantsOfUser(@PathVariable String username) throws SQLException {

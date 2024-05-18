@@ -7,8 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static Mizdooni.Model.Constants.RESERVES_TABLE_NAME;
-import static Mizdooni.Model.Constants.TABLES_TABLE_NAME;
+import static Mizdooni.Model.Constants.*;
 
 public class ReservationRepository {
     private static ReservationRepository instance;
@@ -30,8 +29,23 @@ public class ReservationRepository {
         else return instance;
     }
 
-    public ArrayList<Reservation> getAll() throws SQLException {
-        return dao.getAll();
+    public ArrayList<Reservation> getAll(String userName, String restName, String tableNum) throws SQLException {
+        ArrayList fields = new ArrayList<>();
+        ArrayList values = new ArrayList<>();
+        if(userName != null){
+            values.add(userName);
+            fields.add("reservation_username");
+        }if(restName != null){
+            values.add(restName);
+            fields.add("reservation_restaurant");
+        }if(tableNum != null){
+            values.add(tableNum);
+            fields.add("tableNumber");
+        }
+        System.out.println("####" + values);
+        System.out.println("####" + fields);
+        if(values.size() == 0) return dao.getAll();
+        else return dao.findByFields(values, fields, RESERVES_TABLE_NAME);
     }
 
     public void addReservation(Reservation newRest) throws SQLException {
