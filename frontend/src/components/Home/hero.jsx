@@ -17,7 +17,7 @@ export default function Hero() {
         axios.post("http://localhost:8080/restaurants", params)
             .then(response => {
                 if (response.status && response.status === 200) {
-                    navigate("/search", { state: { data: response.data } })
+                    navigate("/search/", { state: { data: response.data } })
                 }
 
                 else{
