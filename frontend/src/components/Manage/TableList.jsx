@@ -3,7 +3,6 @@ import { GlobalTable } from "./ManageRestaurant"
 import axios from "axios"
 import "./manage.css"
 
-
 export default function TableList({ restName }) {
 
     const [tables, setTables] = useState([])

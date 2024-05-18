@@ -7,7 +7,8 @@ export default function RestaurantList() {
     const [restaurants, setRestaurants] = useState([])
 
     useEffect(() => {
-        axios.get("http://localhost:8080/restaurants")
+        const params = {}
+        axios.get("http://localhost:8080/restaurants", params)
           .then(response => {
             setRestaurants(response.data)
           })
