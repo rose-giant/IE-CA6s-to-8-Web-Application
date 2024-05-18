@@ -12,9 +12,9 @@ export default function Hero() {
         e.preventDefault()
         // const queryString = `?location=${location}&restaurant=${restaurant}&search=${search}`;
         // navigate(`/search/${queryString}`)
-        const params = { location: location, type: restaurant, search: search }
-        console.log(params)
-        axios.get("http://localhost:8080/restaurants/search", {params: { location: location, type: restaurant, search: search }})
+        // const params = { location: location, type: restaurant, search: search }
+        console.log(location, type, search)
+        axios.get("http://localhost:8080/restaurants/search?location="+location+"&type="+type+"&search="+search)
             .then(response => {
                 if (response.status && response.status === 200) {
                     navigate("/search/", { state: { data: response.data } })
