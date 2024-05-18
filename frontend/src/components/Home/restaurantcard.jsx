@@ -31,7 +31,7 @@ export default function RestaurantCard({ restaurant }) {
                         <p className="reviews">
                             2096 &nbsp; reviews
                         </p>
-                        <p classNameName="type">
+                        <p className="type">
                             {restaurant.type}
                         </p>
                         <p className="place">                        
