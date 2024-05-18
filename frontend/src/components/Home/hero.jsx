@@ -14,7 +14,7 @@ export default function Hero() {
         // navigate(`/search/${queryString}`)
         const params = { location: location, type: restaurant, search: search }
         console.log(params)
-        axios.post("http://localhost:8080/restaurants/search", params)
+        axios.get("http://localhost:8080/restaurants/search", {params: { location: location, type: restaurant, search: search }})
             .then(response => {
                 if (response.status && response.status === 200) {
                     navigate("/search/", { state: { data: response.data } })
