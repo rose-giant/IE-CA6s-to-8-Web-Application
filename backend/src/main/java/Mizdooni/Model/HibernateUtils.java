@@ -52,6 +52,7 @@ public class HibernateUtils {
         ds.setMinIdle(1);
         ds.setMaxIdle(2000);
         ds.setMaxOpenPreparedStatements(2000);
+        System.out.println("max active::::" +ds.getMaxActive()+"----"+ ds.toString());
         setEncoding();
     }
 
@@ -73,23 +74,23 @@ public class HibernateUtils {
         }
     }
 
-    public static EntityManagerFactory getEmf() {
-        EntityManagerFactory emf;
-        Map<String, String> persistenceProperties = new HashMap<>();
-        persistenceProperties.put("jakarta.persistence.jdbc.url", "jdbc:mysql://localhost:3306/mizdooni");
-        persistenceProperties.put("jakarta.persistence.jdbc.user", "root");
-        persistenceProperties.put("jakarta.persistence.jdbc.password", "rootpassword");
-        persistenceProperties.put("jakarta.persistence.jdbc.driver", "com.mysql.jdbc.Driver");
-        persistenceProperties.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
-        persistenceProperties.put("hibernate.show_sql", "true");
-
-        // Add entity classes
-        persistenceProperties.put("jakarta.persistence.mapping.entities", "Mizdooni.Model.User, Mizdooni.Model.Restaurant");
-        // Create EntityManagerFactory programmatically
-        emf = Persistence.createEntityManagerFactory("mizdooni-persistence-unit", persistenceProperties);
-
-        return emf;
-    }
+//    public static EntityManagerFactory getEmf() {
+//        EntityManagerFactory emf;
+//        Map<String, String> persistenceProperties = new HashMap<>();
+//        persistenceProperties.put("jakarta.persistence.jdbc.url", "jdbc:mysql://localhost:3306/mizdooni");
+//        persistenceProperties.put("jakarta.persistence.jdbc.user", "root");
+//        persistenceProperties.put("jakarta.persistence.jdbc.password", "rootpassword");
+//        persistenceProperties.put("jakarta.persistence.jdbc.driver", "com.mysql.jdbc.Driver");
+//        persistenceProperties.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
+//        persistenceProperties.put("hibernate.show_sql", "true");
+//
+//        // Add entity classes
+//        persistenceProperties.put("jakarta.persistence.mapping.entities", "Mizdooni.Model.User, Mizdooni.Model.Restaurant");
+//        // Create EntityManagerFactory programmatically
+//        emf = Persistence.createEntityManagerFactory("mizdooni-persistence-unit", persistenceProperties);
+//
+//        return emf;
+//    }
 }
 
 

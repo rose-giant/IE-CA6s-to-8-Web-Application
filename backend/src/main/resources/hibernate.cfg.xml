@@ -1,10 +1,11 @@
-<hibernate-configuration>
-    <session-factory>
-        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/mizdooni</property>
-        <property name="hibernate.connection.username">root</property>
-        <property name="hibernate.connection.password">rootpassword</property>
-        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-        <!-- Other properties -->
-    </session-factory>
-</hibernate-configuration>
+<!--<hibernate-configuration>-->
+<!--    <-factory>-->
+<!--</hibernate-csession-factory>-->
+<!--        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>-->
+<!--        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/mizdooni</property>-->
+<!--        <property name="hibernate.connection.username">root</property>-->
+<!--        <property name="hibernate.connection.password">rootpassword</property>-->
+<!--        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>-->
+<!--        &lt;!&ndash; Other properties &ndash;&gt;-->
+<!--    </sessiononfiguration>-->
+<!--<configuration xmlns="$LOCAL_SCHEMA$" version="" label=""></configuration>-->
