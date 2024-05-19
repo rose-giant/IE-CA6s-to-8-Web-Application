@@ -1,8 +1,5 @@
 package Mizdooni.Model;
 
-
-
-
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import org.apache.commons.dbcp.BasicDataSource;
@@ -86,7 +83,7 @@ public class HibernateUtils {
         // Add entity classes
         persistenceProperties.put("jakarta.persistence.mapping.entities", "Mizdooni.Model.User, Mizdooni.Model.Restaurant");
         // Create EntityManagerFactory programmatically
-        emf = Persistence.createEntityManagerFactory("mizdooni-persistence-unit", persistenceProperties);
+        emf = Persistence.createEntityManagerFactory("persistence.xml", persistenceProperties);
 
         return emf;
     }

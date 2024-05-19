@@ -21,7 +21,7 @@ public class TableRepository {
         if(!dao.checkTableExistence(TABLES_TABLE_NAME)){
             tables = dao.fetchFromAPI(Constants.GET_TABLES_URL, TableRest.class);
             for (TableRest user:tables) {
-                dao.addToDatabase(user);
+               dao.addToDatabase(user);
             }
         }
     }

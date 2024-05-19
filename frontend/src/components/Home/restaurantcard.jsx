@@ -12,13 +12,6 @@ export default function RestaurantCard({ restaurant }) {
         <>
             <div className="card">
                     <div className="body">
-                        {/* <div className="pancreas">
-                            <img id="star" src="./icons/svg/pinkstar.svg" alt=""/>
-                            <img id="star" src="./icons/svg/pinkstar.svg" alt=""/>
-                            <img id="star" src="./icons/svg/pinkstar.svg" alt=""/>
-                            <img id="star" src="./icons/svg/pinkstar.svg" alt=""/>
-                            <img id="star" src="./icons/svg/pinkstar.svg" alt=""/>
-                        </div> */}
                         <img src={restaurant.image} alt=""/>
                     </div>
 

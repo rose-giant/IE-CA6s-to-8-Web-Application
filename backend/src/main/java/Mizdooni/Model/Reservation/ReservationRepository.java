@@ -18,7 +18,7 @@ public class ReservationRepository {
         if(!dao.checkTableExistence(RESERVES_TABLE_NAME)){
             reservations = dao.getFromAPI();
             for (Reservation user:reservations) {
-                dao.addToDatabase(user);
+               dao.addToDatabase(user);
             }
         }
     }

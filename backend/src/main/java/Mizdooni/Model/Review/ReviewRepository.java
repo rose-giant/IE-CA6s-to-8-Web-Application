@@ -20,7 +20,7 @@ public class ReviewRepository {
         if(!dao.checkTableExistence(REVIEWS_TABLE_NAME)){
             reviews = dao.fetchFromAPI(Constants.GET_REVIEWS_URL, Review.class);
             for (Review user:reviews) {
-                dao.addToDatabase(user);
+               dao.addToDatabase(user);
             }
         }
     }

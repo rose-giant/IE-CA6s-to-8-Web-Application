@@ -1,5 +1,5 @@
 import React from "react"
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import "./search.css"
 import axios from "axios"
 import { useEffect, useState } from "react"
@@ -11,26 +11,28 @@ import Footer from "../Footer/footer"
 
 export default function Search() {
     const [signedIn, setSignedIn] = useContext(Context)
-    // const searchParams = new URLSearchParams(location.search)
-    // const locationParam = searchParams.get('location')
-    // const restaurantParam = searchParams.get('restaurant')
-    // const searchParam = searchParams.get('search')
+    const searchParams = new URLSearchParams(location.search)
+    const locationParam = searchParams.get('address')
+    const restaurantParam = searchParams.get('type')
+    const searchParam = searchParams.get('name')
     const location = useLocation()
     const [currentPage, setCurrentPage] = useState(1)
     const itemsPerPage = 6
     const [restaurants, setRestaurants] = useState([])
+    const navigate = useNavigate()
 
     useEffect(() => {
-      const data = location.state?.data
-      setRestaurants(JSON.stringify(data))
+        if(locationParam != "") url += ("address="+locationParam)
+        if(restaurantParam != "") url += ("type="+restaurantParam+"&")
+        if(searchParam != "") url += ("name="+searchParam+"&")
+      axios.get(url)
+            .then(response => {
+                console.log(response.data)
+                if (response.status && response.status === 200) {
+                    setRestaurants(response.data)
+                }
+            })
     }, [])
-
-    // const filteredRestaurants = restaurants.filter(restaurant => {
-    //     const matchesLocation = !locationParam || restaurant.address.city === locationParam
-    //     const matchesRestaurantType = !restaurantParam || restaurant.type === restaurantParam
-    //     const matchesSearchQuery = !searchParam || restaurant.name.toLowerCase().includes(searchParam.toLowerCase())
-    //     return matchesLocation && matchesRestaurantType && matchesSearchQuery
-    // })
 
     const totalPages = Math.ceil(restaurants.length / itemsPerPage)
     const indexOfLastItem = currentPage * itemsPerPage
