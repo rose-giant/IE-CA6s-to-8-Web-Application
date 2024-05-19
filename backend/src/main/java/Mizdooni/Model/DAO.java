@@ -70,16 +70,14 @@ public abstract class DAO<TYPE> {
         PreparedStatement stmt = conn.prepareStatement(getAllQuery());
         System.out.println(stmt);
         ResultSet rs = stmt.executeQuery();
-        ArrayList<TYPE> objects = new ArrayList<>();
-        while (rs.next()) {
-            objects.add((TYPE) convertToDomainModel(rs));
-        }
+        ArrayList<TYPE> objects = convertToDomainModelList(rs);
         return objects;
     }
 
     public void addToDatabase(TYPE obj) throws SQLException {
         Connection con = HibernateUtils.getConnection();
         String insertQuery = getInsertRecordQuery();
+        System.out.println(insertQuery);
         PreparedStatement st = con.prepareStatement(insertQuery);
         fillInsertValues(st, obj);
         System.out.println(st);
@@ -93,7 +91,9 @@ public abstract class DAO<TYPE> {
     }
 
     public <TYPE> ArrayList<TYPE> findByFields(List<String> values, List<String> field_names, String tableName) throws SQLException {
+        System.out.println("findByFields begin");
         Connection con = HibernateUtils.getConnection();
+        System.out.println("after getting conn");
         String query = getFindByFieldQuery(values, field_names, tableName);
         PreparedStatement st = con.prepareStatement(query);
         System.out.println(st);

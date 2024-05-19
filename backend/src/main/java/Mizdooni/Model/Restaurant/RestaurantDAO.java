@@ -47,7 +47,7 @@ public class RestaurantDAO extends DAO<Restaurant> {
 
     @Override
     protected String getAllQuery() {
-        return "SELECT * FROM " + RESTAURANTS_TABLE_NAME;
+        return "SELECT * FROM " + RESTAURANTS_TABLE_NAME + ";";
     }
 
     @Override
@@ -65,11 +65,6 @@ public class RestaurantDAO extends DAO<Restaurant> {
     @Override
     protected String getInsertRecordQuery() {
         return String.format("INSERT IGNORE INTO %s(name,managerUsername,type,startTime,endTime,description,image,address) VALUES(?,?,?,?,?,?,?,?)", RESTAURANTS_TABLE_NAME );
-    }
-
-
-    protected User convertToDomainModel(ResultSet res, String tableName) {
-        return null;
     }
 
     public ArrayList<Restaurant> findTopRate(int number) {

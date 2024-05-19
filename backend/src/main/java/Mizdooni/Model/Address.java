@@ -23,6 +23,7 @@ public class Address {
     }
     public Address toAddress(String addressStr){
         String[] a = addressStr.split(",");
-        return new Address(a[1], a[0], a[2]);
+        if(a.length == 2)return new Address(a[1], a[0]);
+        else return new Address(a[1], a[0], a[2]);
     }
 }

@@ -23,26 +23,12 @@ public class ReservationController {
     }
     @GetMapping("")
     public ArrayList<Reservation> getReservation(
-            @RequestParam(required = false) String userName,
-            @RequestParam(required = false) String restName,
-            @RequestParam(required = false) String tableNum
+            @RequestBody (required = false)Map<String, String> body
     ) throws SQLException {
-        return reservationRepo.getAll(userName, restName, tableNum);
+        if(body == null) return reservationRepo.getAll(null, null, null);
+        return reservationRepo.getAll(body.get("username"), body.get("restName"), body.get("tableNum"));
     }
-//    @GetMapping("")
-//    public ArrayList<Reservation> getReservationOfUser(
-//            @RequestParam(required = false) String username) throws SQLException {
-//        return reservationRepo.findReservationsByUsername(username);
-//    }
-//    @GetMapping("")
-//    public ArrayList<Reservation> getReservationOfRestaurant(
-//            @RequestParam(required = false) String restName) throws SQLException {
-//        return reservationRepo.findReservationsByRestaurantName(restName);
-////    }
-//    @GetMapping("/{RestaurantName}/{TableNumber}")
-//    public ArrayList<Reservation> getReservationOfRestaurantAndTable(@PathVariable String restName,@PathVariable String tableNumber ) throws SQLException {
-//        return reservationRepo.findReservationsByRestaurantNameAndTableNumber(restName, tableNumber);
-//    }
+
     @PostMapping("")
     public Reservation addReservation(HttpServletResponse response,
                            @RequestBody Map<String, String> body) throws Exception {

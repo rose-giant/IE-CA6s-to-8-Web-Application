@@ -1,6 +1,7 @@
 package Mizdooni.Controller;
 
 
+import Mizdooni.Model.Restaurant.Restaurant;
 import Mizdooni.Model.User.User;
 import Mizdooni.Model.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,10 @@ public class UserController {
     @GetMapping("")
     public ArrayList<User> getAll() throws SQLException {
         return userRepo.getAll();
+    }
+    @GetMapping("/{username}")
+    public User getOne(@PathVariable String username) throws SQLException {
+        return userRepo.findUserByUserName(username);
     }
 
 }

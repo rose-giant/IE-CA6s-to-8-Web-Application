@@ -27,6 +27,14 @@ public class RestaurantController {
     }
     @GetMapping("")
     public ArrayList<Restaurant> getAll(
+            @RequestBody (required = false)Map<String, String> body
+    ) throws SQLException {
+
+        return restaurantRepo.getAll(null, null, null);
+
+    }
+    @GetMapping("/search")
+    public ArrayList<Restaurant> getSearch(
             @RequestParam(required = false) String address,
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String type

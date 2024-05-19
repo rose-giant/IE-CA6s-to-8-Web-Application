@@ -3,8 +3,6 @@ import { Context } from "../../App"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import "./customer.css"
-import { useContext } from "react"
-import { Context } from "../../App"
 
 export default function CustomerReservations({ customerName }) {
     const [signedIn, setSignedIn] = useContext(Context)

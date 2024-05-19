@@ -35,18 +35,18 @@ public class RestaurantRepository {
         ArrayList fields = new ArrayList<>();
         ArrayList values = new ArrayList<>();
 
-        if(location != null){
+        if(location != null && location != ""){
             values.add(location);
             fields.add("address");
-        }if(name != null){
+        }if(name != null && name != ""){
             values.add(name);
             fields.add("name");
-        }if(type != null){
+        }if(type != null && type != ""){
             values.add(type);
             fields.add("type");
         }
-        System.out.println("####" + values);
-        System.out.println("####" + fields);
+        System.out.println("restaurant values; ####" + values);
+        System.out.println("restaurant fields;####" + fields);
         if(values.size() == 0) return dao.getAll();
         else return dao.findByFields(values, fields, RESTAURANTS_TABLE_NAME);
     }

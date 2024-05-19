@@ -13,11 +13,18 @@ export default function Hero() {
         // const queryString = `?location=${location}&restaurant=${restaurant}&search=${search}`;
         // navigate(`/search/${queryString}`)
         // const params = { location: location, type: restaurant, search: search }
-        console.log(location, type, search)
-        axios.get("http://localhost:8080/restaurants/search?location="+location+"&type="+type+"&search="+search)
+        console.log(location, restaurant, search)
+
+        let url = "http://localhost:8080/restaurants/search?" 
+        if(location) url += ("address="+location+"&")
+        if(restaurant) url += ("type="+restaurant+"&")
+        if(search) url += ("name="+search)
+        console.log(url)
+        axios.get(url)
             .then(response => {
+                console.log(response.data)
                 if (response.status && response.status === 200) {
-                    navigate("/search/", { state: { data: response.data } })
+                    navigate("/search", { state: { data: response.data } })
                 }
 
                 else{

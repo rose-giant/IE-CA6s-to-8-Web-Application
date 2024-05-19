@@ -22,26 +22,26 @@ public class UserDAO extends DAO<User> {
     }
     @Override
     public void addToDatabase(User user) throws SQLException {
-//        Connection con = HibernateUtils.getConnection();
-//        String insertQuery = getInsertRecordQuery(user.getRole());
-//        PreparedStatement st = con.prepareStatement(insertQuery);
-//        fillInsertValues(st, user);
-//        System.out.println(st);
-//        st.execute();
-//        SQLWarning warning = st.getWarnings();
-//        if (warning != null) {
-//            throw new SQLWarning(warning.getMessage());
-//        }
-//        st.close();
-//        con.close();
-        EntityManagerFactory emf = HibernateUtils.getEmf();
-        EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();
-        em.persist(user);
-        System.out.println("heereeeskldjfskl\n");
-        em.getTransaction().commit();
-        em.close();
-        emf.close();
+        Connection con = HibernateUtils.getConnection();
+        String insertQuery = getInsertRecordQuery(user.getRole());
+        PreparedStatement st = con.prepareStatement(insertQuery);
+        fillInsertValues(st, user);
+        System.out.println(st);
+        st.execute();
+        SQLWarning warning = st.getWarnings();
+        if (warning != null) {
+            throw new SQLWarning(warning.getMessage());
+        }
+        st.close();
+        con.close();
+//        EntityManagerFactory emf = HibernateUtils.getEmf();
+//        EntityManager em = emf.createEntityManager();
+//        em.getTransaction().begin();
+//        em.persist(user);
+//        System.out.println("heereeeskldjfskl\n");
+//        em.getTransaction().commit();
+//        em.close();
+//        emf.close();
     }
 
     private String getInsertRecordQuery(String role) {

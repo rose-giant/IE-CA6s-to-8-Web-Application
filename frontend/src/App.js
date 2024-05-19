@@ -30,7 +30,7 @@ const App = () => {
             <Route path="/manage/:restaurantName" element={<ManageReastaurant />} />
             <Route path="/manager/" element={<Manager />} />
             <Route path="/customer/" element={<Customer/>} />
-            <Route path="/search/" element={<Search />} />
+            <Route path="/search" element={<Search />} />
             <Route path='/' element={<InitUser />} />
             <Route path="/home" element={<HomePage/>}/>
             <Route path="/403" element={<AccessDeniedPage/>}/>

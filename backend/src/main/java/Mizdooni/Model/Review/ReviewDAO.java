@@ -34,7 +34,7 @@ public class ReviewDAO extends DAO<Review> {
     }
 
     private String getReviewsByRestaurantQuery(String restaurantName) {
-        return String.format("SELECT * FROM %s WHERE review_restaurant = '%s'", TABLE_NAME, restaurantName);
+        return String.format("SELECT * FROM %s WHERE review_restaurant = '%s';", TABLE_NAME, restaurantName);
     }
 
     public String getCreateTableQuery(String tableName) {
@@ -56,7 +56,7 @@ public class ReviewDAO extends DAO<Review> {
 
     @Override
     protected String getAllQuery() {
-        return "SELECT * FROM " + REVIEWS_TABLE_NAME;
+        return "SELECT * FROM " + REVIEWS_TABLE_NAME + ";";
     }
 
 

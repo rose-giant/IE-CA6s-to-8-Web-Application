@@ -38,13 +38,12 @@ public class UserRepository {
         return dao.getAll();
     }
 
-    public User findUserByUserName(String userName) {
-        for(User user: users) {
-            if(Objects.equals(user.username, userName)) {
-                return user;
-            }
-        }
-        return null;
+    public User findUserByUserName(String username) throws SQLException {
+        ArrayList<User> u1 = dao.findByFields(Arrays.asList(username),Arrays.asList("username") , CLIENTS_TABLE_NAME);
+        if(u1.size() != 0) return u1.get(0);
+        ArrayList<User> u2 = dao.findByFields(Arrays.asList(username),Arrays.asList("username") , MANAGERS_TABLE_NAME);
+        if(u2.size() != 0) return u2.get(0);
+        else return null;
     }
 
 

@@ -51,7 +51,7 @@ public class TableDAO extends DAO<TableRest> {
 
     @Override
     protected String getAllQuery() {
-        return "SELECT * FROM " + TABLES_TABLE_NAME;
+        return "SELECT * FROM " + TABLES_TABLE_NAME + ";";
     }
 
 

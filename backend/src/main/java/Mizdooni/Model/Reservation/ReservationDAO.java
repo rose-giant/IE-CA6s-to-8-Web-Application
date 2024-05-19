@@ -55,7 +55,7 @@ public class ReservationDAO extends DAO<Reservation> {
 
     @Override
     protected String getAllQuery() {
-        return "SELECT * FROM " + RESERVES_TABLE_NAME;
+        return "SELECT * FROM " + RESERVES_TABLE_NAME + ";";
     }
 
     private static final String TABLE_NAME = "reservation";
