@@ -23,7 +23,7 @@ public class UserRepository {
         boolean b = dao.checkTableExistence(CLIENT_ROLE);
         if(!a || !b){
             users = dao.fetchFromAPI(Constants.GET_USERS_URL, User.class);
-            for (User user:users) {
+            for (User user:users) {        
                 dao.addToDatabase(user);
             }
         }
@@ -31,9 +31,12 @@ public class UserRepository {
     }
 
     public static UserRepository getInstance() throws Exception {
-        if(instance == null)
+        if(instance == null) {
             return new UserRepository();
-        else return instance;
+        }
+        else {
+            return instance;
+        }
     }
 
     public ArrayList<User> getAll() throws SQLException {

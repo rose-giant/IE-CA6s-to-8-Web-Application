@@ -12,7 +12,6 @@ export default function CustomerReservations({ customerName }) {
         const params = { username: signedIn }
         axios.get("http://localhost:8080/reservations", params)
             .then(response => {
-                // setReservations(response.data.filter(rest => rest.username == customerName));
                 setReservations(response.data)
             })
             .catch(error => {
