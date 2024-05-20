@@ -2,7 +2,9 @@ package Mizdooni.Model.User;
 
 import Mizdooni.Model.Address;
 import Mizdooni.Model.Constants;
+import Mizdooni.Model.HibernateUtils;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,18 +44,31 @@ public class UserRepository {
     }
 
     public User findUserByUserName(String username) throws SQLException {
-        ArrayList<User> u1 = dao.findByFields(Arrays.asList(username),Arrays.asList("username") , CLIENTS_TABLE_NAME);
-        if(!u1.isEmpty()) return u1.get(0);
-        ArrayList<User> u2 = dao.findByFields(Arrays.asList(username),Arrays.asList("username") , MANAGERS_TABLE_NAME);
-        if(!u2.isEmpty()) return u2.get(0);
+        System.out.println("findByFields begin");
+        Connection conn = HibernateUtils.getConnection();
+        System.out.println("after getting conn");
+        ArrayList<User> u1 = dao.findByFields(conn, Arrays.asList(username),Arrays.asList("username") , CLIENTS_TABLE_NAME);
+        if(u1.size() != 0) return u1.get(0);
+        System.out.println("findByFields begin");
+        Connection conn2 = HibernateUtils.getConnection();
+        System.out.println("after getting conn");
+        ArrayList<User> u2 = dao.findByFields(conn2, Arrays.asList(username),Arrays.asList("username") , MANAGERS_TABLE_NAME);
+        if(u2.size() != 0) return u2.get(0);
         else return null;
     }
 
+
     public User findByUsernameAndPassword(String username, String password) throws SQLException {
-         ArrayList<User> u1 = dao.findByFields(Arrays.asList(username, password),Arrays.asList("username", "password") , CLIENTS_TABLE_NAME);
-         if(!u1.isEmpty()) return u1.get(0);
-         ArrayList<User> u2 = dao.findByFields(Arrays.asList(username, password),Arrays.asList("username", "password") , MANAGERS_TABLE_NAME);
-         if(!u2.isEmpty()) return u2.get(0);
+        System.out.println("findByFields begin");
+        Connection conn = HibernateUtils.getConnection();
+        System.out.println("after getting conn");
+         ArrayList<User> u1 = dao.findByFields(conn, Arrays.asList(username, password),Arrays.asList("username", "password") , CLIENTS_TABLE_NAME);
+         if(u1.size() != 0) return u1.get(0);
+        System.out.println("findByFields begin");
+        Connection conn2 = HibernateUtils.getConnection();
+        System.out.println("after getting conn");
+         ArrayList<User> u2 = dao.findByFields(conn2, Arrays.asList(username, password),Arrays.asList("username", "password") , MANAGERS_TABLE_NAME);
+         if(u2.size() != 0) return u2.get(0);
          else return null;
     }
 

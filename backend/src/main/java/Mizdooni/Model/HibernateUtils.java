@@ -1,5 +1,8 @@
 package Mizdooni.Model;
 
+
+
+
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import org.apache.commons.dbcp.BasicDataSource;
@@ -15,25 +18,25 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HibernateUtils {
-    private static SessionFactory sessionFactory;
+//    private static SessionFactory sessionFactory;
 
 
-    static {
-        try {
-            Configuration configuration = new Configuration();
-            configuration.setProperty("hibernate.connection.driver_class", "com.mysql.cj.jdbc.Driver");
-            configuration.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/mizdooni");
-            configuration.setProperty("hibernate.connection.username", "root");
-            configuration.setProperty("hibernate.connection.password", "rootpassword");
-            sessionFactory = configuration.buildSessionFactory();
-        } catch (Throwable ex) {
-            throw new ExceptionInInitializerError(ex);
-        }
-    }
+//    static {
+//        try {
+//            Configuration configuration = new Configuration();
+//            configuration.setProperty("hibernate.connection.driver_class", "com.mysql.cj.jdbc.Driver");
+//            configuration.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/mizdooni");
+//            configuration.setProperty("hibernate.connection.username", "root");
+//            configuration.setProperty("hibernate.connection.password", "rootpassword");
+//            sessionFactory = configuration.buildSessionFactory();
+//        } catch (Throwable ex) {
+//            throw new ExceptionInInitializerError(ex);
+//        }
+//    }
 
-    public static SessionFactory getSessionFactory() {
-        return sessionFactory;
-    }
+//    public static SessionFactory getSessionFactory() {
+//        return sessionFactory;
+//    }
 
 
     private static final BasicDataSource ds = new BasicDataSource();
@@ -46,9 +49,10 @@ public class HibernateUtils {
         ds.setUrl(dbURL + "?useUnicode=true&characterEncoding=UTF-8");
         ds.setUsername("root");
         ds.setPassword("rootpassword");
-        ds.setMinIdle(1);
-        ds.setMaxIdle(2000);
-        ds.setMaxOpenPreparedStatements(2000);
+        ds.setMinIdle(5);
+        ds.setMaxIdle(10);
+        ds.setMaxOpenPreparedStatements(4000);
+        System.out.println("max active::::" +ds.getMaxActive()+"----"+ ds.toString());
         setEncoding();
     }
 
@@ -70,23 +74,23 @@ public class HibernateUtils {
         }
     }
 
-    public static EntityManagerFactory getEmf() {
-        EntityManagerFactory emf;
-        Map<String, String> persistenceProperties = new HashMap<>();
-        persistenceProperties.put("jakarta.persistence.jdbc.url", "jdbc:mysql://localhost:3306/mizdooni");
-        persistenceProperties.put("jakarta.persistence.jdbc.user", "root");
-        persistenceProperties.put("jakarta.persistence.jdbc.password", "rootpassword");
-        persistenceProperties.put("jakarta.persistence.jdbc.driver", "com.mysql.jdbc.Driver");
-        persistenceProperties.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
-        persistenceProperties.put("hibernate.show_sql", "true");
-
-        // Add entity classes
-        persistenceProperties.put("jakarta.persistence.mapping.entities", "Mizdooni.Model.User, Mizdooni.Model.Restaurant");
-        // Create EntityManagerFactory programmatically
-        emf = Persistence.createEntityManagerFactory("persistence.xml", persistenceProperties);
-
-        return emf;
-    }
+//    public static EntityManagerFactory getEmf() {
+//        EntityManagerFactory emf;
+//        Map<String, String> persistenceProperties = new HashMap<>();
+//        persistenceProperties.put("jakarta.persistence.jdbc.url", "jdbc:mysql://localhost:3306/mizdooni");
+//        persistenceProperties.put("jakarta.persistence.jdbc.user", "root");
+//        persistenceProperties.put("jakarta.persistence.jdbc.password", "rootpassword");
+//        persistenceProperties.put("jakarta.persistence.jdbc.driver", "com.mysql.jdbc.Driver");
+//        persistenceProperties.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
+//        persistenceProperties.put("hibernate.show_sql", "true");
+//
+//        // Add entity classes
+//        persistenceProperties.put("jakarta.persistence.mapping.entities", "Mizdooni.Model.User, Mizdooni.Model.Restaurant");
+//        // Create EntityManagerFactory programmatically
+//        emf = Persistence.createEntityManagerFactory("mizdooni-persistence-unit", persistenceProperties);
+//
+//        return emf;
+//    }
 }
 
 

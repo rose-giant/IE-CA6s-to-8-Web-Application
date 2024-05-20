@@ -8,14 +8,14 @@ export default function RestaurantList() {
 
     useEffect(() => {
         const params = {}
-        axios.get("http://localhost:8080/restaurants", params)
+        axios.get("http://localhost:8080/restaurants")
           .then(response => {
             setRestaurants(response.data)
           })
           .catch(error => {
             console.error("Error fetching restaurants:", error);
           })
-      }, restaurants)
+      }, [])
 
     return(
         <div>

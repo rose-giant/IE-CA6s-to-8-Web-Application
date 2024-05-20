@@ -90,10 +90,7 @@ public abstract class DAO<TYPE> {
         con.close();
     }
 
-    public <TYPE> ArrayList<TYPE> findByFields(List<String> values, List<String> field_names, String tableName) throws SQLException {
-        System.out.println("findByFields begin");
-        Connection con = HibernateUtils.getConnection();
-        System.out.println("after getting conn");
+    public <TYPE> ArrayList<TYPE> findByFields(Connection con, List<String> values, List<String> field_names, String tableName) throws SQLException {
         String query = getFindByFieldQuery(values, field_names, tableName);
         PreparedStatement st = con.prepareStatement(query);
         System.out.println(st);

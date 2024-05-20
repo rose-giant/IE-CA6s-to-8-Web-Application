@@ -1,9 +1,11 @@
 package Mizdooni.Model.Table;
 
 import Mizdooni.Model.Constants;
+import Mizdooni.Model.HibernateUtils;
 import Mizdooni.Model.Review.Review;
 import Mizdooni.Model.User.User;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,7 +39,10 @@ public class TableRepository {
     }
 
     public ArrayList<TableRest> findTablesByRestaurantName(String restaurantName) throws SQLException {
-        return dao.findByFields(Arrays.asList(restaurantName), Arrays.asList("tableRestaurant"), TABLES_TABLE_NAME);
+        System.out.println("findByFields begin");
+        Connection conn = HibernateUtils.getConnection();
+        System.out.println("after getting conn");
+        return dao.findByFields(conn, Arrays.asList(restaurantName), Arrays.asList("tableRestaurant"), TABLES_TABLE_NAME);
     }
 
     public void addTable(TableRest newRest) throws SQLException {

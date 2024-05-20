@@ -10,12 +10,32 @@ export default function Hero() {
     const navigate = useNavigate()
     const handleSearch = (e) => {
         e.preventDefault()
+       
         console.log(location, restaurant, search)
-        let url = "search?"
-        if(location) url += ("address="+location+"&")
-        if(restaurant) url += ("type="+restaurant+"&")
-        if(search) url += ("name="+search)
-        navigate(url)
+
+        let url = "" 
+        url += ("address="+location+"&")
+        // `address=${location}&`
+        url += ("type="+restaurant+"&")
+        url += ("name="+search)
+        console.log(url);
+        navigate("/search?"+url)
+        
+        // axios.get(url)
+        //     .then(response => {
+        //         console.log(response.data)
+        //         if (response.status && response.status === 200) {
+        //             navigate("/search", { state: { data: response.data } })
+        //         }
+
+        //         else{
+        //             navigate("/403")
+        //         }
+        //     })
+        //     .catch(error => {
+        //         navigate("/403")
+        //         console.error("Error fetching users:", error)
+        //     })
     }
 
     return(
