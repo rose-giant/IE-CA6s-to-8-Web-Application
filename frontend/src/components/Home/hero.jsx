@@ -15,12 +15,12 @@ export default function Hero() {
 
         let url = "" 
         url += ("address="+location+"&")
+        // `address=${location}&`
         url += ("type="+restaurant+"&")
         url += ("name="+search)
         console.log(url);
         navigate("/search?"+url)
         
-
         // axios.get(url)
         //     .then(response => {
         //         console.log(response.data)

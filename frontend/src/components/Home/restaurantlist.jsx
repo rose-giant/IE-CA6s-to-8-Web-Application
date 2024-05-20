@@ -15,7 +15,7 @@ export default function RestaurantList() {
           .catch(error => {
             console.error("Error fetching restaurants:", error);
           })
-      }, [restaurants])
+      }, [])
 
     return(
         <div>

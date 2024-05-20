@@ -1,8 +1,10 @@
 package Mizdooni.Model.Reservation;
 
 import Mizdooni.Model.Constants;
+import Mizdooni.Model.HibernateUtils;
 import Mizdooni.Model.Table.TableRest;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,8 +46,11 @@ public class ReservationRepository {
         }
         System.out.println("####" + values);
         System.out.println("####" + fields);
+        System.out.println("findByFields begin");
+        Connection conn = HibernateUtils.getConnection();
+        System.out.println("after getting conn");
         if(values.size() == 0) return dao.getAll();
-        else return dao.findByFields(values, fields, RESERVES_TABLE_NAME);
+        else return dao.findByFields(conn, values, fields, RESERVES_TABLE_NAME);
     }
 
     public void addReservation(Reservation newRest) throws SQLException {
@@ -53,17 +58,26 @@ public class ReservationRepository {
     }
 
     public ArrayList<Reservation> findReservationsByUsername(String username) throws SQLException {
-        return dao.findByFields(Arrays.asList(username),
+        System.out.println("findByFields begin");
+        Connection conn = HibernateUtils.getConnection();
+        System.out.println("after getting conn");
+        return dao.findByFields(conn, Arrays.asList(username),
                 Arrays.asList("reservation_username"), RESERVES_TABLE_NAME);
     }
 
     public ArrayList<Reservation> findReservationsByRestaurantName(String restName) throws SQLException {
-        return dao.findByFields(Arrays.asList(restName),
+        System.out.println("findByFields begin");
+        Connection conn = HibernateUtils.getConnection();
+        System.out.println("after getting conn");
+        return dao.findByFields(conn, Arrays.asList(restName),
                 Arrays.asList("reservation_restaurant"), RESERVES_TABLE_NAME);
     }
 
     public ArrayList<Reservation> findReservationsByRestaurantNameAndTableNumber(String restName, String tableNumber) throws SQLException {
-        return dao.findByFields(Arrays.asList(restName, tableNumber),
+        System.out.println("findByFields begin");
+        Connection conn = HibernateUtils.getConnection();
+        System.out.println("after getting conn");
+        return dao.findByFields(conn, Arrays.asList(restName, tableNumber),
                 Arrays.asList("reservation_restaurant", "tableNumber"), RESERVES_TABLE_NAME);
     }
 }

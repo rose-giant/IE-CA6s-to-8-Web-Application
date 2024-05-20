@@ -1,7 +1,9 @@
 package Mizdooni.Model.Restaurant;
 
 import Mizdooni.Model.Constants;
+import Mizdooni.Model.HibernateUtils;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,8 +49,13 @@ public class RestaurantRepository {
         }
         System.out.println("restaurant values; ####" + values);
         System.out.println("restaurant fields;####" + fields);
+
+        System.out.println("findByFields begin");
+        Connection conn = HibernateUtils.getConnection();
+        System.out.println("after getting conn");
+
         if(values.size() == 0) return dao.getAll();
-        else return dao.findByFields(values, fields, RESTAURANTS_TABLE_NAME);
+        else return dao.findByFields(conn, values, fields, RESTAURANTS_TABLE_NAME);
     }
 
     public void addRestaurant(Restaurant newRest) throws SQLException {
@@ -56,7 +63,10 @@ public class RestaurantRepository {
     }
 
     public ArrayList<Restaurant> findRestaurantsByManager(String username) throws SQLException {
-        return dao.findByFields(Arrays.asList(username),
+        System.out.println("findByFields begin");
+        Connection conn = HibernateUtils.getConnection();
+        System.out.println("after getting conn");
+        return dao.findByFields(conn, Arrays.asList(username),
                 Arrays.asList("managerUsername"), RESTAURANTS_TABLE_NAME);
     }
 
