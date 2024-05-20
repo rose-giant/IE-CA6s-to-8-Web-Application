@@ -43,18 +43,17 @@ public class UserRepository {
 
     public User findUserByUserName(String username) throws SQLException {
         ArrayList<User> u1 = dao.findByFields(Arrays.asList(username),Arrays.asList("username") , CLIENTS_TABLE_NAME);
-        if(u1.size() != 0) return u1.get(0);
+        if(!u1.isEmpty()) return u1.get(0);
         ArrayList<User> u2 = dao.findByFields(Arrays.asList(username),Arrays.asList("username") , MANAGERS_TABLE_NAME);
-        if(u2.size() != 0) return u2.get(0);
+        if(!u2.isEmpty()) return u2.get(0);
         else return null;
     }
 
-
     public User findByUsernameAndPassword(String username, String password) throws SQLException {
          ArrayList<User> u1 = dao.findByFields(Arrays.asList(username, password),Arrays.asList("username", "password") , CLIENTS_TABLE_NAME);
-         if(u1.size() != 0) return u1.get(0);
+         if(!u1.isEmpty()) return u1.get(0);
          ArrayList<User> u2 = dao.findByFields(Arrays.asList(username, password),Arrays.asList("username", "password") , MANAGERS_TABLE_NAME);
-         if(u2.size() != 0) return u2.get(0);
+         if(!u2.isEmpty()) return u2.get(0);
          else return null;
     }
 

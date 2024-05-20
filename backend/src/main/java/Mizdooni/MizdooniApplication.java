@@ -1,6 +1,5 @@
 package Mizdooni;
 
-
 import Mizdooni.Model.Reservation.ReservationRepository;
 import Mizdooni.Model.Restaurant.RestaurantRepository;
 import Mizdooni.Model.Review.ReviewRepository;
@@ -22,4 +21,3 @@ public class MizdooniApplication extends SpringBootServletInitializer {
 		SpringApplication.run(MizdooniApplication.class, args);
 	}
 }
-

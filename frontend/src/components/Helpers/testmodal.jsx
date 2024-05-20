@@ -34,6 +34,7 @@ const ReviewModal = ({ isOpen, onClose, restaurantName }) => {
     }
 
     useEffect(() => {
+      const params = { username: singedIn, restaurantName: restaurantName, comment: review.comment }
       axios.get("http://localhost:8080/review", params)
           .then(response => {
             // setFakes(response.data)

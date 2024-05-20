@@ -12,8 +12,6 @@ import static Mizdooni.Model.Constants.CLIENTS_TABLE_NAME;
 import static Mizdooni.Model.Constants.MANAGERS_TABLE_NAME;
 
 public class UserDAO extends DAO<User> {
-
-
     protected void fillInsertValues(PreparedStatement st, User user) throws SQLException {
         st.setString(1, user.getUsername());
         st.setString(2, user.getPassword());
@@ -34,14 +32,6 @@ public class UserDAO extends DAO<User> {
         }
         st.close();
         con.close();
-//        EntityManagerFactory emf = HibernateUtils.getEmf();
-//        EntityManager em = emf.createEntityManager();
-//        em.getTransaction().begin();
-//        em.persist(user);
-//        System.out.println("heereeeskldjfskl\n");
-//        em.getTransaction().commit();
-//        em.close();
-//        emf.close();
     }
 
     private String getInsertRecordQuery(String role) {
@@ -53,7 +43,6 @@ public class UserDAO extends DAO<User> {
                 "CREATE TABLE IF NOT EXISTS %s " +
                         "(username CHAR(225),\npassword CHAR(225),\nemail CHAR(225),\naddress CHAR(225),\nPRIMARY KEY(username));",
                 tableName);
-
     }
 
     @Override
@@ -79,8 +68,4 @@ public class UserDAO extends DAO<User> {
     private String getFindByFieldQuery(String fieldName, String tableName) {
         return String.format("SELECT * FROM %s u WHERE u.%s = ?;", tableName, fieldName);
     }
-
-
-
-
 }

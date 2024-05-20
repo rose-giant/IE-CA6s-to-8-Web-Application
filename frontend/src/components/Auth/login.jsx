@@ -1,37 +1,35 @@
 import React, { useState } from "react"
-import { useContext, useEffect } from "react"
-import { Context } from "../../App"
-import { useNavigate } from "react-router-dom"
-import axios from "axios"
 
 export default function Login() {
-    const [user, setUser] = useState()
-    const [users, setUsers] = useState()
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
-    const [signedIn, setSignedIn, role, setRole] = useContext(Context)
-    const navigate = useNavigate()
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault()
         const params = { username: username, password: password }
-        axios.post("http://localhost:8080/login", params)
-            .then(response => {
-                if (response.status && response.status === 200) {
-                    setSignedIn(username)
-                    response.data.role && setRole(response.data.role)
-                    console.log(signedIn)
-                    console.log(role)
-                    navigate("/home")
-                }                   
-                else{
-                    navigate("/403")
-                }
-            })
-            .catch(error => {
-                navigate("/403")
-                console.error("Error fetching users:", error);
-            })
+        try {
+            const response = await fetch('http://localhost:8080/login', {
+                method: 'POST',
+                mode: "cors",
+                headers: {
+                    "Accept": 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            });
+    
+            if (!response.ok) {
+                const message = await response.text()
+                console.error('Login failed:', message)
+                return
+            }
+    
+            const token = await response.text()
+            localStorage.setItem('jwtToken', token)
+            console.log('Token stored:', token)
+        } catch (error) {
+            console.error('Error during login:', error)
+        }
     }
 
     return(
