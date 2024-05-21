@@ -46,7 +46,7 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         } else {
             System.out.println(user.username);
-            String token = JwtUtil.generateToken(user.getUsername());
+            String token = JwtUtil.generateToken(user);
             response.setHeader("Authorization", "Bearer " + token);
             response.setStatus(HttpServletResponse.SC_OK);
             System.out.println("Generated token is " + token);
@@ -64,7 +64,7 @@ public class AuthController {
         AuthenticationResponse authenticationResponse = new AuthenticationResponse();
 
         try {
-            token = JwtUtil.generateToken(newUser.username);
+            token = JwtUtil.generateToken(newUser);
             System.out.println("Generated signup token is " + token);
             userRepository.addUser(newUser);
             HttpHeaders headers = new HttpHeaders();
