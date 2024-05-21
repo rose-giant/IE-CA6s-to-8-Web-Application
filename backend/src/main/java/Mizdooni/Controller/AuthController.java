@@ -5,6 +5,8 @@ import Mizdooni.Model.User.UserRepository;
 import Mizdooni.Model.User.userView;
 //import Mizdooni.Security.AuthenticationResponse;
 //import Mizdooni.Security.JwtUtil;
+import Mizdooni.Security.ApplicationConfig;
+import Mizdooni.Security.AuthenticationRequest;
 import Mizdooni.Security.AuthenticationResponse;
 import Mizdooni.Security.JwtUtil;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,6 +16,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.core.parameters.P;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -56,6 +60,8 @@ public class AuthController {
         }
     }
 
+    private ApplicationConfig applicationConfig = new ApplicationConfig();
+
     @PostMapping("signup")
     public ResponseEntity<AuthenticationResponse> signup(@RequestBody userView userView) throws Exception {
         UserRepository userRepository = UserRepository.getInstance();
@@ -66,20 +72,45 @@ public class AuthController {
         try {
             token = JwtUtil.generateToken(newUser);
             System.out.println("Generated signup token is " + token);
+
+            newUser.password = applicationConfig.passwordEncoder().encode(newUser.password);
+            System.out.println("hashed password is " + newUser.password);
+
             userRepository.addUser(newUser);
             HttpHeaders headers = new HttpHeaders();
             headers.set("Authorization", "Bearer " + token);
 
             authenticationResponse.setAccessToken(token);
             return ResponseEntity.ok(authenticationResponse);
-//            return new ResponseEntity<>(newUser, headers, HttpStatus.CREATED);
         } catch (SQLWarning e) {
-//            return ResponseEntity.badRequest();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         } catch (Exception e) {
             e.printStackTrace();
-//            return ResponseEntity.internalServerError();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
+
+    @PostMapping("/authenticate")
+    public ResponseEntity<AuthenticationResponse> authenticate(
+            @RequestBody AuthenticationRequest request
+            ) {
+        return null;
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
