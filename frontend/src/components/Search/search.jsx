@@ -1,5 +1,5 @@
 import React from "react"
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import "./search.css"
 import axios from "axios"
 import { useEffect, useState } from "react"
@@ -11,26 +11,28 @@ import Footer from "../Footer/footer"
 
 export default function Search() {
     const [signedIn, setSignedIn] = useContext(Context)
-    const location = useLocation()
     const searchParams = new URLSearchParams(location.search)
     const locationParam = searchParams.get('address')
     const restaurantParam = searchParams.get('type')
     const searchParam = searchParams.get('name')
+    const location = useLocation()
     const [currentPage, setCurrentPage] = useState(1)
     const itemsPerPage = 6
     const [restaurants, setRestaurants] = useState([])
+    const navigate = useNavigate()
+    let url = ""
 
     useEffect(() => {
-      console.log(locationParam, restaurantParam, searchParam)
-      let url = "http://localhost:8080/restaurants/search?" 
-        if(locationParam) url += ("address="+locationParam+"&")
-        if(restaurantParam) url += ("type="+restaurantParam+"&")
-        if(searchParam) url += ("name="+searchParam)
+        if(locationParam != "") url += ("address="+locationParam)
+        if(restaurantParam != "") url += ("type="+restaurantParam+"&")
+        if(searchParam != "") url += ("name="+searchParam+"&")
       axios.get(url)
             .then(response => {
-              setRestaurants(response.data)
+                console.log(response.data)
+                if (response.status && response.status === 200) {
+                    setRestaurants(response.data)
+                }
             })
-      
     }, [])
 
     const totalPages = Math.ceil(restaurants.length / itemsPerPage)

@@ -13,8 +13,9 @@ export default function Register() {
     const [country, setCountry] = useState("")
     const navigate = useNavigate()
 
-    const registerSubmit = (e) => {
+    const registerSubmit = async (e) => {
         e.preventDefault();
+
         const params = {
             username: name,
             password: password,
@@ -22,29 +23,42 @@ export default function Register() {
             role: role,
             city: city,
             country: country
-          };
-        axios.post("http://localhost:8080/signup", params)
-            .then(response => {
-                if (response.status && response.status === 200) {
-                    setSignedIn(name)
-                    setRole(role)
-                    console.log(signedIn)
-                    console.log(role)
-                    navigate("/home")
-                }                   
-                else{
-                    navigate("/403")
-                }
-            })
-            .catch(error => {
-                navigate("/403")
-                console.error("Error fetching users:", error);
-            })
+        };
+    
+        try {
+            const response = await fetch('http://localhost:8080/signup', {
+                method: 'POST',
+                mode: 'cors',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(params)
+            });
+    
+            if (!response.ok) {
+                console.error('Signup failed:', await response.text());
+                navigate('/403');
+                return;
+            }
             
-        e.preventDefault()
-        console.log(name)
-        setSignedIn(name)
-        navigate("/home")
+            console.log(1)
+            const authHeader = response.headers.get('Authorization');
+            if (authHeader && authHeader.startsWith('Bearer ')) {
+                const token = authHeader.substring(7)
+                localStorage.setItem('jwtToken', token);
+                console.log('Token stored:', token);
+            }
+            console.log(2)
+    
+            const data = await response.json();
+            setSignedIn(name);
+            setRole(role);
+            navigate('/home');
+        } catch (error) {
+            console.error('Error during signup:', error);
+            navigate('/403');
+        }
     }
 
     return(
@@ -73,7 +87,7 @@ export default function Register() {
                 <div className="radios">
                         <label htmlFor="I'm a new Customer">Customer</label>
                         <input className="input-group" type="radio" id="c"
-                        onChange={(e) => setRole("customer")}/>
+                        onChange={(e) => setRole("client")}/>
 
                         <label htmlFor="Manager">Manager</label>
                         <input className="input-group" type="radio" id="m"

@@ -17,9 +17,9 @@ export default function RestaurantCard({ restaurant }) {
 
                     <div className="card-footer">
                         <p onClick={hello}>
-                        <p className="title">
-                            {restaurant.name}
-                        </p>
+                            <span className="title">
+                                {restaurant.name}
+                            </span>
                         </p>
                         <p className="reviews">
                             2096 &nbsp; reviews
@@ -28,10 +28,10 @@ export default function RestaurantCard({ restaurant }) {
                             {restaurant.type}
                         </p>
                         <p className="place">                        
-                            <p className="location">
+                            <span className="location">
                                 <img className="icon location-icon" src="./icons/location.png" alt=""/>
-                                <p>{restaurant.address.city}</p>
-                            </p>
+                                <span>{restaurant.address.city}</span>
+                            </span>
                         </p>
 
                         <p className="open">
