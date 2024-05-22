@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Function;
 
 public class JwtUtil {
     private static final long EXPIRATION_TIME = 864_000_000; // 10 days
@@ -33,5 +34,22 @@ public class JwtUtil {
         }
 
         return String.join(",", authoritiesSet);
+    }
+
+    private static Claims extractAllClaims(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(SIGNING_KEY)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+    }
+
+    public static String extractUsername(String token) {
+        return extractClaim(token, Claims::getSubject);
+    }
+
+    public static <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+        final Claims claims = extractAllClaims(token);
+        return claimsResolver.apply(claims);
     }
 }
