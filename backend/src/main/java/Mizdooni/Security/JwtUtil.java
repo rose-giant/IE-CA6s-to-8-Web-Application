@@ -14,6 +14,7 @@ import java.util.Set;
 import java.util.function.Function;
 
 public class JwtUtil {
+    //mizdooni2024
     private static final long EXPIRATION_TIME = 864_000_000; // 10 days
     private static final Key SIGNING_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS512);
 

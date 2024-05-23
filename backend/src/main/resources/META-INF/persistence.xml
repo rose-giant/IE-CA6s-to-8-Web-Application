@@ -18,7 +18,9 @@
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
             <property name="hibernate.show_sql" value="true"/>
-            <!-- Other Hibernate properties -->
+
+<!--            <property name="oauth.client.id" value="62778481787-6h22qrtgc9rd2h8frjbgmi5ecsjknslv.apps.googleusercontent.com"/>-->
+<!--            <property name="oauth.client.secret" value="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"/>-->
         </properties>
     </persistence-unit>
 

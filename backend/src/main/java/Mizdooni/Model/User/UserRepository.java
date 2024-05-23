@@ -1,14 +1,14 @@
 package Mizdooni.Model.User;
 
-import Mizdooni.Model.Address;
 import Mizdooni.Model.Constants;
 import Mizdooni.Model.HibernateUtils;
+import Mizdooni.Security.ApplicationConfig;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Objects;
 
 import static Mizdooni.Model.Constants.*;
 
@@ -60,15 +60,21 @@ public class UserRepository {
     public User findByUsernameAndPassword(String username, String password) throws SQLException {
         Connection conn = HibernateUtils.getConnection();
         System.out.println("after getting conn");
+        ApplicationConfig applicationConfig = new ApplicationConfig();
+        String encodedPassword;
+        try {
+            encodedPassword = applicationConfig.hmac(password);
+        } catch (Exception e) {
+               throw new UsernameNotFoundException(null);
+        }
 
-        System.out.println("sssssssssssssss" +username + password);
-        ArrayList<User> u1 = dao.findByFields(conn, Arrays.asList(username, password),Arrays.asList("username", "password") , CLIENTS_TABLE_NAME);
+        ArrayList<User> u1 = dao.findByFields(conn, Arrays.asList(username, encodedPassword),Arrays.asList("username", "password") , CLIENTS_TABLE_NAME);
         System.out.println("client " + u1.size());
         if(!u1.isEmpty()) return u1.get(0);
 
         Connection conn2 = HibernateUtils.getConnection();
         System.out.println("after getting conn");
-         ArrayList<User> u2 = dao.findByFields(conn2, Arrays.asList(username, password),Arrays.asList("username", "password") , MANAGERS_TABLE_NAME);
+         ArrayList<User> u2 = dao.findByFields(conn2, Arrays.asList(username, encodedPassword),Arrays.asList("username", "password") , MANAGERS_TABLE_NAME);
         System.out.println("manager " + u1.size());
 
          if(!u2.isEmpty()) return u2.get(0);

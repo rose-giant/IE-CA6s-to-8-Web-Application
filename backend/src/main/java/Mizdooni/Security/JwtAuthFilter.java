@@ -6,8 +6,6 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import org.hibernate.annotations.NotFound;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,13 +23,11 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     protected void doFilterInternal(@NonNull HttpServletRequest request,
                                     @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
-
         final String authHeader = request.getHeader("Authorization");
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
-
 
         String jwt = authHeader.substring(7);
         String username = JwtUtil.extractUsername(jwt);
@@ -64,9 +60,11 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             return null;
         }
     };
+
     @Override
     protected boolean shouldNotFilter(@NonNull HttpServletRequest request) throws ServletException {
-        return (request.getServletPath().contains("login") ||
-                request.getServletPath().contains("signup"));
+        return (request.getServletPath().contains("oauth") ||
+                request.getServletPath().contains("login") ||
+                request.getServletPath().contains("signup") );
     }
 }

@@ -7,31 +7,19 @@ import Mizdooni.Security.ApplicationConfig;
 import Mizdooni.Security.AuthenticationRequest;
 import Mizdooni.Security.AuthenticationResponse;
 import Mizdooni.Security.JwtUtil;
-import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.parameters.P;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.http.HttpHeaders;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.io.IOException;
-import java.sql.SQLException;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import java.sql.SQLWarning;
-import java.util.Map;
 
 @RestController
 @RequestMapping(path= "",produces = MediaType.APPLICATION_JSON_VALUE)
@@ -48,8 +36,8 @@ public class AuthController {
     @PostMapping("login")
     public ResponseEntity<AuthenticationResponse> login(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
         UserRepository userRepo = UserRepository.getInstance();
-        HttpServletResponse response;
 
+        System.out.println("request is " + authenticationRequest.getUsername() + authenticationRequest.getPassword());
         AuthenticationResponse authenticationResponse = new AuthenticationResponse();
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -58,10 +46,8 @@ public class AuthController {
         );
 
         System.out.println("request is " + authenticationRequest.getUsername() + authenticationRequest.getPassword());
-
-        User user = userRepo.findUserByUserName(authenticationRequest.getUsername());
-//        User user = userRepo.findByUsernameAndPassword(authenticationRequest.getUsername(),
-//                applicationConfig.passwordEncoder().encode(authenticationRequest.getPassword()));
+//        User user = userRepo.findUserByUserName(authenticationRequest.getUsername());
+        User user = userRepo.findByUsernameAndPassword(authenticationRequest.getUsername(), authenticationRequest.getPassword());
         if (user == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
@@ -69,13 +55,15 @@ public class AuthController {
         String token = JwtUtil.generateToken(user);
         System.out.println("Generated token is " + token);
         authenticationResponse.setAccessToken(token);
+//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         return ResponseEntity.ok(authenticationResponse);
     }
 
-    private ApplicationConfig applicationConfig = new ApplicationConfig();
+    private final ApplicationConfig applicationConfig = new ApplicationConfig();
 
     @PostMapping("signup")
     public ResponseEntity<AuthenticationResponse> signup(@RequestBody userView userView) throws Exception {
+        System.out.println("yeahhhhhhhhhhhh");
         UserRepository userRepository = UserRepository.getInstance();
         User newUser = userView.viewToUser();
         String token;
@@ -85,7 +73,7 @@ public class AuthController {
             token = JwtUtil.generateToken(newUser);
             System.out.println("Generated signup token is " + token);
 
-            newUser.password = applicationConfig.passwordEncoder().encode(newUser.password);
+            newUser.password = applicationConfig.hmac(newUser.password);
             System.out.println("hashed password is " + newUser.password);
 
             userRepository.addUser(newUser);
@@ -107,6 +95,19 @@ public class AuthController {
             @RequestBody AuthenticationRequest request
             ) {
         return null;
+    }
+
+    @PostMapping("/callback")
+    public ResponseEntity<AuthenticationResponse> callbcak(
+            @RequestBody AuthenticationRequest request
+    ) {
+        return null;
+    }
+
+    @GetMapping("oauth")
+    public String oauth(Model model , @AuthenticationPrincipal OAuth2User user) throws Exception {
+        System.out.println("in oauth controller");
+        return "index";
     }
 
 }

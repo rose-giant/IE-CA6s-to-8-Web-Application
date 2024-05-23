@@ -3,8 +3,7 @@ package Mizdooni.Model.User;
 import Mizdooni.Model.Address;
 import Mizdooni.Model.DAO;
 import Mizdooni.Model.HibernateUtils;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
+import Mizdooni.Security.ApplicationConfig;
 
 import java.sql.*;
 
@@ -12,6 +11,7 @@ import static Mizdooni.Model.Constants.CLIENTS_TABLE_NAME;
 import static Mizdooni.Model.Constants.MANAGERS_TABLE_NAME;
 
 public class UserDAO extends DAO<User> {
+    private final ApplicationConfig applicationConfig = new ApplicationConfig();
     protected void fillInsertValues(PreparedStatement st, User user) throws SQLException {
         st.setString(1, user.getUsername());
         st.setString(2, user.getPassword());
@@ -23,6 +23,7 @@ public class UserDAO extends DAO<User> {
         Connection con = HibernateUtils.getConnection();
         String insertQuery = getInsertRecordQuery(user.getRole());
         PreparedStatement st = con.prepareStatement(insertQuery);
+//        user.password = applicationConfig.passwordEncoder().encode(user.password);
         fillInsertValues(st, user);
         System.out.println(st);
         st.execute();
@@ -47,7 +48,7 @@ public class UserDAO extends DAO<User> {
 
     @Override
     protected String getAllQuery() {
-        return "SELECT * FROM " + MANAGERS_TABLE_NAME + " UNION SELECT * FROM " + CLIENTS_TABLE_NAME +";";
+        return "SELECT * FROM " + MANAGERS_TABLE_NAME + " UNION SELECT * FROM " + CLIENTS_TABLE_NAME + ";";
     }
 
     @Override
