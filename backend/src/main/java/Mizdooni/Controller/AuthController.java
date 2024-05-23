@@ -20,6 +20,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.sql.SQLWarning;
+import java.util.Collection;
 
 @RestController
 @RequestMapping(path= "",produces = MediaType.APPLICATION_JSON_VALUE)
@@ -104,12 +105,14 @@ public class AuthController {
         return null;
     }
 
-    @GetMapping("oauth")
-    public String oauth(Model model , @AuthenticationPrincipal OAuth2User user) throws Exception {
-        System.out.println("in oauth controller");
-        return "index";
+//    @GetMapping("oauth")
+//    public String oauth(Model model , @AuthenticationPrincipal OAuth2User user) throws Exception {
+//        return "index";
+//    }
+    @GetMapping("/redirect")
+    public void oauthToken(@RequestParam String token) {
+        System.out.println(token);
     }
-
 }
 
 
