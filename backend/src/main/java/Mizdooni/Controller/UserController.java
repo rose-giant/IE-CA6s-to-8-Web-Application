@@ -28,6 +28,7 @@ public class UserController {
     }
     @GetMapping("/{username}")
     public User getOne(@PathVariable String username) throws SQLException {
+        System.out.println("get one user: " + username);
         return userRepo.findUserByUserName(username);
     }
 

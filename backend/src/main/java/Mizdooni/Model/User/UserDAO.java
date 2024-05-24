@@ -7,9 +7,9 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 
 import java.sql.*;
+import java.util.ArrayList;
 
-import static Mizdooni.Model.Constants.CLIENTS_TABLE_NAME;
-import static Mizdooni.Model.Constants.MANAGERS_TABLE_NAME;
+import static Mizdooni.Model.Constants.*;
 
 public class UserDAO extends DAO<User> {
 
@@ -44,6 +44,27 @@ public class UserDAO extends DAO<User> {
 //        emf.close();
     }
 
+    @Override
+    public ArrayList<User> getAll() throws SQLException {
+        Connection conn = HibernateUtils.getConnection();
+        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM client");
+        System.out.println(stmt);
+        ResultSet rs = stmt.executeQuery();
+        ArrayList<User> objects = new ArrayList<>();
+        while (rs.next()) {
+            objects.add(convertToDomainModel(rs, CLIENT_ROLE));
+        }
+
+        stmt = conn.prepareStatement("SELECT * FROM manager");
+        System.out.println(stmt);
+        rs = stmt.executeQuery();
+        while (rs.next()) {
+            objects.add(convertToDomainModel(rs, MANAGER_ROLE));
+        }
+
+        return objects;
+    }
+
     private String getInsertRecordQuery(String role) {
         return String.format("INSERT IGNORE INTO %s(username, password, email, address) VALUES(?,?,?,?)", role );
     }
@@ -66,6 +87,18 @@ public class UserDAO extends DAO<User> {
         try{
             Address ad = new Address().toAddress(rs.getString(4));
             return new User(ad, rs.getString(3), rs.getString(2), "user", rs.getString(1));
+        }
+        catch (Exception e){
+            System.out.println("convertToDomainModelError: " + e.getMessage());
+            return null;
+        }
+    }
+
+
+    protected User convertToDomainModel(ResultSet rs, String role) {
+        try{
+            Address ad = new Address().toAddress(rs.getString(4));
+            return new User(ad, rs.getString(3), rs.getString(2), role, rs.getString(1));
         }
         catch (Exception e){
             System.out.println("convertToDomainModelError: " + e.getMessage());

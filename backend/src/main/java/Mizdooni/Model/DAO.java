@@ -124,7 +124,7 @@ public abstract class DAO<TYPE> {
         return query;
     }
 
-    protected <TYPE> ArrayList<TYPE> convertToDomainModelList(ResultSet rs) throws SQLException {
+    protected <TYPE> ArrayList<TYPE> convertToDomainModelList(ResultSet rs,String... args) throws SQLException {
         ArrayList<TYPE> suppliers = new ArrayList<>();
         while (rs.next()) {
             suppliers.add((TYPE) convertToDomainModel(rs));

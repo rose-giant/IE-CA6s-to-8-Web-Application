@@ -16,7 +16,11 @@ public class Address {
         this.street = street;
     }
 
-    public Address(){}
+    public Address(){
+        this.city = " ";
+        this.country = " ";
+        this.street = " ";
+    }
 
     public String toString(){
         return country + ", " +  city + ", " + street;

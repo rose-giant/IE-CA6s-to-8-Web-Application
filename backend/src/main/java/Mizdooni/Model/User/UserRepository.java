@@ -63,12 +63,22 @@ public class UserRepository {
         Connection conn = HibernateUtils.getConnection();
         System.out.println("after getting conn");
          ArrayList<User> u1 = dao.findByFields(conn, Arrays.asList(username, password),Arrays.asList("username", "password") , CLIENTS_TABLE_NAME);
-         if(u1.size() != 0) return u1.get(0);
+         if(u1.size() != 0) {
+             System.out.println(u1.get(0));
+             User user = u1.get(0);
+             user.setRole(CLIENT_ROLE);
+             return user;
+         }
         System.out.println("findByFields begin");
         Connection conn2 = HibernateUtils.getConnection();
         System.out.println("after getting conn");
          ArrayList<User> u2 = dao.findByFields(conn2, Arrays.asList(username, password),Arrays.asList("username", "password") , MANAGERS_TABLE_NAME);
-         if(u2.size() != 0) return u2.get(0);
+         if(u2.size() != 0) {
+             System.out.println(u2.get(0));
+             User user = u2.get(0);
+             user.setRole(MANAGER_ROLE);
+             return user;
+         }
          else return null;
     }
 

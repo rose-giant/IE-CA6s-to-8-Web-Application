@@ -16,7 +16,7 @@ export default function ManagerRestaurants({managerName}) {
             .catch(error => {
                 console.error("Error fetching restaurants:", error);
             });
-    }, restaurants)
+    }, [])
 
     // console.log(managerName);
     // console.log(restaurants)

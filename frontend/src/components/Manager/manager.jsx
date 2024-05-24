@@ -22,7 +22,7 @@ export default function Manager() {
             .catch(error => {
                 console.error("Error fetching users:", error);
             });
-    }, [manager])
+    }, [])
 
     // console.log(manager)
     // console.log(manager.username )

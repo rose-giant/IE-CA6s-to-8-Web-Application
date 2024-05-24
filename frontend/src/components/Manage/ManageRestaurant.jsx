@@ -18,14 +18,14 @@ export default function ManageRestaurant() {
   
 
   useEffect(() => {
-    axios.get("http://localhost:8080/restaurants")
+    axios.get("http://localhost:8080/restaurants" + "/search?name=" + restaurantName)
       .then(response => {
-        setRestaurant(response.data.filter(rest => rest.name == restaurantName)[0]);
+        setRestaurant(response.data);
       })
       .catch(error => {
         console.error("Error fetching restaurants:", error);
       });
-  }, [restaurant])
+  }, [])
 
   // console.log(restaurantName)
   // console.log(restaurant)

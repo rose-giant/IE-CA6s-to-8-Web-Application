@@ -45,6 +45,7 @@ public class RestaurantController {
     public ArrayList<Restaurant> getRestaurantsOfUser(@PathVariable String username) throws SQLException {
         return restaurantRepo.findRestaurantsByManager(username);
     }
+
     @GetMapping("/top/{number}")
     public ArrayList<Restaurant> getTopTenRestaurants(@PathVariable int number) throws SQLException {
         return restaurantRepo.findTopRestaurants(number);
