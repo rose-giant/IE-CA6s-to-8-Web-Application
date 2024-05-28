@@ -4,24 +4,22 @@ import "./reviewmodal.css"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 
-const ReserveModal = ({ isOpen, onClose, time, city, country, street, restaurantName, username}) => {
+const ReserveModal = ({ isOpen, onClose, time, city, country, street, restaurantName, username, tableNumber}) => {
     const [singedIn, setSignedIn] = useContext(Context)
     const navigate = useNavigate()
     const submitReservation = (e) => {
-      const params = { username: username, restaurantName: restaurantName, time: time }
-        axios.post("http://localhost:8080/reserve", params)
-            .then(response => {
-                if (response.status && response.status === 200) {
-                   
-                }
-                else{
-                  navigate("/403")
-                }
-            })
-            .catch(error => {
-                navigate("/403")
-                console.error("Error fetching users:", error);
-            })
+      const params = { userName: username, restName: restaurantName, dateTime: time, tableNum:  tableNumber}
+      axios({
+        method: 'post',
+        url: "http://localhost:8080/reservations",
+        headers: {}, 
+        data: params
+      })
+      .then(navigate("../../customer"))
+      .catch(error => {
+          navigate("/403")
+          console.error("Error fetching users:", error);
+      })
     }
     
     if (!isOpen) return null;

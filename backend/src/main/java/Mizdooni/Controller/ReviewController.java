@@ -27,6 +27,10 @@ public class ReviewController {
     public ArrayList<Review> getAll() throws SQLException {
         return reviewRepo.getAll();
     }
+    @GetMapping("/{RestaurantName}")
+    public ArrayList<Review> getReviewsOfRestaurant(@PathVariable String RestaurantName) throws SQLException {
+        return reviewRepo.findByRestaurant(RestaurantName);
+    }
     @PostMapping("")
     public Review addTable(HttpServletResponse response,
                               @RequestBody Map<String, String> body) throws Exception {

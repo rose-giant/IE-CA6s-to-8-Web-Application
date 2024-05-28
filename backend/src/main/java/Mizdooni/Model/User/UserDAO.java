@@ -61,7 +61,6 @@ public class UserDAO extends DAO<User> {
         while (rs.next()) {
             objects.add(convertToDomainModel(rs, MANAGER_ROLE));
         }
-
         return objects;
     }
 

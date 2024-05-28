@@ -23,11 +23,17 @@ export default function Register() {
             city: city,
             country: country
           };
-        axios.post("http://localhost:8080/signup", params)
+          axios({
+            method: 'post',
+            url: "http://localhost:8080/signup",
+            headers: {}, 
+            data: params
+          })
             .then(response => {
-                if (response.status && response.status === 200) {
+                console.log(response)
+                if (response.status && response.status === 201) {
                     setSignedIn(name)
-                    setRole(role)
+                    response.data.role && setRole(role)
                     console.log(signedIn)
                     console.log(role)
                     navigate("/home")

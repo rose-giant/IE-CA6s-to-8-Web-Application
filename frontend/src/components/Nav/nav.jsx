@@ -12,6 +12,8 @@ export default function Nav() {
         navigate("/home")
     }
 
+    console.log("signedin user: " + signedIn)
+
     return (
         <nav className="navbar px-5 py-2">
             <div className="nav-left">

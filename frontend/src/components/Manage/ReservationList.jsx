@@ -8,22 +8,22 @@ export default function ReservationList({ restName }) {
     const [reservations, setReservations] = useState([])
     const [restReservations, setRestReservations] = useState([])
     const [table, setTable] = useContext(GlobalTable)
+    // console.log("http://localhost:8080/reservations?restName=" + restName)
 
     useEffect(() => {
-        axios.get("http://localhost:8080/reservations")
+        axios.get("http://localhost:8080/reservations?restName=" + restName)
             .then(response => {
-                setRestReservations(response.data.filter(resrv => resrv.restaurantName == restName));
-                setReservations(restReservations.filter(resrv => resrv.tableNumber == table.tableNumber))
+                setRestReservations(response.data);
+                table != null ? setReservations(restReservations.filter(resrv => resrv.tableNumber == table.tableNumber)):setReservations(response.data)
             })
             .catch(error => {
                 console.error("Error fetching reservations:", error);
             });
     }, [restReservations, table])
 
-    // table && setReservations(restReservations.filter(resrv => resrv.tableNumber == table.tableNumber))
-    // console.log(table.tableNumber);
-    console.log(reservations)
-    console.log(table)
+   
+    // console.log(reservations)
+    // console.log(table)
 
 
 

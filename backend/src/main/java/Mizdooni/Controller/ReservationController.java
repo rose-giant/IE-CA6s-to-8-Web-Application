@@ -23,17 +23,18 @@ public class ReservationController {
     }
     @GetMapping("")
     public ArrayList<Reservation> getReservation(
-            @RequestBody (required = false)Map<String, String> body
+            @RequestParam(required = false) String userName,
+            @RequestParam(required = false) String restName,
+            @RequestParam(required = false) String tableNum
     ) throws SQLException {
-        if(body == null) return reservationRepo.getAll(null, null, null);
-        return reservationRepo.getAll(body.get("username"), body.get("restName"), body.get("tableNum"));
+        return reservationRepo.getAll(userName, restName, tableNum);
     }
 
     @PostMapping("")
     public Reservation addReservation(HttpServletResponse response,
                            @RequestBody Map<String, String> body) throws Exception {
         ReservationRepository reservationRepository = ReservationRepository.getInstance();
-        Reservation newRest = new Reservation( body.get("username"),body.get("restaurantName")
+        Reservation newRest = new Reservation( body.get("userName"),body.get("restName")
                 ,Integer.parseInt(body.get("tableNumber")), body.get("dateTime"));
         try{
             reservationRepository.addReservation(newRest);

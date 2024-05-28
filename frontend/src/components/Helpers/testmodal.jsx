@@ -22,11 +22,12 @@ const ReviewModal = ({ isOpen, onClose, restaurantName }) => {
 
     const submitReview = (e) => {
       e.preventDefault()
-      const params = { username: singedIn, restaurantName: restaurantName, comment: review.comment }
-      axios.post("http://localhost:8080/review", params)
-          .then(response => {
-            // setFakes(response.data)
-            // setReview(response.data)
+      const params = { username: singedIn, restaurantName: restaurantName, comment: review.comment, ambianceRate: review.ambianceRate, overallRate: review.overallRate, serviceRate: review.serviceRate, foodRate: review.foodRate}
+          axios({
+            method: 'post',
+            url: "http://localhost:8080/reviews",
+            headers: {}, 
+            data: params
           })
           .catch(error => {
             console.error("Error fetching reviews:", error);
@@ -34,7 +35,7 @@ const ReviewModal = ({ isOpen, onClose, restaurantName }) => {
     }
 
     useEffect(() => {
-      axios.get("http://localhost:8080/review", params)
+      axios.get("http://localhost:8080/reviews")
           .then(response => {
             // setFakes(response.data)
             setReview(response.data)

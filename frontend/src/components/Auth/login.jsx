@@ -15,7 +15,12 @@ export default function Login() {
     const handleLogin = (e) => {
         e.preventDefault()
         const params = { username: username, password: password }
-        axios.post("http://localhost:8080/login", params)
+        axios({
+            method: 'post',
+            url: "http://localhost:8080/login",
+            headers: {}, 
+            data: params
+          })
             .then(response => {
                 if (response.status && response.status === 200) {
                     setSignedIn(username)
@@ -32,6 +37,7 @@ export default function Login() {
                 navigate("/403")
                 console.error("Error fetching users:", error);
             })
+            
     }
 
     return(

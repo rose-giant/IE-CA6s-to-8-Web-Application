@@ -41,9 +41,12 @@ public abstract class DAO<TYPE> {
         }
     }
     public <TYPE> ArrayList<TYPE> fetchFromAPI(String GET_URL, Class<TYPE> elementClass) throws Exception{
+        System.out.println(GET_URL);
         String UsersJsonString = getRequest(GET_URL);
+        System.out.println(UsersJsonString);
         ObjectMapper om = new ObjectMapper();
         CollectionType listType = om.getTypeFactory().constructCollectionType(ArrayList.class,elementClass);
+        System.out.println("fetch from ; " + GET_URL);
         return om.readValue(UsersJsonString,listType);
     }
     public boolean checkTableExistence(String tableName) throws SQLException {

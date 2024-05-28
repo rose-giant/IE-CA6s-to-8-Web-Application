@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom"
 export default function RestaurantCard({ restaurant }) {
     const navigate = useNavigate()
     const hello = () => {
-        navigate(`restaurant/${restaurant.name}/`)
+        navigate(`../restaurant/${restaurant.name}`)
     }
         
     return(

@@ -12,16 +12,15 @@ export default function Customer() {
     const [customer, setcustomer] = useState(null)
 
     useEffect(() => {
-        const params = { username: signedIn }
-        axios.get("http://localhost:8080/users", params)
+        axios.get("http://localhost:8080/users/" + signedIn)
             .then(response => {
-                // setcustomer(response.data.filter(user => user.username == signedIn)[0]);
+                console.log(response.data)
                 setcustomer(response.data)
             })
             .catch(error => {
                 console.error("Error fetching users:", error);
             })
-    }, [customer])
+    }, [])
 
     // console.log(customer)
     // console.log(customer.username )

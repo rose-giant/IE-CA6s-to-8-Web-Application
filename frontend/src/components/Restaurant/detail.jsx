@@ -186,6 +186,7 @@ export default function RestaurantDetail() {
                                 <ReserveModal time={date} city={restaurant.address.city} country={restaurant.address.country}
                                  street={restaurant.address.street} isOpen={isModalOpen}
                                  restaurantName={restaurant.name} username={signedIn}
+                                 tableNumber = {1}
                                  onClose={() => setIsModalOpen(false)} />
                             </div>
                         }

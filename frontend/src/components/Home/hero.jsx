@@ -13,29 +13,13 @@ export default function Hero() {
        
         console.log(location, restaurant, search)
 
-        let url = "" 
+        let url = "/search?" 
         url += ("address="+location+"&")
-        // `address=${location}&`
         url += ("type="+restaurant+"&")
         url += ("name="+search)
         console.log(url);
-        navigate("/search?"+url)
+        navigate(url)
         
-        // axios.get(url)
-        //     .then(response => {
-        //         console.log(response.data)
-        //         if (response.status && response.status === 200) {
-        //             navigate("/search", { state: { data: response.data } })
-        //         }
-
-        //         else{
-        //             navigate("/403")
-        //         }
-        //     })
-        //     .catch(error => {
-        //         navigate("/403")
-        //         console.error("Error fetching users:", error)
-        //     })
     }
 
     return(

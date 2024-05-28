@@ -19,8 +19,10 @@ public class AuthController {
     @PostMapping("login")
     public User login(HttpServletResponse response,
                       @RequestBody Map<String, String> body) throws Exception {
+
         UserRepository userRepo = UserRepository.getInstance();
         User user = userRepo.findByUsernameAndPassword(body.get("username"), body.get("password"));
+        System.out.println(body.get("username") + body.get("password"));
         if(user == null) {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             response.getWriter().write("Invalid username or password!");

@@ -1,42 +1,65 @@
 import React, { useContext, useState, useEffect } from "react"
 import { GlobalTable } from "./ManageRestaurant"
 import axios from "axios"
+import { Context } from "../../App"
 import "./manage.css"
+import Modal from "../Helpers/Modal/Modal"
 
 export default function TableList({ restName }) {
 
     const [tables, setTables] = useState([])
     const [table, setTable] = useContext(GlobalTable)
+    const [modalOpen, setModalOpen] = useState(false)
+    const [signedIn] = useContext(Context)
+    const [seatNum, setSeatNum] = useState("")
+
+    const openModal = () => {
+        setModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setModalOpen(false);
+    };
+    
 
     useEffect(() => {
-        const params = { restaurantName: restName }
-        axios.get("http://localhost:8080/tables", params)
+        axios.get("http://localhost:8080/tables/"+ restName)
             .then(response => {
-                // setTables(response.data.filter(table => table.restaurantName == restName));
                 setTables(response.data)
             })
             .catch(error => {
                 console.error("Error fetching restaurants:", error);
             });
-    }, tables)
+    }, [restName])
 
     const addTableHandler = (e) => {
+        closeModal()
         e.preventDefault()
-        const params = { restaurantName: restName, seats: table.seatsNumber }
-        axios.post("http://localhost:8080/table", params)
-            .then(response => {
-                // setFakes(response.data)
-                // setReview(response.data)
-            })
+        const params = { restaurantName: restName, seatsNumber: seatNum , managerUsername: signedIn, tableNumber: tables.length + 1}
+        axios({
+            method: 'post',
+            url: "http://localhost:8080/tables",
+            headers: {}, 
+            data: params
+          })
             .catch(error => {
-                console.error("Error fetching reviews:", error);
+                console.error("Error adding table: ", error);
         })
     }
 
     return (
         <div>
             <div class="grid-item pink-back">
-                <a className="red inline-cell" onClick={addTableHandler}>+ Add Table</a>
+                <a className="red inline-cell" onClick={openModal}>+ Add Table</a>
+                <Modal isOpen={modalOpen} onClose={closeModal}>
+                    <form className="form-cotrol" action="" onSubmit={addTableHandler}>
+                    
+                    <label htmlFor="seats">Number of seats</label>
+                    <input required className="input-group" onChange={(e) => setSeatNum(e.target.value)} type="text" />
+
+                    <button type="submit">Add</button>
+                    </form>
+                </Modal>
                 {
                     tables.length == 0
                     ?

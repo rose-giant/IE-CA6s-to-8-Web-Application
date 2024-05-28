@@ -17,12 +17,14 @@ public class ReviewRepository {
     ReviewDAO dao = new ReviewDAO();
 
     public ReviewRepository() throws Exception {
-        if(!dao.checkTableExistence(REVIEWS_TABLE_NAME)){
-            reviews = dao.fetchFromAPI(Constants.GET_REVIEWS_URL, Review.class);
-            for (Review user:reviews) {
-               dao.addToDatabase(user);
-            }
-        }
+//        if(!dao.checkTableExistence(REVIEWS_TABLE_NAME)){
+//            reviews = dao.fetchFromAPI(Constants.GET_REVIEWS_URL, Review.class);
+//            for (Review user:reviews) {
+//               dao.addToDatabase(user);
+//            }
+//        }
+//        reviews = dao.fetchFromAPI(Constants.GET_REVIEWS_URL, Review.class);
+        reviews = dao.getAll();
     }
 
     public ArrayList<Review> findByRestaurant(String restaurantName) {
@@ -32,7 +34,6 @@ public class ReviewRepository {
                 results.add(review);
             }
         }
-
         return results;
     }
 
@@ -43,21 +44,22 @@ public class ReviewRepository {
                 results.add(review);
             }
         }
-
         return results;
     }
 
     public static ReviewRepository getInstance() throws Exception {
         if(instance == null)
-            return new ReviewRepository();
-        else return instance;
+            instance = new ReviewRepository();
+        return instance;
     }
 
     public ArrayList<Review> getAll() throws SQLException {
-        return dao.getAll();
+//        return dao.getAll();
+        return reviews;
     }
 
     public void addReview(Review newRest) throws SQLException {
-        dao.addToDatabase(newRest);
+//        dao.addToDatabase(newRest);
+        reviews.add(newRest);
     }
 }

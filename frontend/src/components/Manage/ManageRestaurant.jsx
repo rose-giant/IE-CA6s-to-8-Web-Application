@@ -15,12 +15,13 @@ export default function ManageRestaurant() {
   const { restaurantName } = useParams();
   const [restaurant, setRestaurant] = useState(null)
   const [table, setTable] = useState(null)
+  // console.log("http://localhost:8080/restaurants/search?name=" + restaurantName)
   
 
   useEffect(() => {
-    axios.get("http://localhost:8080/restaurants" + "/search?name=" + restaurantName)
+    axios.get("http://localhost:8080/restaurants/search?name=" + restaurantName)
       .then(response => {
-        setRestaurant(response.data);
+        setRestaurant(response.data[0]);
       })
       .catch(error => {
         console.error("Error fetching restaurants:", error);
@@ -38,7 +39,7 @@ export default function ManageRestaurant() {
         <div>
           <div className="sub-nav">
             <p className="normal-font">{restaurant.name}</p>
-            <p className="normal-font">Address: {restaurant.address.street}, {restaurant.address.city}, {restaurant.address.country}</p>
+            <p className="normal-font">Address:  {restaurant.address.city}, {restaurant.address.country}</p>
           </div>
           <div className="grid-container">
             <ReservationList restName={restaurant.name}/>

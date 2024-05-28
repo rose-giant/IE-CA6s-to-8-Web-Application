@@ -2,6 +2,7 @@ package Mizdooni.Model.Reservation;
 
 import Mizdooni.Model.Constants;
 import Mizdooni.Model.HibernateUtils;
+import Mizdooni.Model.Restaurant.Restaurant;
 import Mizdooni.Model.Table.TableRest;
 
 import java.sql.Connection;
@@ -17,44 +18,65 @@ public class ReservationRepository {
     ReservationDAO dao = new ReservationDAO();
 
     public ReservationRepository() throws Exception {
-        if(!dao.checkTableExistence(RESERVES_TABLE_NAME)){
-            reservations = dao.getFromAPI();
-            for (Reservation user:reservations) {
-               dao.addToDatabase(user);
-            }
-        }
+//        if(!dao.checkTableExistence(RESERVES_TABLE_NAME)){
+//            reservations = dao.getFromAPI();
+//            for (Reservation user:reservations) {
+//               dao.addToDatabase(user);
+//            }
+//        }
+        reservations = dao.getFromAPI();
+
     }
 
     public static ReservationRepository getInstance() throws Exception {
         if(instance == null)
-            return new ReservationRepository();
-        else return instance;
+            instance = new ReservationRepository();
+        return instance;
     }
 
-    public ArrayList<Reservation> getAll(String userName, String restName, String tableNum) throws SQLException {
-        ArrayList fields = new ArrayList<>();
-        ArrayList values = new ArrayList<>();
-        if(userName != null){
-            values.add(userName);
-            fields.add("reservation_username");
-        }if(restName != null){
-            values.add(restName);
-            fields.add("reservation_restaurant");
-        }if(tableNum != null){
-            values.add(tableNum);
-            fields.add("tableNumber");
-        }
-        System.out.println("####" + values);
-        System.out.println("####" + fields);
-        System.out.println("findByFields begin");
-        Connection conn = HibernateUtils.getConnection();
-        System.out.println("after getting conn");
-        if(values.size() == 0) return dao.getAll();
-        else return dao.findByFields(conn, values, fields, RESERVES_TABLE_NAME);
+    public boolean isEmpty(String in){
+        if(in == null || in == "") return true;
+        else return false;
     }
+    public ArrayList<Reservation> getAll(String userName, String restName, String tableNum) throws SQLException {
+
+        ArrayList<Reservation> rs = new ArrayList<>();
+
+        for (Reservation rest: reservations) {
+            if ( (isEmpty(userName) || rest.username.equals(userName)) &&
+                    (isEmpty(tableNum) || rest.tableNumber == Integer.parseInt(tableNum)) &&
+                    (isEmpty(restName) || rest.restaurantName.equals(restName)) ) {
+                rs.add(rest);
+            }
+        }
+        return rs;
+    }
+
+//    public ArrayList<Reservation> getAll(String userName, String restName, String tableNum) throws SQLException {
+//        ArrayList fields = new ArrayList<>();
+//        ArrayList values = new ArrayList<>();
+//        if(userName != null){
+//            values.add(userName);
+//            fields.add("reservation_username");
+//        }if(restName != null){
+//            values.add(restName);
+//            fields.add("reservation_restaurant");
+//        }if(tableNum != null){
+//            values.add(tableNum);
+//            fields.add("tableNumber");
+//        }
+//        System.out.println("####" + values);
+//        System.out.println("####" + fields);
+//        System.out.println("findByFields begin");
+//        Connection conn = HibernateUtils.getConnection();
+//        System.out.println("after getting conn");
+//        if(values.size() == 0) return dao.getAll();
+//        else return dao.findByFields(conn, values, fields, RESERVES_TABLE_NAME);
+//    }
 
     public void addReservation(Reservation newRest) throws SQLException {
-        dao.addToDatabase(newRest);
+//        dao.addToDatabase(newRest);
+        reservations.add(newRest);
     }
 
     public ArrayList<Reservation> findReservationsByUsername(String username) throws SQLException {

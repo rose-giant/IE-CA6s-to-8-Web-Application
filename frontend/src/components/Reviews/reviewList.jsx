@@ -44,11 +44,10 @@ export default function ReviewList({ restaurantName }) {
     }
 
     useEffect(() => {
-        const params = { restaurantName: restaurantName }
-        axios.get("http://localhost:8080/reviews", params)
+        axios.get("http://localhost:8080/reviews/"+restaurantName)
           .then(response => {
-            // findTargetRest(response.data)
             setreviews(response.data)
+            findTargetRest(reviews)
           })
           .catch(error => {
             console.error("Error fetching reviews:", error)
