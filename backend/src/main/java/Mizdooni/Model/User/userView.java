@@ -1,6 +1,7 @@
 package Mizdooni.Model.User;
 
 import Mizdooni.Model.Address;
+import Mizdooni.Security.Hash;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,7 +27,8 @@ public class userView {
 
 
     public User viewToUser() throws Exception {
-        return new User(new Address(city, country),email, password, role, username );
+        String hashPass = Hash.doHash(password);
+        return new User(new Address(city, country),email, hashPass, role, username );
     }
 }
 

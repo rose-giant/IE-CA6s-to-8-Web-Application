@@ -41,7 +41,7 @@ public class UserRepository {
         return users;
     }
 
-    public User findUserByUserName(String username) throws SQLException {
+    public User findUserByUserName(String username)  {
 //        System.out.println("findByFields begin");
 //        Connection conn = HibernateUtils.getConnection();
 //        System.out.println("after getting conn");
@@ -62,7 +62,7 @@ public class UserRepository {
 
     public User findByUsernameAndPassword(String username, String password) {
         for (User user: users) {
-            System.out.println(user.username + " " + user.password);
+
             if(user.username.equals(username) && user.password.equals(password)) return user;
         }
         return null;
