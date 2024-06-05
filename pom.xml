@@ -11,6 +11,7 @@
 	<groupId>com.example</groupId>
 	<artifactId>React-Web-Application-Back-end-API</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 	<name>React-Web-Application-Back-end-API</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
@@ -87,6 +88,16 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.19</version>
+		</dependency>
+		<dependency>
+			<groupId>co.elastic.apm</groupId>
+			<artifactId>apm-agent-api</artifactId>
+			<version>1.50.0</version>
+		</dependency>
+		<dependency>
+			<groupId>co.elastic.apm</groupId>
+			<artifactId>apm-agent-attach</artifactId>
+			<version>1.50.0</version>
 		</dependency>
 
 

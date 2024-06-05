@@ -6,7 +6,13 @@ import Mizdooni.Model.Restaurant.RestaurantRepository;
 import Mizdooni.Model.User.User;
 import Mizdooni.Model.User.UserRepository;
 import Mizdooni.Model.User.userView;
+import co.elastic.apm.api.ElasticApm;
+import co.elastic.apm.api.Scope;
+import co.elastic.apm.api.Span;
+import co.elastic.apm.api.Transaction;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +26,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/restaurants")
 public class RestaurantController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(RestaurantController.class);
     private final RestaurantRepository restaurantRepo;
     @Autowired
     public RestaurantController() throws Exception {
@@ -30,7 +37,35 @@ public class RestaurantController {
             @RequestBody (required = false)Map<String, String> body
     ) throws SQLException {
 
-        return restaurantRepo.getAll(null, null, null);
+
+//        return restaurantRepo.getAll(null, null, null);
+        ArrayList<Restaurant> restaurants = new ArrayList<>();
+        Transaction transaction = ElasticApm.startTransaction();
+        try (Scope txScope = transaction.activate()) {
+            transaction.setName("HTTP GET /restaurants");
+            transaction.setType(Transaction.TYPE_REQUEST);
+
+            Span getRestsSpan = transaction.startSpan("getAllRests", "query", "findRestaurants");
+            try (Scope dbScope = getRestsSpan.activate()) {
+                getRestsSpan.setName("Find All restaurants");
+
+                LOGGER.info("get all restaurants API requested");
+                restaurants = restaurantRepo.getAll(null, null, null);
+                getRestsSpan.end();
+
+
+            } catch (Exception e) {
+                getRestsSpan.captureException(e);
+                getRestsSpan.end();
+                throw e;
+            }
+        } catch (Exception e) {
+            transaction.captureException(e);
+        } finally {
+            transaction.end();
+        }
+
+        return restaurants;
 
     }
     @GetMapping("/search")
@@ -39,10 +74,12 @@ public class RestaurantController {
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String type
     ) throws SQLException {
+        LOGGER.info("Search for restaurants API requested");
         return restaurantRepo.getAll(address, name, type);
     }
     @GetMapping("/{username}")
     public ArrayList<Restaurant> getRestaurantsOfUser(@PathVariable String username) throws SQLException {
+        LOGGER.info("get a User restaurants API requested");
         return restaurantRepo.findRestaurantsByManager(username);
     }
 
@@ -67,6 +104,7 @@ public class RestaurantController {
             response.getWriter().flush();
             System.out.println(e.getMessage());
         }
+        LOGGER.info("A new restaurant added");
         return null;
     }
     
