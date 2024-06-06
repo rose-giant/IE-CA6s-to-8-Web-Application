@@ -33,8 +33,9 @@ public class AuthController {
             response.getWriter().flush();
             System.out.println("Invalid username or password!");
         }else{
-            String token = JwtUtils.createJWT(body.get("username"));
+            String token = JwtUtils.generateToken(body.get("username"));
             user.setToken(token);
+            response.setHeader("Authorization", "Bearer " + token);
             System.out.println(token);
         }
         return user;
@@ -46,8 +47,9 @@ public class AuthController {
         User newUser = userView.viewToUser();
         try{
             userRepository.addUser(newUser);
-            String token = JwtUtils.createJWT(userView.getUsername());
+            String token = JwtUtils.generateToken(userView.getUsername());
             newUser.setToken(token);
+            response.setHeader("Authorization", "Bearer " + token);
             System.out.println(token);
             response.setStatus(HttpServletResponse.SC_CREATED);
             return newUser;

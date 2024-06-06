@@ -13,7 +13,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 @SpringBootApplication
 public class MizdooniApplication extends SpringBootServletInitializer {
 	public static void main(String[] args) throws Exception {
-		System.out.println("hi");
+
 		UserRepository.getInstance();
 		RestaurantRepository.getInstance();
 		TableRepository.getInstance();
