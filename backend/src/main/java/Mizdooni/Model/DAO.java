@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public abstract class DAO<TYPE> {
-
     protected abstract String getCreateTableQuery(String tableName);
     protected abstract String getAllQuery();
     protected abstract TYPE convertToDomainModel(ResultSet res);
@@ -63,7 +62,6 @@ public abstract class DAO<TYPE> {
         stmt.close();
         conn.close();
         return tableExists;
-
     }
     public <TYPE> ArrayList<TYPE> getAll() throws SQLException {
         Connection conn = HibernateUtils.getConnection();
@@ -131,10 +129,6 @@ public abstract class DAO<TYPE> {
         }
         return suppliers;
     }
-
-
-
-
 }
 
 

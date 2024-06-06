@@ -13,7 +13,7 @@ import Manager from './components/Manager/manager'
 import ManageReastaurant from './components/Manage/ManageRestaurant'
 import AccessDeniedPage from './pages/AccessDenied'
 import Customer from './components/Customer/Customer'
-
+// FROM --platform=linux/amd64 node:18
 
 export const Context = React.createContext()
 

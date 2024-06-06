@@ -1,11 +1,6 @@
 package Mizdooni.Model;
 
 public final class Constants {
-
-    private Constants() {
-        // restrict instantiation
-    }
-
     //API_URLS
     public static final String BASE_URL = "http://91.107.137.117:55";
     public static final String GET_RESTAURANTS_URL = "http://91.107.137.117:55/restaurants";
@@ -23,10 +18,6 @@ public final class Constants {
     public static final String TABLES_TABLE_NAME = "rest_table";
     public static final String REVIEWS_TABLE_NAME = "review";
 
-
-
-
     public static final char[] FORBIDDEN_CHARS_FOR_EMAIL = {'`', '~', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '-',
             '=', '{', '[', '}', ']', ';', ':', '|', '/', '\'', '.', '>', ',', '<', ' '};
-
 }
