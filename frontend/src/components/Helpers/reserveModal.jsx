@@ -12,7 +12,10 @@ const ReserveModal = ({ isOpen, onClose, time, city, country, street, restaurant
       axios({
         method: 'post',
         url: "http://localhost:8080/reservations",
-        headers: {}, 
+        headers: {
+            'Authorization': localStorage.getItem('authToken'),
+            'Content-Type': 'application/json'
+        },
         data: params
       })
       .then(navigate("../../customer"))

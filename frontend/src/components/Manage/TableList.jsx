@@ -23,7 +23,12 @@ export default function TableList({ restName }) {
     
 
     useEffect(() => {
-        axios.get("http://localhost:8080/tables/"+ restName)
+        axios.get("http://localhost:8080/tables/"+ restName, {
+            headers: {
+                'Authorization': localStorage.getItem('authToken'),
+                'Content-Type': 'application/json'
+            }
+            })
             .then(response => {
                 setTables(response.data)
             })
@@ -39,7 +44,10 @@ export default function TableList({ restName }) {
         axios({
             method: 'post',
             url: "http://localhost:8080/tables",
-            headers: {}, 
+            headers: {
+                'Authorization': localStorage.getItem('authToken'),
+                'Content-Type': 'application/json'
+            },
             data: params
           })
             .catch(error => {

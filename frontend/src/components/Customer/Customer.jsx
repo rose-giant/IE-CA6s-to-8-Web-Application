@@ -12,7 +12,12 @@ export default function Customer() {
     const [customer, setcustomer] = useState(null)
 
     useEffect(() => {
-        axios.get("http://localhost:8080/users/" + signedIn)
+        axios.get("http://localhost:8080/users/" + signedIn, {
+            headers: {
+                'Authorization': localStorage.getItem('authToken'),
+                'Content-Type': 'application/json'
+            }
+            })
             .then(response => {
                 console.log(response.data)
                 setcustomer(response.data)

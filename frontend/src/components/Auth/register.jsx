@@ -30,6 +30,8 @@ export default function Register() {
             data: params
           })
             .then(response => {
+                const token = response.headers['authorization'];
+                localStorage.setItem('authToken', token);
                 console.log(response)
                 if (response.status && response.status === 201) {
                     setSignedIn(name)

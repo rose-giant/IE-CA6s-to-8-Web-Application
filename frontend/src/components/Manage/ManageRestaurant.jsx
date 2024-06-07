@@ -19,7 +19,12 @@ export default function ManageRestaurant() {
   
 
   useEffect(() => {
-    axios.get("http://localhost:8080/restaurants/search?name=" + restaurantName)
+    axios.get("http://localhost:8080/restaurants/search?name=" + restaurantName, {
+      headers: {
+          'Authorization': localStorage.getItem('authToken'),
+          'Content-Type': 'application/json'
+      }
+      })
       .then(response => {
         setRestaurant(response.data[0]);
       })

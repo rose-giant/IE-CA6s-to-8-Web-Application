@@ -23,10 +23,15 @@ export default function Login() {
           })
             .then(response => {
                 if (response.status && response.status === 200) {
+                    const token = response.headers['authorization'];
+                    localStorage.setItem('authToken', token);
                     setSignedIn(username)
                     response.data.role && setRole(response.data.role)
                     console.log(signedIn)
                     console.log(role)
+                    console.log(response.headers)
+                    console.log(token)
+                    console.log(localStorage.getItem('authToken'))
                     navigate("/home")
                 }                   
                 else{

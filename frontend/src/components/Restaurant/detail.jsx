@@ -58,7 +58,12 @@ export default function RestaurantDetail() {
 
     const param = useParams()
     useEffect(() => {
-        axios.get("http://localhost:8080/restaurants")
+        axios.get("http://localhost:8080/restaurants", {
+            headers: {
+                'Authorization': localStorage.getItem('authToken'),
+                'Content-Type': 'application/json'
+            }
+            })
         .then(response => {
             findTargetRest(response.data)
         })

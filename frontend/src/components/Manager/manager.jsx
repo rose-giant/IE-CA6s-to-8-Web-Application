@@ -14,7 +14,12 @@ export default function Manager() {
     const [manager, setManager] = useState(null)
 
     useEffect(() => {
-        axios.get("http://localhost:8080/users/" + signedIn)
+        axios.get("http://localhost:8080/users/" + signedIn, {
+            headers: {
+                'Authorization': localStorage.getItem('authToken'),
+                'Content-Type': 'application/json'
+            }
+            })
             .then(response => {
                 // setManager(response.data.filter(user => user.username == signedIn)[0]);
                 setManager(response.data)

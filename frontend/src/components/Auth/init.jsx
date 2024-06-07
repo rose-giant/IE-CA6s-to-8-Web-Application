@@ -21,15 +21,15 @@ export default function InitUser() {
         setActiveButton("register")
     }
 
-    useEffect(() => {
-        axios.get("http://localhost:8080/users")
-          .then(response => {
-            setUsers(response.data);
-          })
-          .catch(error => {
-            console.error("Error fetching restaurants:", error);
-          });
-      }, [])
+    // useEffect(() => {
+    //     axios.get("http://localhost:8080/users")
+    //       .then(response => {
+    //         setUsers(response.data);
+    //       })
+    //       .catch(error => {
+    //         console.error("Error fetching restaurants:", error);
+    //       });
+    //   }, [])
 
     return(
         <>

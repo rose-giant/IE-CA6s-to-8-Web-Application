@@ -26,7 +26,12 @@ export default function Search() {
         if(locationParam) url += ("address="+locationParam+"&")
         if(restaurantParam) url += ("type="+restaurantParam+"&")
         if(searchParam) url += ("name="+searchParam)
-      axios.get(url)
+      axios.get(url, {
+            headers: {
+                'Authorization': localStorage.getItem('authToken'),
+                'Content-Type': 'application/json'
+            }
+            })
             .then(response => {
               setRestaurants(response.data)
             })

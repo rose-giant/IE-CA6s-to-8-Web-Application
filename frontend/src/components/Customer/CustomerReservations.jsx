@@ -27,7 +27,12 @@ export default function CustomerReservations({ customerName }) {
 
 
     useEffect(() => {
-        axios.get("http://localhost:8080/reservations?userName="+ customerName)
+        axios.get("http://localhost:8080/reservations?userName="+ customerName, {
+            headers: {
+                'Authorization': localStorage.getItem('authToken'),
+                'Content-Type': 'application/json'
+            }
+            })
             .then(response => {
                 setReservations(response.data)
             })
@@ -50,7 +55,10 @@ export default function CustomerReservations({ customerName }) {
         axios({
             method: 'post',
             url: "http://localhost:8080/reviews",
-            headers: {}, 
+            headers: {
+                'Authorization': localStorage.getItem('authToken'),
+                'Content-Type': 'application/json'
+            },
             data: params
           })
             .catch(error => {

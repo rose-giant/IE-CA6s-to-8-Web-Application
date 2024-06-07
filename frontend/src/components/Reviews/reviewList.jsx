@@ -44,7 +44,12 @@ export default function ReviewList({ restaurantName }) {
     }
 
     useEffect(() => {
-        axios.get("http://localhost:8080/reviews/"+restaurantName)
+        axios.get("http://localhost:8080/reviews/"+restaurantName, {
+            headers: {
+                'Authorization': localStorage.getItem('authToken'),
+                'Content-Type': 'application/json'
+            }
+            })
           .then(response => {
             setreviews(response.data)
             findTargetRest(reviews)

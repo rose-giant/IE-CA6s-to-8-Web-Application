@@ -11,7 +11,12 @@ export default function ReservationList({ restName }) {
     // console.log("http://localhost:8080/reservations?restName=" + restName)
 
     useEffect(() => {
-        axios.get("http://localhost:8080/reservations?restName=" + restName)
+        axios.get("http://localhost:8080/reservations?restName=" + restName, {
+            headers: {
+                'Authorization': localStorage.getItem('authToken'),
+                'Content-Type': 'application/json'
+            }
+            })
             .then(response => {
                 setRestReservations(response.data);
                 table != null ? setReservations(restReservations.filter(resrv => resrv.tableNumber == table.tableNumber)):setReservations(response.data)

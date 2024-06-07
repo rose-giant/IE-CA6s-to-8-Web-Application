@@ -28,7 +28,12 @@ export default function ManagerRestaurants({managerName}) {
     };
 
     useEffect(() => {
-        axios.get("http://localhost:8080/restaurants/" + managerName)
+        axios.get("http://localhost:8080/restaurants/" + managerName, {
+            headers: {
+                'Authorization': localStorage.getItem('authToken'),
+                'Content-Type': 'application/json'
+            }
+            })
             .then(response => {
                 setRestaurants(response.data);
             })
@@ -53,7 +58,10 @@ export default function ManagerRestaurants({managerName}) {
         axios({
             method: 'post',
             url: "http://localhost:8080/restaurants",
-            headers: {}, 
+            headers: {
+                'Authorization': localStorage.getItem('authToken'),
+                'Content-Type': 'application/json'
+            }, 
             data: params
           })
             .catch(error => {

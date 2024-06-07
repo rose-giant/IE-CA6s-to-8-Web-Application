@@ -8,7 +8,14 @@ export default function RestaurantList() {
 
     useEffect(() => {
         const params = {}
-        axios.get("http://localhost:8080/restaurants")
+        console.log(localStorage.getItem('authToken'))
+        axios.get("http://localhost:8080/restaurants", {
+          withCredentials: true,
+          headers: {
+              'Authorization': localStorage.getItem('authToken'),
+              'Content-Type': 'application/json'
+          }
+          })
           .then(response => {
             setRestaurants(response.data)
           })
