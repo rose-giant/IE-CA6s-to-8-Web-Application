@@ -19,16 +19,16 @@ public class UserRepository {
     UserDAO dao = new UserDAO();
 
     public UserRepository() throws Exception {
-//        boolean a = dao.checkTableExistence(MANAGER_ROLE);
-//        boolean b = dao.checkTableExistence(CLIENT_ROLE);
-//        if(!a || !b){
-//            users = dao.fetchFromAPI(Constants.GET_USERS_URL, User.class);
-//            for (User user:users) {
-//                dao.addToDatabase(user);
-//            }
-//        }
+        boolean a = dao.checkTableExistence(MANAGER_ROLE);
+        boolean b = dao.checkTableExistence(CLIENT_ROLE);
+        if(!a || !b){
+            users = dao.fetchFromAPI(Constants.GET_USERS_URL, User.class);
+            for (User user:users) {
+                dao.addToDatabase(user);
+            }
+        }
 
-//        users = dao.fetchFromAPI(Constants.GET_USERS_URL, User.class);
+        users = dao.fetchFromAPI(Constants.GET_USERS_URL, User.class);
         users = dao.getAll();
     }
 
@@ -41,7 +41,7 @@ public class UserRepository {
         return users;
     }
 
-    public User findUserByUserName(String username)  {
+    public User findUserByUserName(String username) throws SQLException {
 //        System.out.println("findByFields begin");
 //        Connection conn = HibernateUtils.getConnection();
 //        System.out.println("after getting conn");
@@ -62,7 +62,7 @@ public class UserRepository {
 
     public User findByUsernameAndPassword(String username, String password) {
         for (User user: users) {
-
+            System.out.println(user.username + " " + user.password);
             if(user.username.equals(username) && user.password.equals(password)) return user;
         }
         return null;

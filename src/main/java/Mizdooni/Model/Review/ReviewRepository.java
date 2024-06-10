@@ -17,13 +17,13 @@ public class ReviewRepository {
     ReviewDAO dao = new ReviewDAO();
 
     public ReviewRepository() throws Exception {
-//        if(!dao.checkTableExistence(REVIEWS_TABLE_NAME)){
-//            reviews = dao.fetchFromAPI(Constants.GET_REVIEWS_URL, Review.class);
-//            for (Review user:reviews) {
-//               dao.addToDatabase(user);
-//            }
-//        }
-//        reviews = dao.fetchFromAPI(Constants.GET_REVIEWS_URL, Review.class);
+        if(!dao.checkTableExistence(REVIEWS_TABLE_NAME)){
+            reviews = dao.fetchFromAPI(Constants.GET_REVIEWS_URL, Review.class);
+            for (Review user:reviews) {
+               dao.addToDatabase(user);
+            }
+        }
+        reviews = dao.fetchFromAPI(Constants.GET_REVIEWS_URL, Review.class);
         reviews = dao.getAll();
     }
 

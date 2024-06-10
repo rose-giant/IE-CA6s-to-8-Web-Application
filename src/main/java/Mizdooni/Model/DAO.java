@@ -57,6 +57,7 @@ public abstract class DAO<TYPE> {
         ResultSet rs = stmt.executeQuery();
         boolean tableExists = rs.next();
         System.out.println(tableName + ": " +tableExists);
+        System.out.println("creating the table!!ha ha ha");
         if (!tableExists) {
             stmt = conn.prepareStatement(getCreateTableQuery(tableName));
             System.out.println(stmt);

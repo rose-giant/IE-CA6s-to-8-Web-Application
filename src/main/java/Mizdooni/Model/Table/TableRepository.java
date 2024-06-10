@@ -20,13 +20,13 @@ public class TableRepository {
     TableDAO dao = new TableDAO();
 
     public TableRepository() throws Exception {
-//        if(!dao.checkTableExistence(TABLES_TABLE_NAME)){
-//            tables = dao.fetchFromAPI(Constants.GET_TABLES_URL, TableRest.class);
-//            for (TableRest user:tables) {
-//               dao.addToDatabase(user);
-//            }
-//        }
-//        tables = dao.fetchFromAPI(Constants.GET_TABLES_URL, TableRest.class);
+        if(!dao.checkTableExistence(TABLES_TABLE_NAME)){
+            tables = dao.fetchFromAPI(Constants.GET_TABLES_URL, TableRest.class);
+            for (TableRest user:tables) {
+               dao.addToDatabase(user);
+            }
+        }
+        tables = dao.fetchFromAPI(Constants.GET_TABLES_URL, TableRest.class);
         tables = dao.getAll();
     }
 

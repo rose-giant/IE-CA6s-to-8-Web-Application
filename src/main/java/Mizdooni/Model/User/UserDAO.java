@@ -3,16 +3,11 @@ package Mizdooni.Model.User;
 import Mizdooni.Model.Address;
 import Mizdooni.Model.DAO;
 import Mizdooni.Model.HibernateUtils;
-import Mizdooni.Security.Hash;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.ArrayList;
-
 
 import static Mizdooni.Model.Constants.*;
 
@@ -99,14 +94,10 @@ public class UserDAO extends DAO<User> {
     }
 
 
-
-
-
     protected User convertToDomainModel(ResultSet rs, String role) {
         try{
             Address ad = new Address().toAddress(rs.getString(4));
-            String hashedPass = Hash.doHash(rs.getString(2));
-            return new User(ad, rs.getString(3), hashedPass, role, rs.getString(1));
+            return new User(ad, rs.getString(3), rs.getString(2), role, rs.getString(1));
         }
         catch (Exception e){
             System.out.println("convertToDomainModelError: " + e.getMessage());

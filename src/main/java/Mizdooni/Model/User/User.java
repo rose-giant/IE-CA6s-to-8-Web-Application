@@ -35,8 +35,6 @@ public class User {
 
     @JsonIgnore
     public ArrayList<Reservation> reservations = new ArrayList<>();
-    @JsonIgnore
-    private String token;
 
     public User(@JsonProperty("address") Address address,
                 @JsonProperty("email") String email,
@@ -71,9 +69,5 @@ public class User {
     public String getRole() {
         return this.role;
     }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
+//    public User(String username, String password, String role){};
 }

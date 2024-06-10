@@ -20,13 +20,13 @@ public class RestaurantRepository {
     private RestaurantDAO dao = new RestaurantDAO();
 
     public RestaurantRepository() throws Exception {
-//        if(!dao.checkTableExistence(RESTAURANTS_TABLE_NAME)){
-//            restaurants = dao.fetchFromAPI(Constants.GET_RESTAURANTS_URL, Restaurant.class);
-//            for (Restaurant rest:restaurants) {
-//                dao.addToDatabase(rest);
-//            }
-//        }
-//        restaurants = dao.fetchFromAPI(Constants.GET_RESTAURANTS_URL, Restaurant.class);
+        if(!dao.checkTableExistence(RESTAURANTS_TABLE_NAME)){
+            restaurants = dao.fetchFromAPI(Constants.GET_RESTAURANTS_URL, Restaurant.class);
+            for (Restaurant rest:restaurants) {
+                dao.addToDatabase(rest);
+            }
+        }
+        restaurants = dao.fetchFromAPI(Constants.GET_RESTAURANTS_URL, Restaurant.class);
         restaurants = dao.getAll();
     }
 

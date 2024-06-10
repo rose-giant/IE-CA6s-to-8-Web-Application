@@ -1,6 +1,5 @@
 package Mizdooni;
 
-
 import Mizdooni.Model.Reservation.ReservationRepository;
 import Mizdooni.Model.Restaurant.RestaurantRepository;
 import Mizdooni.Model.Review.ReviewRepository;
@@ -13,7 +12,6 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 @SpringBootApplication
 public class MizdooniApplication extends SpringBootServletInitializer {
 	public static void main(String[] args) throws Exception {
-
 		UserRepository.getInstance();
 		RestaurantRepository.getInstance();
 		TableRepository.getInstance();
@@ -23,4 +21,3 @@ public class MizdooniApplication extends SpringBootServletInitializer {
 		SpringApplication.run(MizdooniApplication.class, args);
 	}
 }
-

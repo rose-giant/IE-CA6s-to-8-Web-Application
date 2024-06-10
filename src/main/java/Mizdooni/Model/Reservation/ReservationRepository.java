@@ -18,12 +18,12 @@ public class ReservationRepository {
     ReservationDAO dao = new ReservationDAO();
 
     public ReservationRepository() throws Exception {
-//        if(!dao.checkTableExistence(RESERVES_TABLE_NAME)){
-//            reservations = dao.getFromAPI();
-//            for (Reservation user:reservations) {
-//               dao.addToDatabase(user);
-//            }
-//        }
+        if(!dao.checkTableExistence(RESERVES_TABLE_NAME)){
+            reservations = dao.getFromAPI();
+            for (Reservation user:reservations) {
+               dao.addToDatabase(user);
+            }
+        }
         reservations = dao.getFromAPI();
 
     }
