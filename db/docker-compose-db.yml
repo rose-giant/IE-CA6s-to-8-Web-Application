@@ -1,0 +1,19 @@
+services:
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: mizdooni
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - db_network
+
+volumes:
+  db_data:
+
+networks:
+  db_network:
+    external: true

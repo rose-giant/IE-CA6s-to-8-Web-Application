@@ -1,25 +1,26 @@
-<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
-             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
-                                 http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
-             version="2.2">
+<!--<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"-->
+<!--             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"-->
+<!--             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence-->
+<!--                                 http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"-->
+<!--             version="2.2">-->
 
-    <persistence-unit name="mizdooni-persistence-unit">
-        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>Mizdooni.Model.Reservation</class>
-        <class>Mizdooni.Model.Restaurant</class>
-        <class>Mizdooni.Model.Review</class>
-        <class>Mizdooni.Model.Table</class>
-        <class>Mizdooni.Model.User</class>
-        <properties>
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/mizdooni"/>
-            <property name="javax.persistence.jdbc.user" value="root"/>
-            <property name="javax.persistence.jdbc.password" value="rootpassword"/>
-            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
-            <property name="hibernate.show_sql" value="true"/>
-            <!-- Other Hibernate properties -->
-        </properties>
-    </persistence-unit>
+<!--    <persistence-unit name="mizdooni-persistence-unit">-->
+<!--        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>-->
+<!--        <class>Mizdooni.Model.Reservation</class>-->
+<!--        <class>Mizdooni.Model.Restaurant</class>-->
+<!--        <class>Mizdooni.Model.Review</class>-->
+<!--        <class>Mizdooni.Model.Table</class>-->
+<!--        <class>Mizdooni.Model.User</class>-->
+<!--        <properties>-->
+<!--            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/mizdooni"/>-->
+<!--            <property name="javax.persistence.jdbc.user" value="root"/>-->
+<!--            <property name="javax.persistence.jdbc.password" value="rootpassword"/>-->
+<!--            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>-->
+<!--            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>-->
+<!--            <property name="hibernate.show_sql" value="true"/>-->
+<!--            &lt;!&ndash; Other Hibernate properties &ndash;&gt;-->
+<!--        </properties>-->
+<!--    </persistence-unit>-->
 
-</persistence>
+<!--</persistence>-->
+<advice xmlns="http://www.springframework.org/schema/cache"></advice>

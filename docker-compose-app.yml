@@ -1,0 +1,16 @@
+services:
+  app:
+    build: .
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/mizdooni
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: rootpassword
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+
+networks:
+  default:
+    external:
+      name: db_network
